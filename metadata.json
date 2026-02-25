@@ -1,0 +1,8 @@
+{
+  "name": "Mendly",
+  "description": "Plataforma de servicios de hogar y diseño impulsada por IA. Mendly actúa como un arquitecto operativo para profesionalizar el mantenimiento y el diseño de interiores.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
