@@ -33,6 +33,9 @@ const KPICard: React.FC<KPICardProps> = ({ label, value, trend, trendUp, icon, b
 const ProviderDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     const [activeTab, setActiveTab] = useState<'dashboard' | 'orders' | 'services'>('dashboard');
     const [isAddingService, setIsAddingService] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState<any>(null);
+    const [isModifying, setIsModifying] = useState(false);
+    const [modifiedData, setModifiedData] = useState({ service: '', price: 0, materials: '' });
 
     const kpis: KPICardProps[] = [
         { label: 'Ingresos', value: '$12,450', trend: '+12.5%', trendUp: true, icon: <DollarSign size={18} />, bg: '#E8FBF1', color: '#10C96D' },
@@ -47,10 +50,10 @@ const ProviderDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => 
         { id: '3', name: 'Desinfección', price: 1200, status: 'Revisión' },
     ];
 
-    const recentOrders = [
-        { id: 'ORD-001', client: 'Julio R.', service: 'Limpieza Profunda', date: 'Mañana, 2pm', price: 800, status: 'Escrow' },
-        { id: 'ORD-002', client: 'María C.', service: 'Limpieza Express', date: 'Hoy, 5pm', price: 400, status: 'En Camino' },
-    ];
+    const [orders, setOrders] = useState([
+        { id: 'ORD-001', client: 'Julio R.', service: 'Limpieza Profunda', date: 'Mañana, 2pm', price: 800, status: 'Escrow', materials: '' },
+        { id: 'ORD-002', client: 'María C.', service: 'Limpieza Express', date: 'Hoy, 5pm', price: 400, status: 'En Camino', materials: '' },
+    ]);
 
     const barData = [60, 80, 45, 95, 70, 100, 55, 88, 72, 65, 90, 85];
     const months = ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
@@ -148,8 +151,12 @@ const ProviderDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => 
                                 <button onClick={() => setActiveTab('orders')} className="text-xs font-semibold text-green-600 flex items-center gap-1">Ver todas <ChevronRight size={12} /></button>
                             </div>
                             <div className="space-y-3">
-                                {recentOrders.map(o => (
-                                    <div key={o.id} className="flex items-center gap-3 p-3 bg-canvas rounded-2xl hover:bg-black/5 transition-colors cursor-pointer">
+                                {orders.map(o => (
+                                    <div
+                                        key={o.id}
+                                        onClick={() => setSelectedOrder(o)}
+                                        className="flex items-center gap-3 p-3 bg-canvas rounded-2xl hover:bg-black/5 transition-colors cursor-pointer"
+                                    >
                                         <div className="w-9 h-9 bg-ink rounded-xl flex items-center justify-center text-white font-black text-sm">{o.client[0]}</div>
                                         <div className="flex-1">
                                             <p className="text-sm font-semibold text-ink">{o.service}</p>
@@ -199,8 +206,12 @@ const ProviderDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => 
                     <>
                         <h2 className="text-2xl font-black text-ink mb-1">Órdenes</h2>
                         <div className="space-y-3">
-                            {recentOrders.map(o => (
-                                <div key={o.id} className="card-hover bg-white rounded-3xl border border-black/5 p-5">
+                            {orders.map(o => (
+                                <div
+                                    key={o.id}
+                                    onClick={() => setSelectedOrder(o)}
+                                    className="card-hover bg-white rounded-3xl border border-black/5 p-5 cursor-pointer"
+                                >
                                     <div className="flex items-center gap-4 mb-4">
                                         <div className="w-12 h-12 bg-ink rounded-2xl flex items-center justify-center text-xl font-black text-white">{o.client[0]}</div>
                                         <div className="flex-1">
@@ -245,6 +256,155 @@ const ProviderDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => 
                             <button onClick={() => setIsAddingService(false)} className="btn-ghost flex-1 py-4 text-sm font-bold">Cancelar</button>
                             <button onClick={() => setIsAddingService(false)} className="btn-primary flex-1 py-4 text-sm font-bold">Enviar solicitud</button>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Order Details Modal/Screen */}
+            {selectedOrder && (
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-end animate-fade-in">
+                    <div className="bg-white w-full h-[90vh] rounded-t-[2rem] p-7 animate-slide-up shadow-float overflow-y-auto no-scrollbar">
+                        <div className="w-10 h-1 bg-black/10 rounded-full mx-auto mb-7" />
+
+                        {!isModifying ? (
+                            <>
+                                <div className="flex justify-between items-start mb-6">
+                                    <div>
+                                        <p className="text-[10px] text-ink-muted font-mono mb-1">{selectedOrder.id}</p>
+                                        <h2 className="text-2xl font-black text-ink">{selectedOrder.service}</h2>
+                                        <p className="text-sm text-ink-muted">Cliente: {selectedOrder.client}</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-2xl font-black text-green-600">${selectedOrder.price}</p>
+                                        <span className="text-[9px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full">{selectedOrder.status}</span>
+                                    </div>
+                                </div>
+
+                                <div className="bg-canvas/50 rounded-2xl p-4 mb-6 border border-black/5">
+                                    <p className="text-xs font-bold text-ink-secondary mb-2 uppercase tracking-wider">Detalles del Trabajo</p>
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-ink/70">
+                                                <Clock size={14} />
+                                            </div>
+                                            <p className="text-sm text-ink">{selectedOrder.date}</p>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-ink/70">
+                                                <TrendingUp size={14} />
+                                            </div>
+                                            <p className="text-sm text-ink">Verificación requerida en sitio</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <button
+                                        onClick={() => {
+                                            // Confirm as is
+                                            setOrders(prev => prev.map(ord =>
+                                                ord.id === selectedOrder.id ? { ...ord, status: 'Confirmado' } : ord
+                                            ));
+                                            setSelectedOrder(null);
+                                        }}
+                                        className="btn-primary w-full py-4 text-sm font-bold flex items-center justify-center gap-2"
+                                    >
+                                        <CheckCircle2 size={16} /> Confirmar Servicio como Solicitado
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setModifiedData({
+                                                service: selectedOrder.service,
+                                                price: selectedOrder.price,
+                                                materials: selectedOrder.materials || ''
+                                            });
+                                            setIsModifying(true);
+                                        }}
+                                        className="btn-ghost w-full py-4 text-sm font-bold bg-canvas border-black/5"
+                                    >
+                                        Modificar Servicio / Costo
+                                    </button>
+                                    <button
+                                        onClick={() => setSelectedOrder(null)}
+                                        className="w-full text-xs font-semibold text-ink-muted py-2"
+                                    >
+                                        Cerrar
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h2 className="text-2xl font-black text-ink mb-1">Ajustar Orden</h2>
+                                <p className="text-sm text-ink-muted mb-8">Modifica los detalles según la verificación en campo.</p>
+
+                                <div className="space-y-6 mb-8">
+                                    <div>
+                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Servicio Final</label>
+                                        <select
+                                            value={modifiedData.service}
+                                            onChange={(e) => {
+                                                const selectedService = services.find(s => s.name === e.target.value);
+                                                if (selectedService) {
+                                                    setModifiedData({
+                                                        ...modifiedData,
+                                                        service: selectedService.name,
+                                                        price: selectedService.price
+                                                    });
+                                                }
+                                            }}
+                                            className="input-field w-full appearance-none bg-no-repeat bg-[right_1rem_center] bg-[length:1em_1em]"
+                                            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")` }}
+                                        >
+                                            {services.map(s => (
+                                                <option key={s.id} value={s.name}>{s.name} - ${s.price}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Materiales / Extras</label>
+                                        <textarea
+                                            value={modifiedData.materials}
+                                            onChange={(e) => setModifiedData({ ...modifiedData, materials: e.target.value })}
+                                            placeholder="Detalla materiales adicionales o cargos por complejidad..."
+                                            className="input-field w-full min-h-[100px] py-3"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Costo Total Final</label>
+                                        <input
+                                            type="number"
+                                            value={modifiedData.price}
+                                            onChange={(e) => setModifiedData({ ...modifiedData, price: parseInt(e.target.value) })}
+                                            className="input-field w-full text-2xl font-black text-green-600"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3">
+                                    <button
+                                        onClick={() => setIsModifying(false)}
+                                        className="btn-ghost flex-1 py-4 text-sm font-bold"
+                                    >
+                                        Atrás
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            // Persist changes to local state
+                                            setOrders(prev => prev.map(ord =>
+                                                ord.id === selectedOrder.id
+                                                    ? { ...ord, service: modifiedData.service, price: modifiedData.price, materials: modifiedData.materials, status: 'Confirmado' }
+                                                    : ord
+                                            ));
+                                            setSelectedOrder(null);
+                                            setIsModifying(false);
+                                        }}
+                                        className="btn-primary flex-1 py-4 text-sm font-bold"
+                                    >
+                                        Actualizar y Confirmar
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
