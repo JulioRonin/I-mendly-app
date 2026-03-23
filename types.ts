@@ -1,150 +1,261 @@
-export type Role = 'user' | 'model' | 'system';
+// ============================================================
+// I mendly — Type Definitions
+// Noche Teal Design System · 3 Portals Architecture
+// ============================================================
 
-export interface Message {
-  id: string;
-  role: Role;
-  text: string;
-  timestamp: Date;
-  isTyping?: boolean;
-  metadata?: any;
-  attachments?: string[];
-  action?: 'PAY_HELD' | 'PAY_RELEASED' | 'DISPUTE_OPEN' | 'RENDER_GENERATED';
-  payload?: MendlyJSONOutput; // structured data for the UI to consume
+// ===== VIEWS / ROUTING =====
+export enum AppView {
+  SPLASH = 'SPLASH',
+  LOGIN = 'LOGIN',
+  PORTAL_SELECT = 'PORTAL_SELECT',
+
+  // Client Portal
+  CLIENT_HOME = 'CLIENT_HOME',
+  PROVIDER_LIST = 'PROVIDER_LIST',
+  PROVIDER_PROFILE = 'PROVIDER_PROFILE',
+  SERVICE_CONFIG = 'SERVICE_CONFIG',
+  BOOKING_CALENDAR = 'BOOKING_CALENDAR',
+  PAYMENT = 'PAYMENT',
+  ORDER_TRACKING = 'ORDER_TRACKING',
+  ORDERS = 'ORDERS',
+  CLIENT_PROFILE = 'CLIENT_PROFILE',
+  OFFERS = 'OFFERS',
+
+  // Provider Portal
+  PROVIDER_ONBOARDING = 'PROVIDER_ONBOARDING',
+  PROVIDER_DASHBOARD = 'PROVIDER_DASHBOARD',
+  PROVIDER_EARNINGS = 'PROVIDER_EARNINGS',
+  PROVIDER_REVIEWS = 'PROVIDER_REVIEWS',
+
+  // Admin Portal
+  ADMIN_DASHBOARD = 'ADMIN_DASHBOARD',
 }
 
-export interface MendlyJSONOutput {
-  id_cliente?: string;
-  categoria_servicio?: string;
-  urgencia_nivel?: number;
-  descripcion_problema?: string;
-  render_trigger?: boolean;
-  replicate_model?: string;
-  cotizacion_estimada?: number;
-  stripe_status?: string;
-  metadata?: {
-    latency_goal?: string;
-    raw_prompt?: string;
-  };
-}
+export type UserRole = 'client' | 'provider' | 'admin';
 
-export interface OrderPhase {
-  label: string;
+// ===== SERVICE CATEGORIES =====
+export type ServiceCategoryId =
+  | 'electricity' | 'plumbing' | 'painting' | 'waterproofing'
+  | 'ac' | 'cleaning' | 'construction' | 'carpentry'
+  | 'fumigation' | 'pets' | 'carwash' | 'tailoring';
+
+export type PricingModel = 'per_sqm' | 'per_unit' | 'per_hour' | 'fixed' | 'per_event' | 'per_day' | 'per_linear_meter';
+
+export interface ServiceCategory {
+  id: ServiceCategoryId;
+  name: string;
+  icon: string;
+  iconBg: string;
+  iconColor: string;
   description: string;
-  status: 'completed' | 'current' | 'pending';
-  date?: string;
-}
-
-export interface OrderMessage {
-  id: string;
-  sender: 'user' | 'provider' | 'system';
-  text: string;
-  timestamp: string;
-  photoUrl?: string;
-}
-
-export interface Order {
-  id: string;
-  serviceName: string;
-  serviceDescription: string;
-  providerName: string;
-  providerAvatar: string;
-  price: number;
-  status: string;
-  currentPhase: number;
-  date: string;
-  location: string;
-  phases: OrderPhase[];
-  messages: OrderMessage[];
-  photos: string[];
-}
-
-export interface ServiceVariable {
-  id: string;
-  name: string;
-  options: string[];
-  priceImpact: Record<string, number>; // Record of optionName -> priceDelta
-}
-
-export interface SubService {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  color: string; // 'pink' | 'orange' | 'purple' | 'blue'
-  priceLabel?: string; // e.g., 'desde'
-  priceNote?: string; // e.g., 'Final cost depends on requirements'
-  variables?: ServiceVariable[]; // New: Dynamic pricing variables
-}
-
-export interface Provider {
-  id: string;
-  name: string;
-  specialty: string;
-  rating: number;
-  mendlyReady: boolean;
-  reviews: number;
-  pricePerHour?: number;
-  distance: string;
-  avatarUrl: string;
-  coordinates: { lat: number; lng: number };
-  zone?: string; // New: Service Area
-  categoryId: string; // Link to ServiceCategory
-  services?: SubService[]; // List of specific services offered
-  portfolio?: string[]; // New: List of portfolio images
-  zones?: string[]; // New: List of zones where the provider operates
+  pricingModel: PricingModel;
+  minPrice: number;
+  maxPrice: number;
+  unit: string;
+  featured?: boolean;
 }
 
 export interface ServiceItem {
   id: string;
+  categoryId: ServiceCategoryId;
   name: string;
-  price: number;
-  count: number;
-  image?: string;
+  description: string;
+  minPrice: number;
+  maxPrice: number;
+  unit: string;
+  estimatedMinutes: number;
+  includesMaterials: boolean;
+  popular?: boolean;
 }
 
-export interface ServiceCategory {
+// ===== PROVIDERS =====
+export type CertificationStatus = 'pending' | 'in_review' | 'approved' | 'rejected';
+
+export interface Provider {
   id: string;
   name: string;
-  icon: string;
-  type: 'MAINTENANCE' | 'DESIGN' | 'REPAIR';
+  initials: string;
+  avatarColor: string;
+  avatarImage?: string;
+  location: string;
+  zone: string;
+  rating: number;
+  reviewCount: number;
+  completedJobs: number;
+  completionRate: number;
+  yearsExperience: number;
+  categories: ServiceCategoryId[];
   description: string;
-  theme: 'pink' | 'green' | 'blue' | 'yellow' | 'purple' | 'orange' | 'gray' | 'red';
-  image: string;
-  promo?: string;
-  items?: ServiceItem[];
+  certificationStatus: CertificationStatus;
+  responseTimeMinutes: number;
+  portfolio: string[];
+  startingPrice: number;
+  badges: ProviderBadge[];
+  imendlyCertified: boolean;
+  services: ServiceItem[];
 }
 
-export enum AppView {
-  LOGIN = 'LOGIN',
-  SERVICES = 'SERVICES',
-  CHAT = 'CHAT',
-  CALENDAR = 'CALENDAR', // Main Agenda View
-  BOOKING_CALENDAR = 'BOOKING_CALENDAR', // Step in the flow to pick a date
-  MAP = 'MAP', // Provider Detail
-  SERVICE_CONFIG = 'SERVICE_CONFIG',
-  PAYMENT = 'PAYMENT',
-  PROVIDER_LIST = 'PROVIDER_LIST',
-  PROVIDER_SERVICES = 'PROVIDER_SERVICES',
-  OFFERS = 'OFFERS',
-  ORDERS = 'ORDERS',
-  PROFILE = 'PROFILE',
-  ADMIN = 'ADMIN',
-  PROVIDER_DASHBOARD = 'PROVIDER_DASHBOARD'
+export type ProviderBadge = 'top_rated' | 'fast_response' | 'pro_certified' | 'background_checked' | 'new';
+
+// ===== ORDERS / ESCROW =====
+export type EscrowStatus = 'initiated' | 'payment_held' | 'in_progress' | 'pending_validation' | 'completed' | 'disputed' | 'cancelled' | 'refunded' | 'released';
+
+export interface EscrowTransaction {
+  amount: number;
+  commissionRate: number;
+  commissionAmount: number;
+  netProviderAmount: number;
+  status: EscrowStatus;
+  paymentMethod: 'card' | 'spei' | 'oxxo';
 }
 
-export interface MendlyJSONOutput {
-  id_cliente?: string;
-  categoria_servicio?: string;
-  urgencia_nivel?: number;
-  descripcion_problema?: string;
-  render_trigger?: boolean;
-  replicate_model?: string;
-  cotizacion_estimada?: number;
-  stripe_status?: string;
-  metadata?: {
-    latency_goal?: string;
-    raw_prompt?: string;
-  };
+export interface OrderEvent {
+  type: string;
+  label: string;
+  timestamp: string;
+  done: boolean;
+  active: boolean;
+}
+
+export interface ServiceRequest {
+  id: string;
+  status: EscrowStatus;
+  address: string;
+  zone: string;
+  scheduledAt: string;
+  description: string;
+  quotedAmount: number;
+  finalAmount?: number;
+  createdAt: string;
+  escrow?: EscrowTransaction;
+  providerName: string;
+  providerInitials: string;
+  providerAvatarColor: string;
+  serviceName: string;
+  categoryId: ServiceCategoryId;
+  categoryName: string;
+  timeline: OrderEvent[];
+}
+
+// ===== REVIEWS =====
+export interface Review {
+  id: string;
+  reviewerName: string;
+  reviewerInitials: string;
+  rating: number;
+  comment: string;
+  serviceName: string;
+  amount: number;
+  createdAt: string;
+}
+
+// ===== USERS =====
+export interface ClientUser {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  initials: string;
+  zone: string;
+  city: string;
+  memberSince: string;
+}
+
+export interface ProviderUser {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  initials: string;
+  zone: string;
+  city: string;
+  certificationStatus: CertificationStatus;
+  ratingAvg: number;
+  totalServices: number;
+  completionRate: number;
+  earnedThisMonth: number;
+  earnedLastMonth: number;
+  categories: ServiceCategoryId[];
+  imendlyCertified: boolean;
+  onboardingStep: number;
+}
+
+// ===== APP STATE =====
+export interface BookingDetails {
+  service?: ServiceItem;
+  category?: ServiceCategory;
+  provider?: Provider;
+  scheduledDate?: string;
+  scheduledTime?: string;
+  address?: string;
+  zone?: string;
+  description?: string;
+  quotedAmount?: number;
+  paymentMethod?: 'card' | 'spei' | 'oxxo';
+}
+
+export interface AppState {
+  currentView: AppView;
+  history: AppView[];
+  userRole: UserRole | null;
+  clientUser: ClientUser | null;
+  providerUser: ProviderUser | null;
+  selectedCategory: ServiceCategory | null;
+  selectedProvider: Provider | null;
+  selectedService: ServiceItem | null;
+  bookingDetails: BookingDetails;
+  orders: ServiceRequest[];
+  onboardingStep: number;
+  notifCount: number;
+}
+
+// ===== ONBOARDING =====
+export interface OnboardingData {
+  fullName: string;
+  phone: string;
+  phoneVerified: boolean;
+  birthDate: string;
+  colonia: string;
+  email: string;
+  password: string;
+  curp: string;
+  rfc: string;
+  ineFrontUploaded: boolean;
+  ineBackUploaded: boolean;
+  selfieUploaded: boolean;
+  criminalRecordUploaded: boolean;
+  domicileProofUploaded: boolean;
+  portfolioCount: number;
+  selectedServices: ServiceCategoryId[];
+  selectedZones: string[];
+  hourlyRate: number;
+  yearsExperience: number;
+  specialtyDescription: string;
+  interviewDate: string;
+  interviewTime: string;
+  step: number;
+}
+
+// ===== COMMISSION =====
+export interface CommissionTier {
+  maxAmount: number;
+  rate: number;
+  label: string;
+}
+
+export const COMMISSION_TIERS: CommissionTier[] = [
+  { maxAmount: 800,      rate: 0.17, label: '17%' },
+  { maxAmount: 1500,     rate: 0.14, label: '14%' },
+  { maxAmount: 3000,     rate: 0.11, label: '11%' },
+  { maxAmount: Infinity, rate: 0.07, label: '7%'  },
+];
+
+export function calculateCommission(amount: number): { rate: number; commission: number; net: number } {
+  const tier = COMMISSION_TIERS.find(t => amount <= t.maxAmount) || COMMISSION_TIERS[COMMISSION_TIERS.length - 1];
+  const commission = Math.round(amount * tier.rate);
+  return { rate: tier.rate, commission, net: amount - commission };
+}
+
+export function formatMXN(amount: number): string {
+  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(amount);
 }

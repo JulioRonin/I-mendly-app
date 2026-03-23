@@ -1,415 +1,324 @@
 import React, { useState } from 'react';
-import {
-    DollarSign, Star, Package, CheckCircle2, Clock, Plus,
-    ChevronRight, Bell, LogOut, ArrowUpRight, MoreHorizontal, Zap, TrendingUp
-} from 'lucide-react';
+import { AppState, AppView } from '../types';
+import { DEMO_REVIEWS, DEMO_WEEKLY_EARNINGS, SERVICE_CATEGORIES } from '../constants';
+import BottomNav from './BottomNav';
+import IMendlyLogo from './IMendlyLogo';
 
-interface KPICardProps {
-    label: string;
-    value: string;
-    trend: string;
-    trendUp: boolean;
-    icon: React.ReactNode;
-    bg: string;
-    color: string;
+interface Props {
+  state: AppState;
+  navigate: (v: AppView) => void;
+  goBack: () => void;
+  setCategory: (c: any) => void;
+  setProvider: (p: any) => void;
+  setService: (s: any) => void;
+  setBooking: (b: any) => void;
 }
 
-const KPICard: React.FC<KPICardProps> = ({ label, value, trend, trendUp, icon, bg, color }) => (
-    <div className="card-hover bg-white rounded-3xl border border-black/5 p-5 animate-card-in">
-        <div className="flex justify-between items-start mb-5">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: bg, color }}>
-                {icon}
+const maxBar = Math.max(...DEMO_WEEKLY_EARNINGS.map(d => d.amount));
+
+export default function ProviderDashboard({ state, navigate }: Props) {
+  const [tab, setTab] = useState<'home' | 'orders' | 'earnings' | 'reviews' | 'profile'>('home');
+  const provider = state.providerUser;
+  const activeOrder = state.orders.find(o => o.status === 'in_progress');
+  const completedOrders = state.orders.filter(o => o.escrow?.status === 'released');
+  const weekEarnings = DEMO_WEEKLY_EARNINGS.reduce((s, d) => s + d.amount, 0);
+  const monthGrowth = Math.round(((provider?.earnedThisMonth ?? 0) - (provider?.earnedLastMonth ?? 0)) / (provider?.earnedLastMonth ?? 1) * 100);
+
+  const renderHome = () => (
+    <div className="flex flex-col gap-4">
+      {/* Header */}
+      <div className="px-4 pt-4 relative overflow-hidden"
+        style={{ background: 'linear-gradient(160deg, #0F3460 0%, #060D16 100%)', paddingBottom: 20 }}>
+        <div className="blob-coral absolute" style={{ width: 300, height: 300, top: '-50%', right: '-20%', opacity: 0.08 }} />
+        <div className="relative z-10">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg"
+                style={{ background: 'linear-gradient(135deg,#0891B2,#0F3460)', fontFamily: 'Syne, sans-serif', color: 'white', boxShadow: '0 4px 16px rgba(8,145,178,0.4)' }}>
+                {provider?.initials}
+              </div>
+              <div>
+                <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>Panel proveedor</p>
+                <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16, color: 'white', letterSpacing: '-0.02em' }}>{provider?.name?.split(' ')[0]}</p>
+              </div>
             </div>
-            <span className={`text-[9px] font-black uppercase tracking-wide px-2 py-1 rounded-full flex items-center gap-1 ${trendUp ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'}`}>
-                <ArrowUpRight size={9} className={trendUp ? '' : 'rotate-90'} />
-                {trend}
-            </span>
+            <div className="flex gap-2">
+              {provider?.imendlyCertified && (
+                <span className="badge-teal px-2 py-1 flex items-center gap-1" style={{ fontSize: 10 }}>
+                  ✓ Certificado
+                </span>
+              )}
+              <button className="w-9 h-9 rounded-xl flex items-center justify-center relative"
+                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer', fontSize: 16 }}>
+                🔔
+                {state.notifCount > 0 && <span className="notif-dot" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Metrics grid */}
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { label: 'Ganancias este mes', value: `$${(provider?.earnedThisMonth ?? 0).toLocaleString('es-MX')}`, sub: `${monthGrowth > 0 ? '+' : ''}${monthGrowth}% vs mes anterior`, color: '#FF6B47' },
+              { label: 'Servicios completados', value: provider?.totalServices ?? 0, sub: `+${completedOrders.length} este mes`, color: '#10B981' },
+              { label: 'Calificación promedio', value: `★ ${provider?.ratingAvg}`, sub: `Top 5% de la red`, color: '#F59E0B' },
+              { label: 'Tasa completados', value: `${provider?.completionRate}%`, sub: provider?.completionRate && provider.completionRate >= 90 ? '✅ Badge activo' : '⚠️ Mejorar', color: '#0891B2' },
+            ].map(m => (
+              <div key={m.label} className="flex flex-col gap-1 p-3 rounded-xl"
+                style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.4)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{m.label}</p>
+                <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 18, color: m.color, letterSpacing: '-0.03em' }}>{m.value}</p>
+                <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>{m.sub}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <p className="text-xs text-ink-muted mb-1">{label}</p>
-        <h3 className="text-2xl font-black text-ink">{value}</h3>
+      </div>
+
+      {/* Active order */}
+      {activeOrder && (
+        <div className="mx-4 rounded-2xl p-4 relative overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, rgba(15,52,96,0.8), rgba(6,13,22,0.95))', border: '1.5px solid rgba(8,145,178,0.3)' }}>
+          <div className="blob-teal absolute" style={{ width: 200, height: 200, top: '-50%', right: '-20%', opacity: 0.2 }} />
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 mb-3">
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#0891B2', animation: 'pulse 2s infinite' }} />
+              <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 11, color: '#0891B2', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Servicio activo</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, color: 'white' }}>{activeOrder.serviceName}</p>
+                <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>📍 {activeOrder.zone}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>Monto garantizado:</span>
+                  <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 16, color: '#10B981' }}>
+                    ${(activeOrder.escrow?.netProviderAmount ?? 0).toLocaleString('es-MX')}
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <button className="btn-coral px-4 py-2 text-xs font-bold" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+                  ✅ Completar
+                </button>
+                <button className="btn-ghost px-4 py-2 text-xs" style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11 }}>
+                  💬 Chat
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Earnings chart */}
+      <div className="mx-4 rounded-2xl p-4" style={{ background: 'rgba(15,52,96,0.3)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 700 }}>Esta semana</p>
+            <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 22, color: '#FF6B47', letterSpacing: '-0.03em', marginTop: 2 }}>
+              ${weekEarnings.toLocaleString('es-MX')}
+            </p>
+          </div>
+          <span className="badge-success px-3 py-1.5">↑ +12%</span>
+        </div>
+        <div className="flex items-end justify-between gap-1.5" style={{ height: 80 }}>
+          {DEMO_WEEKLY_EARNINGS.map((d, i) => {
+            const isMax = d.amount === maxBar;
+            const pct = (d.amount / maxBar) * 100;
+            return (
+              <div key={d.day} className="flex-1 flex flex-col items-center gap-1">
+                <div className="w-full rounded-t-md transition-all duration-700"
+                  style={{ height: `${pct}%`, background: isMax ? 'linear-gradient(180deg,#FF6B47,#CC4A2A)' : 'rgba(8,145,178,0.5)', minHeight: 4 }} />
+                <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 10, color: isMax ? '#FF6B47' : 'rgba(255,255,255,0.3)', fontWeight: isMax ? 700 : 500 }}>{d.day}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Upcoming / recent */}
+      <div className="mx-4">
+        <div className="flex items-center justify-between mb-3">
+          <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, color: 'white' }}>Últimas reseñas</h3>
+          <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: '#0891B2', fontWeight: 600, cursor: 'pointer' }}>Ver todas</span>
+        </div>
+        <div className="flex flex-col gap-2">
+          {DEMO_REVIEWS.map(r => (
+            <div key={r.id} className="p-3 rounded-xl" style={{ background: 'rgba(15,52,96,0.25)', border: '1.5px solid rgba(255,255,255,0.06)' }}>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: '#0891B2', fontFamily: 'Syne, sans-serif', color: 'white' }}>
+                    {r.reviewerInitials}
+                  </div>
+                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 12, color: 'white' }}>{r.reviewerName}</span>
+                </div>
+                <div className="flex gap-0.5">{[1,2,3,4,5].map(s => <span key={s} style={{ color: '#F59E0B', fontSize: 11 }}>★</span>)}</div>
+              </div>
+              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', lineHeight: 1.4 }}>{r.comment.substring(0, 65)}…</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-);
+  );
 
-const ProviderDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
-    const [activeTab, setActiveTab] = useState<'dashboard' | 'orders' | 'services'>('dashboard');
-    const [isAddingService, setIsAddingService] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState<any>(null);
-    const [isModifying, setIsModifying] = useState(false);
-    const [modifiedData, setModifiedData] = useState({ service: '', price: 0, materials: '' });
+  const renderEarnings = () => (
+    <div className="flex flex-col gap-4 p-4">
+      <div className="rounded-2xl p-5" style={{ background: 'linear-gradient(135deg,rgba(255,107,71,0.15),rgba(15,52,96,0.5))', border: '1.5px solid rgba(255,107,71,0.2)' }}>
+        <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.06em' }}>Ganancias este mes</p>
+        <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 36, color: '#FF6B47', letterSpacing: '-0.04em', marginTop: 4 }}>
+          ${(provider?.earnedThisMonth ?? 0).toLocaleString('es-MX')}
+        </p>
+        <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: '#10B981' }}>↑ +{monthGrowth}% vs mes anterior</p>
+      </div>
 
-    const kpis: KPICardProps[] = [
-        { label: 'Ingresos', value: '$12,450', trend: '+12.5%', trendUp: true, icon: <DollarSign size={18} />, bg: '#E8FBF1', color: '#10C96D' },
-        { label: 'Rating', value: '4.9', trend: '+0.2', trendUp: true, icon: <Star size={18} />, bg: '#FFF8E1', color: '#D97706' },
-        { label: 'Activas', value: '8', trend: '-2', trendUp: false, icon: <Package size={18} />, bg: '#F5F0FF', color: '#7C3AED' },
-        { label: 'Éxito', value: '98%', trend: '+1%', trendUp: true, icon: <CheckCircle2 size={18} />, bg: '#EBF4FF', color: '#2563EB' },
-    ];
-
-    const services = [
-        { id: '1', name: 'Limpieza Profunda', price: 800, status: 'Activo' },
-        { id: '2', name: 'Limpieza Express', price: 400, status: 'Activo' },
-        { id: '3', name: 'Desinfección', price: 1200, status: 'Revisión' },
-    ];
-
-    const [orders, setOrders] = useState([
-        { id: 'ORD-001', client: 'Julio R.', service: 'Limpieza Profunda', date: 'Mañana, 2pm', price: 800, status: 'Escrow', materials: '' },
-        { id: 'ORD-002', client: 'María C.', service: 'Limpieza Express', date: 'Hoy, 5pm', price: 400, status: 'En Camino', materials: '' },
-    ]);
-
-    const barData = [60, 80, 45, 95, 70, 100, 55, 88, 72, 65, 90, 85];
-    const months = ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
-
-    return (
-        <div className="h-full bg-canvas flex flex-col overflow-hidden animate-fade-in">
-            {/* Header */}
-            <div className="bg-white px-5 pt-14 pb-4 border-b border-black/5 shrink-0">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 bg-ink rounded-2xl flex items-center justify-center">
-                            <Zap size={18} className="text-green-400" />
-                        </div>
-                        <div>
-                            <h1 className="text-lg font-black text-ink">Provider Hub</h1>
-                            <div className="flex items-center gap-1.5">
-                                <span className="green-dot" style={{ width: 6, height: 6 }} />
-                                <p className="text-[10px] text-ink-secondary font-mono">Modo Profesional</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        <button className="w-10 h-10 bg-canvas rounded-xl border border-black/5 flex items-center justify-center text-ink-secondary hover:bg-black/5 transition-colors">
-                            <Bell size={17} />
-                        </button>
-                        <button
-                            onClick={onLogout}
-                            className="w-10 h-10 bg-canvas rounded-xl border border-black/5 flex items-center justify-center text-red-400 hover:bg-red-50 transition-colors"
-                        >
-                            <LogOut size={17} />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Tabs */}
-                <div className="flex gap-1 mt-4 bg-canvas rounded-xl p-1">
-                    {(['dashboard', 'orders', 'services'] as const).map(tab => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`flex-1 py-2.5 rounded-lg text-[11px] font-bold capitalize transition-all ${activeTab === tab ? 'bg-white shadow-xs text-ink' : 'text-ink-muted'
-                                }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto no-scrollbar p-5 pb-36 space-y-4">
-                {activeTab === 'dashboard' && (
-                    <>
-                        {/* KPI Grid */}
-                        <div className="grid grid-cols-2 gap-3">
-                            {kpis.map((kpi, i) => (
-                                <KPICard key={i} {...kpi} />
-                            ))}
-                        </div>
-
-                        {/* Revenue chart */}
-                        <div className="bg-white rounded-3xl border border-black/5 p-5">
-                            <div className="flex justify-between items-center mb-5">
-                                <div>
-                                    <p className="text-xs text-ink-muted mb-0.5 flex items-center gap-1.5"><TrendingUp size={12} className="text-green-500" /> Ingresos</p>
-                                    <p className="text-2xl font-black text-ink">$12,450</p>
-                                </div>
-                                <span className="text-[9px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+12.5%</span>
-                            </div>
-                            <div className="flex items-end gap-1.5 h-20">
-                                {barData.map((h, i) => (
-                                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                                        <div
-                                            className="w-full rounded-t-md transition-all hover:opacity-100"
-                                            style={{
-                                                height: `${h}%`,
-                                                background: i === 11 ? '#10C96D' : `rgba(16,201,109,${0.2 + (h / 100) * 0.35})`,
-                                                opacity: i === 11 ? 1 : 0.75
-                                            }}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex justify-between mt-2">
-                                {months.map((m, i) => (
-                                    <span key={i} className="text-[8px] text-ink-muted flex-1 text-center">{m}</span>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Recent orders */}
-                        <div className="bg-white rounded-3xl border border-black/5 p-5">
-                            <div className="flex justify-between mb-4">
-                                <p className="text-xs font-black text-ink-muted uppercase tracking-widest flex items-center gap-1.5"><Clock size={11} /> Recientes</p>
-                                <button onClick={() => setActiveTab('orders')} className="text-xs font-semibold text-green-600 flex items-center gap-1">Ver todas <ChevronRight size={12} /></button>
-                            </div>
-                            <div className="space-y-3">
-                                {orders.map(o => (
-                                    <div
-                                        key={o.id}
-                                        onClick={() => setSelectedOrder(o)}
-                                        className="flex items-center gap-3 p-3 bg-canvas rounded-2xl hover:bg-black/5 transition-colors cursor-pointer"
-                                    >
-                                        <div className="w-9 h-9 bg-ink rounded-xl flex items-center justify-center text-white font-black text-sm">{o.client[0]}</div>
-                                        <div className="flex-1">
-                                            <p className="text-sm font-semibold text-ink">{o.service}</p>
-                                            <p className="text-xs text-ink-muted">{o.client} · {o.date}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-sm font-bold text-green-600">${o.price}</p>
-                                            <span className="text-[8px] font-bold text-green-700 bg-green-50 px-1.5 py-0.5 rounded-full">{o.status}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </>
-                )}
-
-                {activeTab === 'services' && (
-                    <>
-                        <div className="flex items-center justify-between mb-1">
-                            <h2 className="text-2xl font-black text-ink">Servicios</h2>
-                            <button
-                                onClick={() => setIsAddingService(true)}
-                                className="btn-primary flex items-center gap-2 px-4 py-2.5 text-xs"
-                            >
-                                <Plus size={14} /> Nueva
-                            </button>
-                        </div>
-                        <div className="bg-white rounded-3xl border border-black/5 overflow-hidden">
-                            {services.map((s, idx) => (
-                                <div key={s.id} className={`flex items-center gap-4 px-5 py-4 hover:bg-canvas transition-colors ${idx < services.length - 1 ? 'border-b border-black/5' : ''}`}>
-                                    <span className={`w-2 h-2 rounded-full shrink-0 ${s.status === 'Activo' ? 'bg-green-500' : 'bg-yellow-400'}`} />
-                                    <div className="flex-1">
-                                        <p className="font-semibold text-sm text-ink">{s.name}</p>
-                                        <p className="text-xs text-ink-muted">{s.status} · ${s.price}</p>
-                                    </div>
-                                    <MoreHorizontal size={16} className="text-ink-muted" />
-                                </div>
-                            ))}
-                        </div>
-                        <div className="bg-yellow-50 border border-yellow-100 rounded-2xl p-4">
-                            <p className="text-xs text-yellow-700 font-medium">1 servicio en revisión por el staff de I Mendly.</p>
-                        </div>
-                    </>
-                )}
-
-                {activeTab === 'orders' && (
-                    <>
-                        <h2 className="text-2xl font-black text-ink mb-1">Órdenes</h2>
-                        <div className="space-y-3">
-                            {orders.map(o => (
-                                <div
-                                    key={o.id}
-                                    onClick={() => setSelectedOrder(o)}
-                                    className="card-hover bg-white rounded-3xl border border-black/5 p-5 cursor-pointer"
-                                >
-                                    <div className="flex items-center gap-4 mb-4">
-                                        <div className="w-12 h-12 bg-ink rounded-2xl flex items-center justify-center text-xl font-black text-white">{o.client[0]}</div>
-                                        <div className="flex-1">
-                                            <p className="text-[9px] text-ink-muted font-mono">{o.id}</p>
-                                            <p className="font-bold text-sm text-ink">{o.service}</p>
-                                            <p className="text-xs text-ink-muted">{o.client}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-lg font-black text-green-600">${o.price}</p>
-                                            <span className="text-[8px] font-bold text-green-700 bg-green-50 px-1.5 py-0.5 rounded-full">{o.status}</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2 pt-3 border-t border-black/5">
-                                        <Clock size={12} className="text-ink-muted" />
-                                        <span className="text-xs text-ink-muted">{o.date}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )}
-            </div>
-
-            {/* Add Service Modal */}
-            {isAddingService && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-end animate-fade-in">
-                    <div className="bg-white w-full rounded-t-[2rem] p-7 animate-slide-up shadow-float">
-                        <div className="w-10 h-1 bg-black/10 rounded-full mx-auto mb-7" />
-                        <h2 className="text-2xl font-black text-ink mb-1">Nuevo Servicio</h2>
-                        <p className="text-sm text-ink-muted mb-6">Tu solicitud será revisada por el equipo.</p>
-                        <div className="space-y-4 mb-6">
-                            <div>
-                                <label className="block text-xs font-semibold text-ink-secondary mb-1.5 uppercase tracking-wider">Nombre</label>
-                                <input type="text" placeholder="Ej. Instalación Solar" className="input-field w-full" />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-semibold text-ink-secondary mb-1.5 uppercase tracking-wider">Precio estimado</label>
-                                <input type="number" placeholder="$0.00" className="input-field w-full text-xl font-bold" />
-                            </div>
-                        </div>
-                        <div className="flex gap-3">
-                            <button onClick={() => setIsAddingService(false)} className="btn-ghost flex-1 py-4 text-sm font-bold">Cancelar</button>
-                            <button onClick={() => setIsAddingService(false)} className="btn-primary flex-1 py-4 text-sm font-bold">Enviar solicitud</button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Order Details Modal/Screen */}
-            {selectedOrder && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-end animate-fade-in">
-                    <div className="bg-white w-full h-[90vh] rounded-t-[2rem] p-7 animate-slide-up shadow-float overflow-y-auto no-scrollbar">
-                        <div className="w-10 h-1 bg-black/10 rounded-full mx-auto mb-7" />
-
-                        {!isModifying ? (
-                            <>
-                                <div className="flex justify-between items-start mb-6">
-                                    <div>
-                                        <p className="text-[10px] text-ink-muted font-mono mb-1">{selectedOrder.id}</p>
-                                        <h2 className="text-2xl font-black text-ink">{selectedOrder.service}</h2>
-                                        <p className="text-sm text-ink-muted">Cliente: {selectedOrder.client}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-2xl font-black text-green-600">${selectedOrder.price}</p>
-                                        <span className="text-[9px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full">{selectedOrder.status}</span>
-                                    </div>
-                                </div>
-
-                                <div className="bg-canvas/50 rounded-2xl p-4 mb-6 border border-black/5">
-                                    <p className="text-xs font-bold text-ink-secondary mb-2 uppercase tracking-wider">Detalles del Trabajo</p>
-                                    <div className="space-y-3">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-ink/70">
-                                                <Clock size={14} />
-                                            </div>
-                                            <p className="text-sm text-ink">{selectedOrder.date}</p>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-ink/70">
-                                                <TrendingUp size={14} />
-                                            </div>
-                                            <p className="text-sm text-ink">Verificación requerida en sitio</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <button
-                                        onClick={() => {
-                                            // Confirm as is
-                                            setOrders(prev => prev.map(ord =>
-                                                ord.id === selectedOrder.id ? { ...ord, status: 'Confirmado' } : ord
-                                            ));
-                                            setSelectedOrder(null);
-                                        }}
-                                        className="btn-primary w-full py-4 text-sm font-bold flex items-center justify-center gap-2"
-                                    >
-                                        <CheckCircle2 size={16} /> Confirmar Servicio como Solicitado
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setModifiedData({
-                                                service: selectedOrder.service,
-                                                price: selectedOrder.price,
-                                                materials: selectedOrder.materials || ''
-                                            });
-                                            setIsModifying(true);
-                                        }}
-                                        className="btn-ghost w-full py-4 text-sm font-bold bg-canvas border-black/5"
-                                    >
-                                        Modificar Servicio / Costo
-                                    </button>
-                                    <button
-                                        onClick={() => setSelectedOrder(null)}
-                                        className="w-full text-xs font-semibold text-ink-muted py-2"
-                                    >
-                                        Cerrar
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <h2 className="text-2xl font-black text-ink mb-1">Ajustar Orden</h2>
-                                <p className="text-sm text-ink-muted mb-8">Modifica los detalles según la verificación en campo.</p>
-
-                                <div className="space-y-6 mb-8">
-                                    <div>
-                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Servicio Final</label>
-                                        <select
-                                            value={modifiedData.service}
-                                            onChange={(e) => {
-                                                const selectedService = services.find(s => s.name === e.target.value);
-                                                if (selectedService) {
-                                                    setModifiedData({
-                                                        ...modifiedData,
-                                                        service: selectedService.name,
-                                                        price: selectedService.price
-                                                    });
-                                                }
-                                            }}
-                                            className="input-field w-full appearance-none bg-no-repeat bg-[right_1rem_center] bg-[length:1em_1em]"
-                                            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")` }}
-                                        >
-                                            {services.map(s => (
-                                                <option key={s.id} value={s.name}>{s.name} - ${s.price}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Materiales / Extras</label>
-                                        <textarea
-                                            value={modifiedData.materials}
-                                            onChange={(e) => setModifiedData({ ...modifiedData, materials: e.target.value })}
-                                            placeholder="Detalla materiales adicionales o cargos por complejidad..."
-                                            className="input-field w-full min-h-[100px] py-3"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Costo Total Final</label>
-                                        <input
-                                            type="number"
-                                            value={modifiedData.price}
-                                            onChange={(e) => setModifiedData({ ...modifiedData, price: parseInt(e.target.value) })}
-                                            className="input-field w-full text-2xl font-black text-green-600"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-3">
-                                    <button
-                                        onClick={() => setIsModifying(false)}
-                                        className="btn-ghost flex-1 py-4 text-sm font-bold"
-                                    >
-                                        Atrás
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            // Persist changes to local state
-                                            setOrders(prev => prev.map(ord =>
-                                                ord.id === selectedOrder.id
-                                                    ? { ...ord, service: modifiedData.service, price: modifiedData.price, materials: modifiedData.materials, status: 'Confirmado' }
-                                                    : ord
-                                            ));
-                                            setSelectedOrder(null);
-                                            setIsModifying(false);
-                                        }}
-                                        className="btn-primary flex-1 py-4 text-sm font-bold"
-                                    >
-                                        Actualizar y Confirmar
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
+      {[
+        { label: 'Ganancias hoy', value: 2400, color: '#FF6B47' },
+        { label: 'Esta semana', value: weekEarnings, color: '#0891B2' },
+        { label: 'Total acumulado', value: 184000, color: '#10B981' },
+      ].map(s => (
+        <div key={s.label} className="flex items-center justify-between p-4 rounded-2xl"
+          style={{ background: 'rgba(15,52,96,0.3)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
+          <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>{s.label}</span>
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 18, color: s.color }}>${s.value.toLocaleString('es-MX')}</span>
         </div>
-    );
-};
+      ))}
 
-export default ProviderDashboard;
+      <div className="rounded-2xl p-4" style={{ background: 'rgba(8,145,178,0.1)', border: '1.5px solid rgba(8,145,178,0.2)' }}>
+        <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, color: '#0891B2', marginBottom: 6 }}>Comisión I mendly</p>
+        <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}>
+          Cobro dinámico: 7% en servicios {'>'} $3,000 · 11% de $1,500-$3,000 · 14% de $800-$1,500 · 17% {'<'} $800 MXN
+        </p>
+      </div>
+    </div>
+  );
+
+  const renderReviews = () => (
+    <div className="flex flex-col gap-4 p-4">
+      <div className="flex items-center gap-4 p-4 rounded-2xl" style={{ background: 'rgba(245,158,11,0.08)', border: '1.5px solid rgba(245,158,11,0.15)' }}>
+        <div className="flex flex-col items-center">
+          <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 40, color: '#F59E0B' }}>{provider?.ratingAvg}</span>
+          <div className="flex gap-0.5">{[1,2,3,4,5].map(i => <span key={i} style={{ color: '#F59E0B', fontSize: 16 }}>★</span>)}</div>
+          <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 4 }}>{DEMO_REVIEWS.length * 45} reseñas</span>
+        </div>
+        <div className="flex-1 flex flex-col gap-1.5">
+          {[5,4,3,2,1].map(star => (
+            <div key={star} className="flex items-center gap-2">
+              <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.4)', width: 8 }}>{star}</span>
+              <div className="flex-1 progress-bar" style={{ height: 5 }}><div className="progress-fill" style={{ width: `${star === 5 ? 85 : star === 4 ? 10 : 5}%`, height: '100%' }} /></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {DEMO_REVIEWS.map(r => (
+        <div key={r.id} className="p-4 rounded-2xl" style={{ background: 'rgba(15,52,96,0.25)', border: '1.5px solid rgba(255,255,255,0.06)' }}>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold" style={{ background: '#0891B2', fontFamily: 'Syne, sans-serif', color: 'white', fontSize: 13 }}>{r.reviewerInitials}</div>
+            <div className="flex-1">
+              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 13, color: 'white' }}>{r.reviewerName}</p>
+              <div className="flex gap-0.5">{[1,2,3,4,5].map(s => <span key={s} style={{ color: s <= r.rating ? '#F59E0B' : 'rgba(255,255,255,0.15)', fontSize: 12 }}>★</span>)}</div>
+            </div>
+            <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 13, color: '#10B981' }}>${r.amount.toLocaleString('es-MX')}</span>
+          </div>
+          <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5 }}>{r.comment}</p>
+          <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 6 }}>{r.serviceName}</p>
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderProfile = () => (
+    <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-col items-center gap-3 py-4">
+        <div className="w-20 h-20 rounded-2xl flex items-center justify-center font-bold text-2xl"
+          style={{ background: 'linear-gradient(135deg,#0891B2,#0F3460)', fontFamily: 'Syne, sans-serif', color: 'white', boxShadow: '0 8px 24px rgba(8,145,178,0.35)' }}>
+          {provider?.initials}
+        </div>
+        <div className="text-center">
+          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 20, color: 'white' }}>{provider?.name}</h2>
+          <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{provider?.email}</p>
+        </div>
+        {provider?.imendlyCertified && (
+          <div className="badge-teal px-4 py-2 flex items-center gap-2">
+            <span>✓</span><span style={{ fontSize: 12 }}>Certificado I mendly</span>
+          </div>
+        )}
+      </div>
+
+      <div className="rounded-2xl overflow-hidden" style={{ border: '1.5px solid rgba(255,255,255,0.07)' }}>
+        {[
+          { icon: '🔧', label: 'Mis servicios y tarifas', sub: `${provider?.categories.length} categorías activas` },
+          { icon: '📍', label: 'Zonas de cobertura', sub: provider?.zone },
+          { icon: '📄', label: 'Mis documentos', sub: 'INE, antecedentes, portafolio' },
+          { icon: '💳', label: 'Cuenta bancaria / SPEI', sub: 'Para recibir tus pagos' },
+          { icon: '💬', label: 'Soporte I mendly', sub: 'Ayuda y centro de soporte' },
+        ].map((item, i, arr) => (
+          <button key={i} className="flex items-center gap-3 px-4 py-3.5 w-full text-left"
+            style={{ background: 'rgba(15,52,96,0.25)', borderBottom: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer' }}>
+            <span style={{ fontSize: 18, width: 24, flexShrink: 0 }}>{item.icon}</span>
+            <div className="flex-1">
+              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 600, fontSize: 14, color: 'white' }}>{item.label}</p>
+              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{item.sub}</p>
+            </div>
+            <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: 16 }}>›</span>
+          </button>
+        ))}
+      </div>
+
+      <button className="w-full py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm font-semibold"
+        style={{ background: 'rgba(239,68,68,0.08)', border: '1.5px solid rgba(239,68,68,0.2)', color: '#EF4444', fontFamily: 'Plus Jakarta Sans, sans-serif', cursor: 'pointer' }}>
+        🚪 Cerrar sesión
+      </button>
+    </div>
+  );
+
+  const tabs = [
+    { id: 'home', icon: '🏠', label: 'Inicio' },
+    { id: 'orders', icon: '📋', label: 'Servicios' },
+    { id: 'earnings', icon: '💰', label: 'Ganancias' },
+    { id: 'reviews', icon: '⭐', label: 'Reseñas' },
+    { id: 'profile', icon: '👤', label: 'Perfil' },
+  ] as const;
+
+  return (
+    <div className="h-full flex flex-col" style={{ background: '#060D16' }}>
+      <div className="flex-1 overflow-y-auto no-scrollbar pb-20">
+        {tab === 'home' && renderHome()}
+        {tab === 'earnings' && renderEarnings()}
+        {tab === 'reviews' && renderReviews()}
+        {tab === 'profile' && renderProfile()}
+        {tab === 'orders' && (
+          <div className="p-4 flex flex-col gap-3">
+            <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 18, color: 'white', marginTop: 16 }}>Mis servicios</h2>
+            {state.orders.map(o => (
+              <div key={o.id} className="p-4 rounded-2xl" style={{ background: 'rgba(15,52,96,0.3)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, color: 'white' }}>{o.serviceName}</p>
+                    <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>📍 {o.zone}</p>
+                  </div>
+                  <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 16, color: '#10B981' }}>${(o.escrow?.netProviderAmount ?? o.quotedAmount).toLocaleString('es-MX')}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Custom bottom nav */}
+      <div className="glass-dark flex items-center pb-safe" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        {tabs.map(t => {
+          const isActive = tab === t.id;
+          return (
+            <button key={t.id} onClick={() => setTab(t.id as any)}
+              className="flex-1 flex flex-col items-center justify-center py-3 gap-1"
+              style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <span style={{ fontSize: 20, filter: isActive ? 'none' : 'grayscale(1) opacity(0.4)' }}>{t.icon}</span>
+              <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 10, fontWeight: isActive ? 700 : 500, color: isActive ? '#FF6B47' : 'rgba(255,255,255,0.35)' }}>{t.label}</span>
+              {isActive && <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#FF6B47' }} />}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
