@@ -137,7 +137,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-full w-full overflow-hidden bg-im-dark">
+    <div className="h-full w-full overflow-hidden" style={{ background: "#F5F5F5" }}>
       {renderView()}
     </div>
   );
