@@ -4,60 +4,37 @@ interface Props {
   title?: string;
   showBack?: boolean;
   onBack?: () => void;
-  rightContent?: React.ReactNode;
-  transparent?: boolean;
-  notifCount?: number;
-  onNotif?: () => void;
+  rightElement?: React.ReactNode;
 }
 
-export default function Navbar({ title, showBack, onBack, rightContent, transparent = false, notifCount = 0, onNotif }: Props) {
+export default function Navbar({ title, showBack, onBack, rightElement }: Props) {
   return (
-    <div className="flex items-center justify-between px-5 py-3"
-      style={{
-        background: transparent ? 'transparent' : '#F2F1F8',
-        borderBottom: transparent ? 'none' : '1px solid #E8E7F0',
-        minHeight: 56,
-      }}>
-      {/* Left */}
-      <div className="flex items-center gap-3">
-        {showBack ? (
-          <button onClick={onBack}
-            className="w-10 h-10 rounded-2xl flex items-center justify-center transition-all active:scale-95"
-            style={{ background: 'white', border: '1.5px solid #E8E7F0', cursor: 'pointer', boxShadow: '0 1px 4px rgba(107,78,255,0.05)' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          </button>
-        ) : (
-          <div className="flex items-center gap-2">
-            <div style={{ width: 30, height: 30, borderRadius: 9, background: '#6B4EFF', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 3px 10px rgba(107,78,255,0.25)' }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z" fill="white"/>
-              </svg>
-            </div>
-            {!title && (
-              <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 18, color: '#1A1A2E', letterSpacing: '-0.04em' }}>
-                imendly
-              </span>
-            )}
-          </div>
-        )}
-        {title && (
-          <h2 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 17, color: '#1A1A2E', letterSpacing: '-0.03em' }}>
-            {title}
-          </h2>
-        )}
-      </div>
+    <div style={{ background: '#EFEFEF', padding: '52px 20px 16px', display: 'flex', alignItems: 'center', gap: 14, flexShrink: 0 }}>
+      {showBack && (
+        <button onClick={onBack}
+          style={{ width: 40, height: 40, borderRadius: 14, background: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '4px 4px 10px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)', flexShrink: 0 }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </button>
+      )}
 
-      {/* Right */}
-      <div className="flex items-center gap-2">
-        {rightContent}
-        {onNotif && (
-          <button onClick={onNotif}
-            className="w-10 h-10 rounded-2xl flex items-center justify-center relative active:scale-95"
-            style={{ background: 'white', border: '1.5px solid #E8E7F0', cursor: 'pointer', boxShadow: '0 1px 4px rgba(107,78,255,0.05)' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" strokeWidth="2" strokeLinecap="round">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            </svg>
-            {notifCount > 0 && <span className="notif-dot" />}
+      {!showBack && (
+        <div className="flex items-center gap-1.5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: 18, color: '#0A0A0A', letterSpacing: '-0.03em' }}>imendly</span>
+        </div>
+      )}
+
+      {title && (
+        <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 17, color: '#0A0A0A', letterSpacing: '-0.03em', margin: 0, flex: 1 }}>
+          {title}
+        </h1>
+      )}
+
+      <div style={{ marginLeft: 'auto' }}>
+        {rightElement ?? (
+          <button style={{ width: 40, height: 40, borderRadius: 14, background: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '4px 4px 10px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)', position: 'relative' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <div style={{ position: 'absolute', top: 8, right: 9, width: 8, height: 8, borderRadius: '50%', background: '#C1E8D5', border: '2px solid #EFEFEF' }} />
           </button>
         )}
       </div>

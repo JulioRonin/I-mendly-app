@@ -21,7 +21,7 @@ export default function ScheduleScreen({ state, navigate }: Props) {
         <span style={{ fontSize: 48 }}>📅</span>
         <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16, color: 'rgba(255,255,255,0.4)' }}>Sin servicios agendados</p>
       </div>
-      <BottomNav currentView={AppView.CLIENT_HOME} onNavigate={v => navigate(v)} role="client" />
+      <BottomNav current={AppView.CLIENT_HOME} navigate={navigate} role="client" />
     </div>
   );
 }

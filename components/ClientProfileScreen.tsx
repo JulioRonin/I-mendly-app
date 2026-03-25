@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppState, AppView } from '../types';
-import Navbar from './Navbar';
 import BottomNav from './BottomNav';
 import IMendlyLogo from './IMendlyLogo';
 
@@ -14,96 +13,101 @@ interface Props {
   setBooking: (b: any) => void;
 }
 
-export default function ClientProfileScreen({ state, navigate, goBack }: Props) {
+const MENU_ICONS = {
+  address: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" strokeWidth="1.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  payment: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" strokeWidth="1.5" strokeLinecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>,
+  notif:   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" strokeWidth="1.5" strokeLinecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
+  star:    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" strokeWidth="1.5" strokeLinecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+  lock:    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
+  chat:    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" strokeWidth="1.5" strokeLinecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+  doc:     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6A6A6A" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
+};
+
+export default function ClientProfileScreen({ state, navigate }: Props) {
   const user = state.clientUser;
+  const completedCount = state.orders.filter(o => o.escrow?.status === 'released').length;
 
   const menuItems = [
-    { icon: '📍', label: 'Mis direcciones', sub: 'Gestiona tus ubicaciones' },
-    { icon: '💳', label: 'Métodos de pago', sub: 'Tarjetas y transferencias' },
-    { icon: '🔔', label: 'Notificaciones', sub: 'Configura tus alertas' },
-    { icon: '⭐', label: 'Mis reseñas', sub: `${state.orders.filter(o => o.status === 'completed' || o.escrow?.status === 'released').length} servicios valorados` },
-    { icon: '🔒', label: 'Seguridad', sub: 'Contraseña y privacidad' },
-    { icon: '💬', label: 'Soporte I mendly', sub: 'Ayuda y centro de soporte' },
-    { icon: '📄', label: 'Términos y privacidad', sub: 'Políticas de la plataforma' },
+    { icon: MENU_ICONS.address, label: 'Mis direcciones',    sub: 'Gestiona tus ubicaciones' },
+    { icon: MENU_ICONS.payment, label: 'Métodos de pago',    sub: 'Tarjetas y transferencias' },
+    { icon: MENU_ICONS.notif,   label: 'Notificaciones',     sub: 'Configura tus alertas' },
+    { icon: MENU_ICONS.star,    label: 'Mis reseñas',        sub: `${completedCount} servicios valorados` },
+    { icon: MENU_ICONS.lock,    label: 'Seguridad',          sub: 'Contraseña y privacidad' },
+    { icon: MENU_ICONS.chat,    label: 'Soporte imendly',    sub: 'Ayuda y centro de soporte' },
+    { icon: MENU_ICONS.doc,     label: 'Términos y privacidad', sub: 'Políticas de la plataforma' },
   ];
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#060D16' }}>
-      <Navbar title="Mi perfil" notifCount={state.notifCount} />
-
+    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
       <div className="flex-1 overflow-y-auto no-scrollbar">
-        <div className="flex flex-col gap-4 pb-24">
-          {/* Profile hero */}
-          <div className="flex flex-col items-center gap-4 px-4 pt-6 pb-6"
-            style={{ background: 'linear-gradient(180deg, rgba(15,52,96,0.3) 0%, transparent 100%)' }}>
-            <div className="relative">
-              <div className="w-20 h-20 rounded-2xl flex items-center justify-center font-bold text-2xl"
-                style={{ background: 'linear-gradient(135deg,#FF6B47,#CC4A2A)', fontFamily: 'Syne, sans-serif', color: 'white', boxShadow: '0 8px 24px rgba(255,107,71,0.35)' }}>
+
+        {/* Hero */}
+        <div style={{ background: '#0A0A0A', padding: '52px 20px 28px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -50, right: -40, width: 200, height: 200, borderRadius: '50%', background: '#C1E8D5', opacity: 0.07, filter: 'blur(40px)', pointerEvents: 'none' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+            <div style={{ position: 'relative' }}>
+              <div style={{ width: 80, height: 80, borderRadius: 26, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 26, color: '#0A0A0A', boxShadow: '0 8px 24px rgba(193,232,213,0.35)' }}>
                 {user?.initials ?? 'U'}
               </div>
-              <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg flex items-center justify-center text-xs"
-                style={{ background: '#0891B2', cursor: 'pointer' }}>✏️</button>
+              <button style={{ position: 'absolute', bottom: -4, right: -4, width: 26, height: 26, borderRadius: 9, background: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+              </button>
             </div>
-            <div className="text-center">
-              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 20, color: 'white', letterSpacing: '-0.03em' }}>{user?.name}</h2>
-              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>{user?.email}</p>
-              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.35)', marginTop: 1 }}>
-                📍 {user?.zone} · {user?.city}
-              </p>
+            <div style={{ textAlign: 'center' }}>
+              <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 22, color: 'white', letterSpacing: '-0.04em', margin: '0 0 4px' }}>{user?.name}</h2>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: '0 0 2px' }}>{user?.email}</p>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.3)', margin: 0 }}>{user?.zone} · {user?.city}</p>
             </div>
 
             {/* Stats */}
-            <div className="flex gap-3 w-full">
+            <div style={{ display: 'flex', gap: 10, width: '100%' }}>
               {[
-                { label: 'Servicios', value: state.orders.length },
-                { label: 'Completados', value: state.orders.filter(o => o.escrow?.status === 'released').length },
-                { label: 'Zona', value: user?.zone?.split(' ')[0] ?? 'Norte' },
+                { label: 'Servicios',   value: state.orders.length },
+                { label: 'Completados', value: completedCount },
+                { label: 'Zona',        value: user?.zone?.split(' ')[0] ?? 'Norte' },
               ].map(stat => (
-                <div key={stat.label} className="flex-1 flex flex-col items-center gap-0.5 p-3 rounded-xl"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
-                  <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 18, color: 'white' }}>{stat.value}</span>
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)', fontWeight: 600 }}>{stat.label}</span>
+                <div key={stat.label} style={{ flex: 1, background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 16, padding: '12px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+                  <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 18, color: 'white', letterSpacing: '-0.04em' }}>{stat.value}</span>
+                  <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 10, fontWeight: 600, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>{stat.label}</span>
                 </div>
               ))}
             </div>
           </div>
+        </div>
 
-          {/* Menu */}
-          <div className="flex flex-col mx-4 rounded-2xl overflow-hidden"
-            style={{ background: 'rgba(15,52,96,0.25)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
+        {/* Menu */}
+        <div style={{ padding: '20px 20px 0' }}>
+          <div style={{ background: 'white', borderRadius: 22, overflow: 'hidden', boxShadow: '5px 5px 14px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)', marginBottom: 16 }}>
             {menuItems.map((item, i) => (
-              <button key={i} className="flex items-center gap-3 px-4 py-3.5 text-left transition-all duration-150 hover:bg-white hover:bg-opacity-5"
-                style={{ borderBottom: i < menuItems.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none', cursor: 'pointer', background: 'none' }}>
-                <span style={{ fontSize: 18, width: 24, textAlign: 'center', flexShrink: 0 }}>{item.icon}</span>
-                <div className="flex-1">
-                  <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 600, fontSize: 14, color: 'white' }}>{item.label}</p>
-                  <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{item.sub}</p>
+              <button key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 18px', width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', borderBottom: i < menuItems.length - 1 ? '1px solid rgba(0,0,0,0.04)' : 'none' }}>
+                <div style={{ width: 36, height: 36, borderRadius: 12, background: '#EFEFEF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {item.icon}
                 </div>
-                <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: 16 }}>›</span>
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', margin: '0 0 2px' }}>{item.label}</p>
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#6A6A6A', margin: 0 }}>{item.sub}</p>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4D4D4" strokeWidth="2" strokeLinecap="round"><path d="M9 18l6-6-6-6"/></svg>
               </button>
             ))}
           </div>
 
           {/* Logout */}
-          <div className="px-4">
-            <button onClick={() => navigate(AppView.LOGIN)}
-              className="w-full py-3.5 rounded-2xl flex items-center justify-center gap-2 text-sm font-semibold transition-all duration-200"
-              style={{ background: 'rgba(239,68,68,0.08)', border: '1.5px solid rgba(239,68,68,0.2)', color: '#EF4444', fontFamily: 'Plus Jakarta Sans, sans-serif', cursor: 'pointer' }}>
-              🚪 Cerrar sesión
-            </button>
-          </div>
+          <button onClick={() => navigate(AppView.LOGIN)}
+            style={{ width: '100%', padding: '15px', background: 'rgba(239,68,68,0.06)', border: '1.5px solid rgba(239,68,68,0.15)', borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#EF4444', cursor: 'pointer', marginBottom: 24 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Cerrar sesión
+          </button>
 
           {/* Branding */}
-          <div className="flex flex-col items-center gap-2 px-4 pb-4">
-            <IMendlyLogo size={28} />
-            <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.2)' }}>
-              v1.0 · Ciudad Juárez, Chih. · 2026
-            </p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, paddingBottom: 32 }}>
+            <IMendlyLogo size={26} variant="light" />
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#B0B0B0', margin: 0 }}>v1.0 · Ciudad Juárez, Chih. · 2026</p>
           </div>
         </div>
       </div>
 
-      <BottomNav currentView={AppView.CLIENT_PROFILE} onNavigate={v => navigate(v)} role="client" />
+      <BottomNav current={AppView.PROFILE} role="client" navigate={navigate} />
     </div>
   );
 }

@@ -71,7 +71,7 @@ export default function OffersScreen({ state, navigate }: Props) {
         </div>
       </div>
 
-      <BottomNav currentView={AppView.OFFERS} onNavigate={v => navigate(v)} role="client" />
+      <BottomNav current={AppView.CLIENT_HOME} navigate={navigate} role="client" />
     </div>
   );
 }

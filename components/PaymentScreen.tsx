@@ -17,10 +17,10 @@ export default function PaymentScreen({ state, navigate, goBack }: Props) {
   const [confirming, setConfirming] = useState(false);
   const [done, setDone] = useState(false);
 
-  const booking = state.bookingDetails;
-  const service = booking.service ?? state.selectedService;
+  const booking  = state.bookingDetails;
+  const service  = booking.service  ?? state.selectedService;
   const provider = booking.provider ?? state.selectedProvider;
-  const amount = booking.quotedAmount ?? service?.minPrice ?? 800;
+  const amount   = booking.quotedAmount ?? service?.minPrice ?? 800;
   const { rate, commission, net } = calculateCommission(amount);
 
   const gatewayFee = method === 'card' ? Math.round(amount * 0.029 + 3) : method === 'oxxo' ? Math.round(amount * 0.039) : 13;
@@ -31,158 +31,130 @@ export default function PaymentScreen({ state, navigate, goBack }: Props) {
     setTimeout(() => { setConfirming(false); setDone(true); }, 1800);
   };
 
-  const handleDone = () => navigate(AppView.ORDERS);
-
+  // ── SUCCESS ──
   if (done) {
     return (
-      <div className="h-full flex flex-col items-center justify-center px-6 gap-6"
-        style={{ background: 'linear-gradient(160deg, #060D16 0%, #0F3460 60%, #060D16 100%)' }}>
-        <div className="blob-teal absolute" style={{ width: 300, height: 300, top: '10%', right: '-10%', opacity: 0.4 }} />
-        <div className="relative z-10 flex flex-col items-center gap-6 animate-scale-in">
-          <div className="w-24 h-24 rounded-full flex items-center justify-center text-4xl"
-            style={{ background: 'linear-gradient(135deg,#10B981,#059669)', boxShadow: '0 8px 32px rgba(16,185,129,0.4)' }}>
-            ✅
+      <div className="h-full flex flex-col items-center justify-center" style={{ background: '#EFEFEF', padding: '0 24px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+          <div style={{ width: 96, height: 96, borderRadius: 30, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 32px rgba(193,232,213,0.5)' }}>
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
-          <div className="text-center">
-            <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 26, color: 'white', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+          <div style={{ textAlign: 'center' }}>
+            <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 28, color: '#0A0A0A', letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: 10 }}>
               ¡Pago retenido<br />en escrow!
             </h1>
-            <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.5)', marginTop: 8 }}>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#6A6A6A', lineHeight: 1.65 }}>
               {provider?.name} ha sido notificado y está en camino
             </p>
           </div>
 
-          <div className="w-full rounded-2xl p-4" style={{ background: 'rgba(15,52,96,0.4)', border: '1.5px solid rgba(255,255,255,0.08)' }}>
-            <div className="flex flex-col gap-3">
-              {[
-                { label: 'Monto total', value: `$${total.toLocaleString('es-MX')} MXN`, color: 'white' },
-                { label: 'Estado del escrow', value: '🔒 Retenido', color: '#F59E0B' },
-                { label: 'Proveedor', value: provider?.name ?? '—', color: 'rgba(255,255,255,0.7)' },
-              ].map(row => (
-                <div key={row.label} className="flex items-center justify-between">
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{row.label}</span>
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 13, color: row.color }}>{row.value}</span>
-                </div>
-              ))}
-            </div>
+          <div style={{ background: 'white', borderRadius: 22, padding: '20px', width: '100%', boxShadow: '6px 6px 18px rgba(0,0,0,0.08), -4px -4px 12px rgba(255,255,255,0.9)' }}>
+            {[
+              { label: 'Monto total', value: `$${total.toLocaleString('es-MX')} MXN` },
+              { label: 'Estado del escrow', value: 'Retenido' },
+              { label: 'Proveedor', value: provider?.name ?? '—' },
+            ].map((row, i, arr) => (
+              <div key={row.label} className="flex items-center justify-between py-3" style={{ borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6A6A6A' }}>{row.label}</span>
+                <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 13, color: '#0A0A0A' }}>{row.value}</span>
+              </div>
+            ))}
           </div>
 
-          <div className="w-full rounded-2xl p-3" style={{ background: 'rgba(8,145,178,0.1)', border: '1.5px solid rgba(8,145,178,0.2)' }}>
-            <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', textAlign: 'center', lineHeight: 1.5 }}>
-              El dinero se libera solo cuando <strong style={{ color: '#0891B2' }}>tú confirmas</strong> que el servicio quedó perfecto.
-              Tienes 24 horas para validar.
+          <div style={{ background: 'rgba(193,232,213,0.2)', borderRadius: 18, padding: '14px 16px', width: '100%', border: '1.5px solid rgba(193,232,213,0.4)' }}>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#0A0A0A', lineHeight: 1.6, textAlign: 'center', margin: 0 }}>
+              El dinero se libera solo cuando <strong>tú confirmas</strong> que el servicio quedó perfecto. Tienes 24 horas para validar.
             </p>
           </div>
 
-          <button onClick={handleDone} className="btn-coral w-full py-4 text-sm font-bold"
-            style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
-            Ver mi pedido →
+          <button onClick={() => navigate(AppView.ORDERS)} className="btn-primary" style={{ width: '100%', padding: '17px', fontSize: 16 }}>
+            Ver mi pedido
           </button>
         </div>
       </div>
     );
   }
 
+  const METHODS = [
+    { id: 'card', label: 'Tarjeta de crédito/débito', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>, fee: `+ $${Math.round(amount * 0.029 + 3).toLocaleString('es-MX')} comisión` },
+    { id: 'spei', label: 'Transferencia SPEI', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>, fee: '+ $13 comisión' },
+    { id: 'oxxo', label: 'Pago en OXXO', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 3h18v18H3zM9 9h6M9 15h6M12 3v18"/></svg>, fee: `+ $${Math.round(amount * 0.039).toLocaleString('es-MX')} comisión` },
+  ] as const;
+
   return (
-    <div className="h-full flex flex-col" style={{ background: '#060D16' }}>
-      <Navbar title="Confirmar y pagar" showBack onBack={goBack} />
+    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
+      <Navbar title="Pago seguro" showBack onBack={goBack} />
 
-      <div className="flex-1 overflow-y-auto no-scrollbar">
-        <div className="flex flex-col gap-4 p-4 pb-32">
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: '0 20px 120px' }}>
 
-          {/* Order summary */}
-          <div className="rounded-2xl p-4" style={{ background: 'rgba(15,52,96,0.35)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, color: 'white', marginBottom: 12 }}>Resumen del servicio</h3>
-            <div className="flex flex-col gap-2.5">
-              {[
-                { label: 'Servicio', value: service?.name ?? '—' },
-                { label: 'Proveedor', value: provider?.name ?? '—' },
-                { label: 'Zona', value: state.bookingDetails.zone ?? '—' },
-                { label: 'Fecha', value: state.bookingDetails.scheduledDate ? new Date(state.bookingDetails.scheduledDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long' }) : '—' },
-                { label: 'Hora', value: state.bookingDetails.scheduledTime ?? '—' },
-              ].map(row => (
-                <div key={row.label} className="flex items-center justify-between">
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>{row.label}</span>
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 600, fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>{row.value}</span>
-                </div>
-              ))}
+        {/* Order summary */}
+        <div style={{ background: '#0A0A0A', borderRadius: 22, padding: '18px', marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: '#C1E8D5', opacity: 0.08, filter: 'blur(20px)', pointerEvents: 'none' }} />
+          <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>Resumen del pedido</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', margin: '0 0 3px' }}>{service?.name ?? 'Servicio'}</p>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>con {provider?.name}</p>
             </div>
+            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 22, color: '#C1E8D5', letterSpacing: '-0.04em', margin: 0 }}>
+              ${amount.toLocaleString('es-MX')}
+            </p>
           </div>
+        </div>
 
-          {/* Payment method */}
-          <div className="flex flex-col gap-3">
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, color: 'white' }}>Método de pago</h3>
-            {[
-              { id: 'card', icon: '💳', label: 'Tarjeta débito/crédito', sub: '2.9% + $3 MXN' },
-              { id: 'spei', icon: '🏦', label: 'SPEI / Transferencia', sub: '$13 MXN fijo' },
-              { id: 'oxxo', icon: '🏪', label: 'OXXO Pay', sub: '3.9% del monto' },
-            ].map(m => (
-              <button key={m.id} onClick={() => setMethod(m.id as any)}
-                className="flex items-center gap-3 p-4 rounded-2xl text-left transition-all duration-200"
-                style={{
-                  background: method === m.id ? 'rgba(255,107,71,0.12)' : 'rgba(255,255,255,0.04)',
-                  border: method === m.id ? '1.5px solid rgba(255,107,71,0.35)' : '1.5px solid rgba(255,255,255,0.07)',
-                  cursor: 'pointer',
-                }}>
-                <span style={{ fontSize: 24, flexShrink: 0 }}>{m.icon}</span>
-                <div className="flex-1">
-                  <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 14, color: 'white' }}>{m.label}</p>
-                  <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>Comisión pasarela: {m.sub}</p>
-                </div>
-                <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: method === m.id ? '#FF6B47' : 'rgba(255,255,255,0.1)', border: method === m.id ? 'none' : '1.5px solid rgba(255,255,255,0.15)' }}>
-                  {method === m.id && <span style={{ color: 'white', fontSize: 11 }}>✓</span>}
-                </div>
-              </button>
-            ))}
+        {/* Commission info */}
+        <div style={{ background: 'white', borderRadius: 20, padding: '16px', marginBottom: 16, boxShadow: '4px 4px 12px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)' }}>
+          {[
+            { label: 'Servicio', value: `$${amount.toLocaleString('es-MX')}` },
+            { label: `Comisión pasarela (${method})`, value: `+$${gatewayFee.toLocaleString('es-MX')}` },
+            { label: 'Total a pagar', value: `$${total.toLocaleString('es-MX')}`, bold: true },
+          ].map((r, i, arr) => (
+            <div key={r.label} className="flex items-center justify-between py-2.5" style={{ borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6A6A6A' }}>{r.label}</span>
+              <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: r.bold ? 900 : 700, fontSize: r.bold ? 18 : 14, color: '#0A0A0A', letterSpacing: '-0.03em' }}>{r.value}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Escrow badge */}
+        <div style={{ background: 'rgba(193,232,213,0.2)', borderRadius: 18, padding: '14px 16px', marginBottom: 16, border: '1.5px solid rgba(193,232,213,0.4)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+          <div style={{ width: 32, height: 32, borderRadius: 11, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#0A0A0A', lineHeight: 1.6, margin: 0 }}>
+            Tu dinero está protegido en <strong>escrow</strong>. Se libera solo cuando confirmes que el servicio quedó perfecto.
+          </p>
+        </div>
 
-          {/* Price breakdown */}
-          <div className="rounded-2xl p-4" style={{ background: 'rgba(15,52,96,0.3)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, color: 'white', marginBottom: 12 }}>Desglose de pago</h3>
-            <div className="flex flex-col gap-2.5">
-              {[
-                { label: 'Servicio', value: `$${amount.toLocaleString('es-MX')}` },
-                { label: `Comisión pasarela`, value: `$${gatewayFee.toLocaleString('es-MX')}` },
-              ].map(row => (
-                <div key={row.label} className="flex items-center justify-between">
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.45)' }}>{row.label}</span>
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{row.value}</span>
-                </div>
-              ))}
-              <div className="h-px" style={{ background: 'rgba(255,255,255,0.07)', margin: '4px 0' }} />
-              <div className="flex items-center justify-between">
-                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, color: 'white' }}>Total</span>
-                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 18, color: '#FF6B47' }}>${total.toLocaleString('es-MX')} MXN</span>
+        {/* Payment methods */}
+        <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', letterSpacing: '-0.02em', marginBottom: 12 }}>Método de pago</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 16 }}>
+          {METHODS.map(m => (
+            <button key={m.id} onClick={() => setMethod(m.id)}
+              style={{ background: 'white', borderRadius: 18, padding: '16px', display: 'flex', alignItems: 'center', gap: 14, border: `2px solid ${method === m.id ? '#0A0A0A' : 'transparent'}`, cursor: 'pointer', textAlign: 'left', boxShadow: method === m.id ? '4px 6px 14px rgba(0,0,0,0.12)' : '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)', width: '100%', transition: 'all 0.2s ease' }}>
+              <div style={{ width: 40, height: 40, borderRadius: 13, background: method === m.id ? '#0A0A0A' : '#EFEFEF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: method === m.id ? 'white' : '#6A6A6A', transition: 'all 0.2s ease' }}>
+                {m.icon}
               </div>
-            </div>
-          </div>
-
-          {/* Escrow info */}
-          <div className="rounded-2xl p-4" style={{ background: 'rgba(8,145,178,0.08)', border: '1.5px solid rgba(8,145,178,0.15)' }}>
-            <div className="flex items-start gap-3">
-              <span style={{ fontSize: 20, flexShrink: 0 }}>🔒</span>
-              <div>
-                <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, color: '#0891B2', marginBottom: 4 }}>¿Cómo funciona el escrow?</p>
-                <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>
-                  Tu pago queda retenido. El proveedor lo recibe solo cuando tú confirmes que el trabajo quedó bien. Si hay un problema, tienes 24 horas para reportarlo.
-                </p>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', margin: '0 0 2px' }}>{m.label}</p>
+                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#B0B0B0', margin: 0 }}>{m.fee}</p>
               </div>
-            </div>
-          </div>
+              {method === m.id && (
+                <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              )}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* CTA */}
-      <div className="px-4 py-3 pb-safe glass-dark" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <button onClick={handlePay} disabled={confirming}
-          className="btn-coral w-full py-4 text-base font-bold"
-          style={{ fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
-          {confirming ? '🔒 Procesando pago...' : `Pagar $${total.toLocaleString('es-MX')} MXN →`}
+      <div style={{ padding: '16px 20px', paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))', background: 'rgba(239,239,239,0.95)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+        <button onClick={handlePay} disabled={confirming} className="btn-primary"
+          style={{ width: '100%', padding: '17px', fontSize: 16, opacity: confirming ? 0.7 : 1 }}>
+          {confirming ? 'Procesando pago…' : `Pagar $${total.toLocaleString('es-MX')} MXN`}
         </button>
-        <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.25)', textAlign: 'center', marginTop: 8 }}>
-          Sin anticipos al proveedor · Pago protegido por escrow
-        </p>
       </div>
     </div>
   );

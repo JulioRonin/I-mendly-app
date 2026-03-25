@@ -2,180 +2,169 @@ import React, { useState } from 'react';
 
 interface Props { onDone: () => void; }
 
-const STEPS = [
-  { num: '01', title: 'Perfil Profesional', desc: 'Completa tu información básica, experiencia laboral y las categorías de servicio que dominas.' },
-  { num: '02', title: 'Documentación', desc: 'Sube tu identificación oficial y comprobante de domicilio para validar tu identidad y seguridad.' },
-  { num: '03', title: 'Antecedentes', desc: 'Iniciamos una revisión de antecedentes sin cargos para mantener nuestra comunidad segura.' },
-  { num: '04', title: 'Entrevista Digital', desc: 'Una breve videollamada para conocer tu metodología de trabajo y atención al cliente.' },
-  { num: '05', title: 'Capacitación', desc: 'Accede a nuestros módulos sobre el estándar de servicio imendly y uso de la aplicación.' },
-  { num: '06', title: '¡Primer Servicio!', desc: 'Una vez aprobado, activa tu disponibilidad y comienza a recibir solicitudes en tu zona.' },
+const CATEGORIES = [
+  { id: 'electricity', label: 'Electricidad', icon: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+  )},
+  { id: 'plumbing', label: 'Plomería', icon: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+  )},
+  { id: 'cleaning', label: 'Limpieza', icon: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 22V12h4V7l5-4 5 4v5h4v10H3zM9 22v-4h6v4"/></svg>
+  )},
+  { id: 'ac', label: 'Clima A/C', icon: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="2" y="3" width="20" height="8" rx="2"/><path d="M7 11v6a2 2 0 0 0 4 0v-6M13 11v4a2 2 0 0 0 4 0v-4"/></svg>
+  )},
 ];
 
-const STATS = [
-  { value: '+45k', label: 'Servicios completados' },
-  { value: '4.9★', label: 'Calificación promedio' },
+const STEPS = [
+  { n: '01', title: 'Perfil Profesional', desc: 'Completa tu información básica, experiencia laboral y las categorías de servicio que dominas.' },
+  { n: '02', title: 'Documentación', desc: 'Sube tu identificación oficial y comprobante de domicilio para validar tu identidad y seguridad.' },
+  { n: '03', title: 'Antecedentes', desc: 'Iniciamos una revisión de antecedentes no penales para mantener nuestra comunidad segura.' },
+  { n: '04', title: 'Entrevista Digital', desc: 'Una breve videollamada para conocer tu metodología de trabajo y atención al cliente.' },
+  { n: '05', title: 'Capacitación', desc: 'Accede a nuestros módulos sobre el estándar de servicio imendly y uso de la aplicación.' },
+  { n: '06', title: 'Primer Servicio', desc: 'Una vez aprobado, activa tu disponibilidad y comienza a recibir solicitudes en tu zona.' },
 ];
 
 export default function SplashScreen({ onDone }: Props) {
-  const [view, setView] = useState<'landing' | 'client'>('landing');
+  const [activeCategory, setActiveCategory] = useState('electricity');
 
   return (
-    <div className="h-full overflow-y-auto no-scrollbar" style={{ background: '#F2F1F8' }}>
-      <div className="flex flex-col min-h-full">
+    <div className="h-full overflow-y-auto no-scrollbar" style={{ background: '#EFEFEF' }}>
 
-        {/* ── HEADER ── */}
-        <div className="flex items-center justify-between px-5 pt-8 pb-2">
+      {/* ── DARK HERO ── */}
+      <div style={{ background: '#0A0A0A', minHeight: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        {/* Background photo */}
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <img
+            src="https://images.unsplash.com/photo-1621905251189-08b45249d95c?w=800&q=80&fit=crop"
+            alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.22 }}
+            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.65) 50%, #0A0A0A 100%)' }} />
+        </div>
+
+        {/* Header */}
+        <div style={{ position: 'relative', zIndex: 1, padding: '56px 24px 0' }}>
           <div className="flex items-center gap-2">
-            <div style={{ width: 28, height: 28, borderRadius: 8, background: '#6B4EFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M14 2H6a2 2 0 0 0-2 2v4h4V4h6v4h4V8l-3-4zM4 8v12a2 2 0 0 0 2 2h5v-6h2v6h5a2 2 0 0 0 2-2V8H4z" fill="white"/>
-              </svg>
-            </div>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 18, color: '#1A1A2E', letterSpacing: '-0.04em' }}>imendly</span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C1E8D5" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: 20, color: 'white', letterSpacing: '-0.03em' }}>imendly</span>
           </div>
-          <button onClick={onDone}
-            style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 600, color: '#6B4EFF', background: 'none', border: 'none', cursor: 'pointer' }}>
-            Iniciar sesión
+        </div>
+
+        {/* Hero text */}
+        <div style={{ position: 'relative', zIndex: 1, padding: '44px 24px 0', flex: 1 }}>
+          <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 50, color: 'white', letterSpacing: '-0.05em', lineHeight: 0.95, margin: '0 0 20px' }}>
+            Servicios<br />
+            <span style={{ color: '#C1E8D5' }}>a domicilio</span><br />
+            en Juárez.
+          </h1>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 15, color: 'rgba(255,255,255,0.5)', lineHeight: 1.65, marginBottom: 40, maxWidth: 300 }}>
+            Conectamos clientes con profesionales verificados mientras te enfocas en lo que mejor sabes hacer.
+          </p>
+
+          {/* Category chips */}
+          <div style={{ marginBottom: 20 }}>
+            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 14 }}>
+              Elige un servicio
+            </p>
+            <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+              {CATEGORIES.map(cat => (
+                <button key={cat.id} onClick={() => setActiveCategory(cat.id)}
+                  style={{
+                    flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                    padding: '16px 18px', borderRadius: 20, border: 'none', cursor: 'pointer',
+                    background: activeCategory === cat.id ? '#C1E8D5' : '#1C1C1C',
+                    color: activeCategory === cat.id ? '#0A0A0A' : 'rgba(255,255,255,0.55)',
+                    minWidth: 76, transition: 'all 0.2s ease',
+                    boxShadow: activeCategory === cat.id ? '0 6px 20px rgba(193,232,213,0.3)' : 'none',
+                  }}>
+                  {cat.icon}
+                  <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 10, whiteSpace: 'nowrap' }}>{cat.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Search + arrow */}
+          <div className="flex items-center gap-3" style={{ marginBottom: 52 }}>
+            <button onClick={onDone}
+              style={{
+                flex: 1, background: 'white', color: '#0A0A0A', border: 'none', borderRadius: 9999,
+                padding: '16px 24px', fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15,
+                cursor: 'pointer', textAlign: 'left',
+              }}>
+              Buscar servicio
+            </button>
+            <button onClick={onDone}
+              style={{
+                width: 54, height: 54, borderRadius: 9999, border: 'none', cursor: 'pointer', flexShrink: 0,
+                background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 6px 20px rgba(193,232,213,0.35)',
+              }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── STEPS SECTION ── */}
+      <div style={{ background: '#EFEFEF', padding: '52px 24px 0' }}>
+        <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 11, color: '#6A6A6A', letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: 10 }}>El proceso</p>
+        <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 32, color: '#0A0A0A', letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: 12 }}>
+          Tu camino al éxito<br />en 6 pasos.
+        </h2>
+        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#6A6A6A', lineHeight: 1.65, marginBottom: 40 }}>
+          Nuestro proceso de selección garantiza la calidad para nuestros clientes y la seguridad para ti.
+        </p>
+
+        <div style={{ marginBottom: 52 }}>
+          {STEPS.map((s, i) => (
+            <div key={s.n} style={{ display: 'flex', gap: 18, paddingBottom: i < STEPS.length - 1 ? 28 : 0 }}>
+              {/* Number column */}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 50, flexShrink: 0 }}>
+                <div style={{
+                  width: 50, height: 50, borderRadius: 16, flexShrink: 0,
+                  background: 'white',
+                  boxShadow: '5px 5px 14px rgba(0,0,0,0.08), -3px -3px 10px rgba(255,255,255,0.9)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: 15, color: '#0A0A0A' }}>{s.n}</span>
+                </div>
+                {i < STEPS.length - 1 && (
+                  <div style={{ width: 1, flex: 1, marginTop: 8, background: 'rgba(0,0,0,0.09)' }} />
+                )}
+              </div>
+              {/* Content */}
+              <div style={{ paddingTop: 13 }}>
+                <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 16, color: '#0A0A0A', letterSpacing: '-0.02em', margin: '0 0 5px' }}>{s.title}</h3>
+                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6A6A6A', lineHeight: 1.65, margin: 0 }}>{s.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── DARK CTA CARD ── */}
+      <div style={{ padding: '0 20px 52px' }}>
+        <div style={{ background: '#0A0A0A', borderRadius: 28, padding: '34px 26px', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -40, right: -30, width: 160, height: 160, borderRadius: '50%', background: '#C1E8D5', opacity: 0.1, filter: 'blur(30px)', pointerEvents: 'none' }} />
+          <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 11, color: '#C1E8D5', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Únete ahora</span>
+          <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 28, color: 'white', letterSpacing: '-0.04em', lineHeight: 1.05, margin: '14px 0 10px' }}>
+            ¿Listo para transformar tu oficio en un negocio?
+          </h2>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6, marginBottom: 26 }}>
+            Únete a los más de 3,000 profesionales que ya confían en imendly para gestionar su agenda.
+          </p>
+          <button onClick={onDone} style={{ width: '100%', padding: '16px', background: 'white', color: '#0A0A0A', border: 'none', borderRadius: 9999, fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: 15, cursor: 'pointer', marginBottom: 10 }}>
+            Comenzar mi registro ahora
+          </button>
+          <button onClick={onDone} style={{ width: '100%', padding: '14px', background: 'transparent', color: 'rgba(255,255,255,0.45)', border: '1.5px solid rgba(255,255,255,0.1)', borderRadius: 9999, fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
+            Ver requisitos
           </button>
         </div>
-
-        {/* ── HERO ── */}
-        <div className="px-5 pt-6 pb-5">
-          <div className="badge-pill mb-4" style={{ fontSize: 10 }}>
-            <span>●</span> Plataforma para profesionales
-          </div>
-          <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: 36, lineHeight: 1.05, letterSpacing: '-0.04em', color: '#1A1A2E', marginBottom: 14 }}>
-            Trabaja con<br />confianza.<br />
-            <span style={{ color: '#6B4EFF' }}>Gana con certeza.</span>
-          </h1>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 15, color: '#7B7B8E', lineHeight: 1.65, fontWeight: 400, marginBottom: 24 }}>
-            Únete a la red de servicios domésticos más exclusiva. Te conectamos con clientes premium mientras tú te enfocas en lo que mejor sabes hacer.
-          </p>
-
-          <div className="flex flex-col gap-3">
-            <button onClick={onDone}
-              className="btn-primary py-4 w-full"
-              style={{ fontFamily: 'Inter, sans-serif', fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em' }}>
-              Comenzar mi registro
-            </button>
-            <button
-              onClick={onDone}
-              style={{
-                fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 15,
-                color: '#1A1A2E', background: 'transparent',
-                border: '1.5px solid #E8E7F0', borderRadius: 9999,
-                padding: '14px 24px', cursor: 'pointer',
-                transition: 'all 0.2s ease',
-              }}>
-              Ver requisitos
-            </button>
-          </div>
-        </div>
-
-        {/* ── FEATURED CARD ── */}
-        <div className="px-5 mb-8">
-          <div style={{
-            background: 'white', borderRadius: 20,
-            overflow: 'hidden',
-            boxShadow: '0 8px 40px rgba(107,78,255,0.10)',
-          }}>
-            <div style={{ position: 'relative', height: 200 }}>
-              <img
-                src="https://images.unsplash.com/photo-1621905251189-08b45249d95c?w=500&q=85&fit=crop"
-                alt="Professional"
-                className="w-full h-full object-cover"
-                onError={e => { (e.target as HTMLImageElement).parentElement!.style.background = 'linear-gradient(135deg,#6B4EFF,#9580FF)'; }}
-              />
-              {/* Stats badge */}
-              <div style={{
-                position: 'absolute', bottom: 12, left: 12,
-                background: 'white', borderRadius: 14, padding: '10px 14px',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
-                display: 'flex', gap: 16,
-              }}>
-                {STATS.map(s => (
-                  <div key={s.value}>
-                    <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 16, color: '#1A1A2E', letterSpacing: '-0.03em' }}>{s.value}</p>
-                    <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, color: '#7B7B8E', fontWeight: 500 }}>{s.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ── NUMBERED STEPS ── */}
-        <div className="px-5 mb-8">
-          <h2 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: 26, color: '#1A1A2E', letterSpacing: '-0.03em', marginBottom: 6 }}>
-            Tu camino al éxito en 6 pasos
-          </h2>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#7B7B8E', fontWeight: 400, marginBottom: 24, lineHeight: 1.6 }}>
-            Nuestro proceso de selección garantiza la calidad para nuestros clientes y la seguridad para ti.
-          </p>
-
-          <div className="flex flex-col">
-            {STEPS.map((step, i) => (
-              <div key={i} className="flex gap-4 pb-6" style={{ borderLeft: i < STEPS.length - 1 ? '1.5px solid #E8E7F0' : 'none', marginLeft: 20, paddingLeft: 24, position: 'relative' }}>
-                {/* Number circle */}
-                <div style={{
-                  position: 'absolute',
-                  left: -14, top: 0,
-                  width: 28, height: 28, borderRadius: '50%',
-                  background: '#F2F1F8',
-                  border: '1.5px solid #E8E7F0',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 10, color: '#6B4EFF' }}>{step.num}</span>
-                </div>
-                <div style={{ paddingTop: 2 }}>
-                  <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 15, color: '#1A1A2E', letterSpacing: '-0.02em', marginBottom: 4 }}>
-                    {step.title}
-                  </p>
-                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#7B7B8E', lineHeight: 1.6, fontWeight: 400 }}>
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── DARK CTA SECTION ── */}
-        <div className="px-5 mb-6">
-          <div style={{
-            background: '#2D1569',
-            borderRadius: 24,
-            padding: '32px 24px',
-            textAlign: 'center',
-          }}>
-            <h2 style={{
-              fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: 26,
-              color: 'white', letterSpacing: '-0.03em', lineHeight: 1.15,
-              marginBottom: 12,
-            }}>
-              ¿Listo para transformar tu oficio en un negocio?
-            </h2>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, marginBottom: 24 }}>
-              Únete hoy a los más de 5,000 profesionales que ya confían en imendly para gestionar su agenda.
-            </p>
-            <button onClick={onDone}
-              style={{
-                background: 'white', color: '#6B4EFF',
-                border: 'none', borderRadius: 9999,
-                padding: '16px 32px', cursor: 'pointer',
-                fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 16,
-                width: '100%', letterSpacing: '-0.01em',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
-              }}>
-              Comenzar mi registro ahora
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom padding */}
-        <div style={{ height: 24 }} />
       </div>
+
     </div>
   );
 }

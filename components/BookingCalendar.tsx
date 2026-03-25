@@ -13,25 +13,24 @@ interface Props {
 }
 
 const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-const DAYS = ['D','L','M','X','J','V','S'];
+const DAYS   = ['D','L','M','X','J','V','S'];
 const TIME_SLOTS = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:00','17:00','18:00'];
 const UNAVAILABLE = [3, 7, 14, 18, 21];
 
 export default function BookingCalendar({ state, navigate, goBack, setBooking }: Props) {
   const today = new Date();
-  const [year, setYear] = useState(today.getFullYear());
-  const [month, setMonth] = useState(today.getMonth());
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [year, setYear]         = useState(today.getFullYear());
+  const [month, setMonth]       = useState(today.getMonth());
+  const [selectedDay, setDay]   = useState<number | null>(null);
+  const [selectedTime, setTime] = useState<string | null>(null);
 
-  const firstDay = new Date(year, month, 1).getDay();
+  const firstDay    = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  const prevMonth = () => { if (month === 0) { setYear(y => y - 1); setMonth(11); } else setMonth(m => m - 1); };
-  const nextMonth = () => { if (month === 11) { setYear(y => y + 1); setMonth(0); } else setMonth(m => m + 1); };
+  const prevMonth = () => { if (month === 0) { setYear(y => y-1); setMonth(11); } else setMonth(m => m-1); };
+  const nextMonth = () => { if (month === 11) { setYear(y => y+1); setMonth(0); } else setMonth(m => m+1); };
 
   const canContinue = selectedDay !== null && selectedTime !== null;
-
   const proceed = () => {
     if (!canContinue) return;
     const dateStr = new Date(year, month, selectedDay!).toISOString();
@@ -40,119 +39,114 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
   };
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#060D16' }}>
-      <Navbar title="Elige fecha y hora" showBack onBack={goBack} />
+    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
+      <Navbar title="Fecha y hora" showBack onBack={goBack} />
 
-      <div className="flex-1 overflow-y-auto no-scrollbar">
-        <div className="flex flex-col gap-5 p-4 pb-32">
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: '0 20px 120px' }}>
 
-          {/* Calendar */}
-          <div className="rounded-2xl p-4" style={{ background: 'rgba(15,52,96,0.3)', border: '1.5px solid rgba(255,255,255,0.07)' }}>
-            {/* Month header */}
-            <div className="flex items-center justify-between mb-4">
-              <button onClick={prevMonth} className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(255,255,255,0.08)', border: 'none', cursor: 'pointer', fontSize: 16, color: 'white' }}>←</button>
-              <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16, color: 'white', letterSpacing: '-0.02em' }}>
-                {MONTHS[month]} {year}
-              </h3>
-              <button onClick={nextMonth} className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(255,255,255,0.08)', border: 'none', cursor: 'pointer', fontSize: 16, color: 'white' }}>→</button>
-            </div>
-
-            {/* Day labels */}
-            <div className="grid grid-cols-7 mb-2">
-              {DAYS.map(d => (
-                <div key={d} className="flex items-center justify-center py-1">
-                  <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.04em' }}>{d}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Days grid */}
-            <div className="grid grid-cols-7 gap-1">
-              {Array.from({ length: firstDay }).map((_, i) => <div key={`empty-${i}`} />)}
-              {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
-                const isPast = new Date(year, month, day) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
-                const isUnavailable = UNAVAILABLE.includes(day);
-                const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
-                const isSelected = day === selectedDay;
-                const disabled = isPast || isUnavailable;
-
-                return (
-                  <button key={day} onClick={() => !disabled && setSelectedDay(day)} disabled={disabled}
-                    className="flex items-center justify-center rounded-xl transition-all duration-200"
-                    style={{
-                      height: 36,
-                      fontFamily: 'Plus Jakarta Sans, sans-serif',
-                      fontSize: 13,
-                      fontWeight: isSelected || isToday ? 700 : 500,
-                      cursor: disabled ? 'not-allowed' : 'pointer',
-                      background: isSelected ? 'linear-gradient(135deg,#FF6B47,#CC4A2A)' : isToday ? 'rgba(8,145,178,0.2)' : 'transparent',
-                      color: isSelected ? 'white' : isToday ? '#0891B2' : disabled ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.8)',
-                      boxShadow: isSelected ? '0 4px 12px rgba(255,107,71,0.35)' : 'none',
-                      border: isToday && !isSelected ? '1.5px solid rgba(8,145,178,0.4)' : 'none',
-                      textDecoration: isUnavailable ? 'line-through' : 'none',
-                    }}>
-                    {day}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Time slots */}
-          <div>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', marginBottom: 12 }}>
-              Horario disponible
+        {/* Calendar card */}
+        <div style={{ background: 'white', borderRadius: 22, padding: '20px', marginBottom: 16, boxShadow: '6px 6px 18px rgba(0,0,0,0.08), -4px -4px 12px rgba(255,255,255,0.9)' }}>
+          {/* Month header */}
+          <div className="flex items-center justify-between" style={{ marginBottom: 18 }}>
+            <button onClick={prevMonth}
+              style={{ width: 36, height: 36, borderRadius: 12, background: '#EFEFEF', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 16, color: '#0A0A0A', letterSpacing: '-0.02em' }}>
+              {MONTHS[month]} {year}
             </h3>
-            <div className="grid grid-cols-4 gap-2">
-              {TIME_SLOTS.map(time => {
-                const isSelected = time === selectedTime;
-                const unavailTimes = ['11:00', '14:00'];
-                const isUnavail = unavailTimes.includes(time) && selectedDay;
+            <button onClick={nextMonth}
+              style={{ width: 36, height: 36, borderRadius: 12, background: '#EFEFEF', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          {/* Day labels */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 8 }}>
+            {DAYS.map(d => (
+              <div key={d} style={{ textAlign: 'center', padding: '4px 0' }}>
+                <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, color: '#B0B0B0', letterSpacing: '0.04em' }}>{d}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Days grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 4 }}>
+            {Array.from({ length: firstDay }).map((_, i) => <div key={`e${i}`} />)}
+            {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
+              const isPast  = new Date(year, month, day) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+              const isUnavail = UNAVAILABLE.includes(day);
+              const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+              const isSel   = day === selectedDay;
+              const disabled = isPast || isUnavail;
+
+              return (
+                <button key={day} disabled={disabled} onClick={() => { setDay(day); setTime(null); }}
+                  style={{
+                    aspectRatio: '1', borderRadius: 12, border: 'none', cursor: disabled ? 'not-allowed' : 'pointer',
+                    fontFamily: 'Outfit, sans-serif', fontWeight: isSel ? 700 : 500, fontSize: 13,
+                    background: isSel ? '#0A0A0A' : isToday ? '#C1E8D5' : 'transparent',
+                    color: isSel ? 'white' : disabled ? '#D4D4D4' : '#0A0A0A',
+                    transition: 'all 0.15s ease',
+                  }}>
+                  {day}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Time slots */}
+        {selectedDay && (
+          <div style={{ background: 'white', borderRadius: 22, padding: '20px', marginBottom: 16, boxShadow: '6px 6px 18px rgba(0,0,0,0.08), -4px -4px 12px rgba(255,255,255,0.9)' }}>
+            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: '#0A0A0A', letterSpacing: '-0.02em', marginBottom: 14 }}>
+              Horario disponible
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+              {TIME_SLOTS.map(t => {
+                const isSel = t === selectedTime;
                 return (
-                  <button key={time} onClick={() => !isUnavail && setSelectedTime(time)} disabled={!!isUnavail}
-                    className="py-3 rounded-xl text-sm font-semibold transition-all duration-200"
+                  <button key={t} onClick={() => setTime(t)}
                     style={{
-                      fontFamily: 'Plus Jakarta Sans, sans-serif',
-                      background: isSelected ? 'linear-gradient(135deg,#0891B2,#0F3460)' : isUnavail ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.06)',
-                      color: isSelected ? 'white' : isUnavail ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.7)',
-                      border: isSelected ? 'none' : '1.5px solid rgba(255,255,255,0.07)',
-                      cursor: isUnavail ? 'not-allowed' : 'pointer',
-                      boxShadow: isSelected ? '0 4px 12px rgba(8,145,178,0.3)' : 'none',
-                      textDecoration: isUnavail ? 'line-through' : 'none',
+                      padding: '11px 0', border: 'none', borderRadius: 14, cursor: 'pointer',
+                      fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 13,
+                      background: isSel ? '#0A0A0A' : '#EFEFEF',
+                      color: isSel ? 'white' : '#6A6A6A',
+                      boxShadow: isSel ? '4px 6px 12px rgba(0,0,0,0.2)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)',
+                      transition: 'all 0.15s ease',
                     }}>
-                    {time}
+                    {t}
                   </button>
                 );
               })}
             </div>
           </div>
+        )}
 
-          {/* Selected summary */}
-          {canContinue && (
-            <div className="rounded-2xl p-4 animate-fade-in" style={{ background: 'rgba(16,185,129,0.08)', border: '1.5px solid rgba(16,185,129,0.2)' }}>
-              <div className="flex items-center gap-2 mb-1">
-                <span style={{ fontSize: 16 }}>✅</span>
-                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, color: '#10B981' }}>Horario seleccionado</span>
+        {/* Summary */}
+        {canContinue && (
+          <div style={{ background: '#0A0A0A', borderRadius: 20, padding: '16px 18px' }}>
+            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>Reserva confirmada</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', margin: 0 }}>
+                  {MONTHS[month]} {selectedDay}, {year}
+                </p>
+                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: 0 }}>{selectedTime} hrs</p>
               </div>
-              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>
-                {MONTHS[month]} {selectedDay}, {year} a las {selectedTime} hrs
-              </p>
-              <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>
-                Recibirás confirmación por WhatsApp y email
-              </p>
+              <div style={{ background: '#C1E8D5', borderRadius: 9999, padding: '6px 14px' }}>
+                <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 12, color: '#0A0A0A' }}>Seleccionado</span>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* CTA */}
-      <div className="px-4 py-3 pb-safe glass-dark" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <button onClick={proceed} disabled={!canContinue}
-          className="btn-coral w-full py-4 text-base font-bold"
-          style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', opacity: canContinue ? 1 : 0.4, cursor: canContinue ? 'pointer' : 'not-allowed' }}>
-          Continuar al pago →
+      <div style={{ padding: '16px 20px', paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))', background: 'rgba(239,239,239,0.95)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+        <button onClick={proceed} disabled={!canContinue} className="btn-primary"
+          style={{ width: '100%', padding: '17px', fontSize: 16, opacity: canContinue ? 1 : 0.4, cursor: canContinue ? 'pointer' : 'not-allowed' }}>
+          Continuar al pago
         </button>
       </div>
     </div>
