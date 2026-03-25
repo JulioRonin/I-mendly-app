@@ -17,6 +17,7 @@ import ClientProfileScreen from './components/ClientProfileScreen';
 import ProviderOnboarding from './components/ProviderOnboarding';
 import ProviderDashboard from './components/ProviderDashboard';
 import AdminDashboard from './components/AdminDashboard';
+import ReportsScreen from './components/ReportsScreen';
 
 const initialState: AppState = {
   currentView: AppView.SPLASH,
@@ -112,6 +113,9 @@ export default function App() {
 
       case AppView.CLIENT_PROFILE:
         return <ClientProfileScreen {...commonProps} />;
+
+      case AppView.CLIENT_REPORTS:
+        return <ReportsScreen {...commonProps} />;
 
       case AppView.PROVIDER_ONBOARDING:
         return (

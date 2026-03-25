@@ -55,59 +55,59 @@ export default function ClientHome({ state, navigate, setCategory }: Props) {
   };
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
       <div className="flex-1 overflow-y-auto no-scrollbar">
 
         {/* ── HEADER ── */}
         <div style={{ padding: '52px 24px 20px' }}>
           <div className="flex items-center justify-between" style={{ marginBottom: 24 }}>
             <div>
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 500, color: '#6A6A6A', marginBottom: 3 }}>Buenos días</p>
-              <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 26, color: '#0A0A0A', letterSpacing: '-0.04em', margin: 0 }}>
-                {state.currentUser?.name?.split(' ')[0] ?? 'Usuario'}
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, fontWeight: 500, color: '#6B6B6B', marginBottom: 3 }}>buenos días</p>
+              <h1 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 26, color: '#1F1F1F', letterSpacing: '-0.04em', margin: 0 }}>
+                {state.clientUser?.name?.split(' ')[0] ?? 'usuario'}
               </h1>
             </div>
             <div style={{ position: 'relative' }}>
-              <div style={{ width: 46, height: 46, borderRadius: 16, overflow: 'hidden', boxShadow: '4px 4px 12px rgba(0,0,0,0.1), -2px -2px 8px rgba(255,255,255,0.9)', border: '3px solid #C1E8D5' }}>
+              <div style={{ width: 46, height: 46, borderRadius: 16, overflow: 'hidden', boxShadow: '4px 4px 12px rgba(0,0,0,0.1), -2px -2px 8px rgba(255,255,255,0.9)', border: '3px solid #3DB87A' }}>
                 <img src={FACE_PHOTOS[0]} alt="avatar" className="w-full h-full object-cover"
-                  onError={e => { const el = e.target as HTMLImageElement; el.parentElement!.style.background = '#C1E8D5'; el.style.display = 'none'; }} />
+                  onError={e => { const el = e.target as HTMLImageElement; el.parentElement!.style.background = '#3DB87A'; el.style.display = 'none'; }} />
               </div>
-              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 14, height: 14, borderRadius: '50%', background: '#C1E8D5', border: '2px solid #EFEFEF' }} />
+              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 14, height: 14, borderRadius: '50%', background: '#3DB87A', border: '2px solid #F5F5F5' }} />
             </div>
           </div>
 
           {/* Search */}
           <div style={{ position: 'relative' }}>
-            <svg style={{ position: 'absolute', left: 18, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <svg style={{ position: 'absolute', left: 18, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
             <input
               className="input-pill"
               placeholder="¿Qué servicio necesitas hoy?"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              style={{ width: '100%', paddingLeft: 48, paddingRight: 20, paddingTop: 15, paddingBottom: 15, fontSize: 14, fontFamily: 'Outfit, sans-serif' }}
+              style={{ width: '100%', paddingLeft: 48, paddingRight: 20, paddingTop: 15, paddingBottom: 15, fontSize: 14, fontFamily: 'Urbanist, sans-serif' }}
             />
           </div>
         </div>
 
         {/* ── ACTIVE ORDER BANNER ── */}
         {activeOrder && (
-          <div style={{ margin: '0 20px 20px', background: '#0A0A0A', borderRadius: 20, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div style={{ width: 40, height: 40, borderRadius: 14, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <div style={{ margin: '0 20px 20px', background: '#1F1F1F', borderRadius: 20, padding: '18px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 14, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2" strokeLinecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             </div>
             <div style={{ flex: 1 }}>
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 13, color: 'white', margin: 0 }}>Servicio en curso</p>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>{activeOrder.providerName} · {activeOrder.serviceName}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 13, color: 'white', margin: 0 }}>Servicio en curso</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', margin: 0 }}>{activeOrder.providerName} · {activeOrder.serviceName}</p>
             </div>
-            <button onClick={() => navigate(AppView.ORDERS)} style={{ background: '#C1E8D5', border: 'none', borderRadius: 9999, padding: '8px 14px', fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 12, color: '#0A0A0A', cursor: 'pointer' }}>Ver</button>
+            <button onClick={() => navigate(AppView.ORDERS)} style={{ background: '#3DB87A', border: 'none', borderRadius: 9999, padding: '8px 14px', fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: '#1F1F1F', cursor: 'pointer' }}>Ver</button>
           </div>
         )}
 
         {/* ── CATEGORIES ── */}
         <div style={{ padding: '0 24px', marginBottom: 28 }}>
           <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 18, color: '#0A0A0A', letterSpacing: '-0.03em', margin: 0 }}>Servicios</h2>
-            <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600, color: '#6A6A6A', cursor: 'pointer' }}>Ver todos →</span>
+            <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 18, color: '#1F1F1F', letterSpacing: '-0.03em', margin: 0 }}>servicios</h2>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, fontWeight: 600, color: '#6B6B6B', cursor: 'pointer' }}>ver todos →</span>
           </div>
           <div className="flex gap-3 overflow-x-auto no-scrollbar pb-1">
             {SERVICE_CATEGORIES.map(cat => {
@@ -118,12 +118,12 @@ export default function ClientHome({ state, navigate, setCategory }: Props) {
                   style={{
                     flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
                     padding: '16px 14px', borderRadius: 20, border: 'none', cursor: 'pointer', minWidth: 68,
-                    background: isActive ? '#0A0A0A' : 'white',
+                    background: isActive ? '#1F1F1F' : 'white',
                     boxShadow: isActive ? '4px 8px 16px rgba(0,0,0,0.22)' : '4px 4px 12px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)',
                     transition: 'all 0.2s ease',
                   }}>
-                  {Icon && <Icon c={isActive ? '#C1E8D5' : '#6A6A6A'} />}
-                  <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 10, color: isActive ? 'white' : '#6A6A6A', whiteSpace: 'nowrap' }}>
+                  {Icon && <Icon c={isActive ? '#3DB87A' : '#6B6B6B'} />}
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 10, color: isActive ? 'white' : '#6B6B6B', whiteSpace: 'nowrap' }}>
                     {cat.name.split(' ')[0]}
                   </span>
                 </button>
@@ -135,15 +135,15 @@ export default function ClientHome({ state, navigate, setCategory }: Props) {
         {/* ── FEATURED ── */}
         <div style={{ marginBottom: 28 }}>
           <div className="flex items-center justify-between" style={{ padding: '0 24px', marginBottom: 16 }}>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 18, color: '#0A0A0A', letterSpacing: '-0.03em', margin: 0 }}>Destacados</h2>
-            <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600, color: '#6A6A6A', cursor: 'pointer' }}>Ver todos →</span>
+            <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 18, color: '#1F1F1F', letterSpacing: '-0.03em', margin: 0 }}>destacados</h2>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, fontWeight: 600, color: '#6B6B6B', cursor: 'pointer' }}>ver todos →</span>
           </div>
           <div className="flex gap-4 overflow-x-auto no-scrollbar" style={{ padding: '4px 24px 8px' }}>
             {FEATURED.map((f, i) => (
               <button key={i} onClick={() => { const c = SERVICE_CATEGORIES.find(sc => sc.id === f.cat); if (c) handleCategory(c); }}
                 style={{
                   flexShrink: 0, width: 200, borderRadius: 22, overflow: 'hidden', border: 'none', cursor: 'pointer',
-                  background: i === 0 ? '#C1E8D5' : 'white',
+                  background: i === 0 ? '#3DB87A' : 'white',
                   boxShadow: '6px 6px 18px rgba(0,0,0,0.09), -3px -3px 10px rgba(255,255,255,0.9)',
                   position: 'relative', textAlign: 'left',
                 }}>
@@ -154,8 +154,8 @@ export default function ClientHome({ state, navigate, setCategory }: Props) {
                   {i === 0 && <div style={{ position: 'absolute', inset: 0, background: 'rgba(193,232,213,0.15)' }} />}
                 </div>
                 <div style={{ padding: '14px 16px' }}>
-                  <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', letterSpacing: '-0.02em', margin: '0 0 4px' }}>{f.title}</p>
-                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#6A6A6A', margin: 0 }}>{f.subtitle}</p>
+                  <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: '#1F1F1F', letterSpacing: '-0.02em', margin: '0 0 4px' }}>{f.title}</p>
+                  <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', margin: 0 }}>{f.subtitle}</p>
                 </div>
               </button>
             ))}
@@ -165,8 +165,8 @@ export default function ClientHome({ state, navigate, setCategory }: Props) {
         {/* ── TOP PROVIDERS ── */}
         <div style={{ padding: '0 24px', marginBottom: 120 }}>
           <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
-            <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 18, color: '#0A0A0A', letterSpacing: '-0.03em', margin: 0 }}>Top Proveedores</h2>
-            <span onClick={() => navigate(AppView.PROVIDER_LIST)} style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600, color: '#6A6A6A', cursor: 'pointer' }}>Ver todos →</span>
+            <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 18, color: '#1F1F1F', letterSpacing: '-0.03em', margin: 0 }}>top proveedores</h2>
+            <span onClick={() => navigate(AppView.PROVIDER_LIST)} style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, fontWeight: 600, color: '#6B6B6B', cursor: 'pointer' }}>ver todos →</span>
           </div>
           <div className="flex flex-col gap-3">
             {MOCK_PROVIDERS.slice(0, 4).map((p, i) => (
@@ -178,34 +178,34 @@ export default function ClientHome({ state, navigate, setCategory }: Props) {
                     onError={e => {
                       const el = e.target as HTMLImageElement;
                       el.parentElement!.style.background = p.avatarColor;
-                      el.parentElement!.innerHTML = `<span style="font-family:Outfit;font-weight:800;font-size:16px;color:white;display:flex;align-items:center;justify-content:center;height:100%">${p.initials}</span>`;
+                      el.parentElement!.innerHTML = `<span style="font-family:Urbanist;font-weight:800;font-size:16px;color:white;display:flex;align-items:center;justify-content:center;height:100%">${p.initials}</span>`;
                     }} />
                 </div>
                 {/* Info */}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="flex items-center gap-2" style={{ marginBottom: 3 }}>
-                    <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: '#0A0A0A', letterSpacing: '-0.02em', margin: 0 }}>{p.name}</p>
+                    <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: '#1F1F1F', letterSpacing: '-0.02em', margin: 0 }}>{p.name}</p>
                     {p.imendlyCertified && (
-                      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      <div style={{ width: 16, height: 16, borderRadius: '50%', background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                       </div>
                     )}
                   </div>
-                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#6A6A6A', margin: '0 0 8px' }}>
+                  <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', margin: '0 0 8px' }}>
                     {p.categories.slice(0, 2).map(c => SERVICE_CATEGORIES.find(sc => sc.id === c)?.name).filter(Boolean).join(' · ')}
                   </p>
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#0A0A0A" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                      <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 12, color: '#0A0A0A' }}>{p.rating}</span>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#1F1F1F" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: '#1F1F1F' }}>{p.rating}</span>
                     </div>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#B0B0B0' }}>{p.completedJobs} trabajos</span>
+                    <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#A8A8A8' }}>{p.completedJobs} trabajos</span>
                   </div>
                 </div>
                 {/* Price + arrow */}
                 <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
-                  <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: 15, color: '#0A0A0A', letterSpacing: '-0.03em' }}>${p.startingPrice.toLocaleString('es-MX')}</span>
-                  <div style={{ width: 30, height: 30, borderRadius: 10, background: '#0A0A0A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 15, color: '#1F1F1F', letterSpacing: '-0.03em' }}>${p.startingPrice.toLocaleString('es-MX')}</span>
+                  <div style={{ width: 30, height: 30, borderRadius: 10, background: '#1F1F1F', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </div>
                 </div>

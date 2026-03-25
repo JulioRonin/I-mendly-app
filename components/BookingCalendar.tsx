@@ -39,7 +39,7 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
   };
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
       <Navbar title="Fecha y hora" showBack onBack={goBack} />
 
       <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: '0 20px 120px' }}>
@@ -49,15 +49,15 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
           {/* Month header */}
           <div className="flex items-center justify-between" style={{ marginBottom: 18 }}>
             <button onClick={prevMonth}
-              style={{ width: 36, height: 36, borderRadius: 12, background: '#EFEFEF', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+              style={{ width: 36, height: 36, borderRadius: 12, background: '#F5F5F5', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
-            <h3 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 16, color: '#0A0A0A', letterSpacing: '-0.02em' }}>
+            <h3 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 16, color: '#1F1F1F', letterSpacing: '-0.02em' }}>
               {MONTHS[month]} {year}
             </h3>
             <button onClick={nextMonth}
-              style={{ width: 36, height: 36, borderRadius: 12, background: '#EFEFEF', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M9 18l6-6-6-6"/></svg>
+              style={{ width: 36, height: 36, borderRadius: 12, background: '#F5F5F5', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2.5" strokeLinecap="round"><path d="M9 18l6-6-6-6"/></svg>
             </button>
           </div>
 
@@ -65,7 +65,7 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 8 }}>
             {DAYS.map(d => (
               <div key={d} style={{ textAlign: 'center', padding: '4px 0' }}>
-                <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 11, fontWeight: 700, color: '#B0B0B0', letterSpacing: '0.04em' }}>{d}</span>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, fontWeight: 700, color: '#A8A8A8', letterSpacing: '0.04em' }}>{d}</span>
               </div>
             ))}
           </div>
@@ -84,9 +84,9 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
                 <button key={day} disabled={disabled} onClick={() => { setDay(day); setTime(null); }}
                   style={{
                     aspectRatio: '1', borderRadius: 12, border: 'none', cursor: disabled ? 'not-allowed' : 'pointer',
-                    fontFamily: 'Outfit, sans-serif', fontWeight: isSel ? 700 : 500, fontSize: 13,
-                    background: isSel ? '#0A0A0A' : isToday ? '#C1E8D5' : 'transparent',
-                    color: isSel ? 'white' : disabled ? '#D4D4D4' : '#0A0A0A',
+                    fontFamily: 'Urbanist, sans-serif', fontWeight: isSel ? 700 : 500, fontSize: 13,
+                    background: isSel ? '#1F1F1F' : isToday ? '#3DB87A' : 'transparent',
+                    color: isSel ? 'white' : disabled ? '#D4D4D4' : '#1F1F1F',
                     transition: 'all 0.15s ease',
                   }}>
                   {day}
@@ -99,7 +99,7 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
         {/* Time slots */}
         {selectedDay && (
           <div style={{ background: 'white', borderRadius: 22, padding: '20px', marginBottom: 16, boxShadow: '6px 6px 18px rgba(0,0,0,0.08), -4px -4px 12px rgba(255,255,255,0.9)' }}>
-            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: '#0A0A0A', letterSpacing: '-0.02em', marginBottom: 14 }}>
+            <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: '#1F1F1F', letterSpacing: '-0.02em', marginBottom: 14 }}>
               Horario disponible
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
@@ -109,9 +109,9 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
                   <button key={t} onClick={() => setTime(t)}
                     style={{
                       padding: '11px 0', border: 'none', borderRadius: 14, cursor: 'pointer',
-                      fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 13,
-                      background: isSel ? '#0A0A0A' : '#EFEFEF',
-                      color: isSel ? 'white' : '#6A6A6A',
+                      fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 13,
+                      background: isSel ? '#1F1F1F' : '#F5F5F5',
+                      color: isSel ? 'white' : '#6B6B6B',
                       boxShadow: isSel ? '4px 6px 12px rgba(0,0,0,0.2)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)',
                       transition: 'all 0.15s ease',
                     }}>
@@ -125,17 +125,17 @@ export default function BookingCalendar({ state, navigate, goBack, setBooking }:
 
         {/* Summary */}
         {canContinue && (
-          <div style={{ background: '#0A0A0A', borderRadius: 20, padding: '16px 18px' }}>
-            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>Reserva confirmada</p>
+          <div style={{ background: '#1F1F1F', borderRadius: 20, padding: '16px 18px' }}>
+            <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>Reserva confirmada</p>
             <div className="flex items-center justify-between">
               <div>
-                <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', margin: 0 }}>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', margin: 0 }}>
                   {MONTHS[month]} {selectedDay}, {year}
                 </p>
-                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: 0 }}>{selectedTime} hrs</p>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.45)', margin: 0 }}>{selectedTime} hrs</p>
               </div>
-              <div style={{ background: '#C1E8D5', borderRadius: 9999, padding: '6px 14px' }}>
-                <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 12, color: '#0A0A0A' }}>Seleccionado</span>
+              <div style={{ background: '#3DB87A', borderRadius: 9999, padding: '6px 14px' }}>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: '#1F1F1F' }}>Seleccionado</span>
               </div>
             </div>
           </div>

@@ -34,16 +34,16 @@ export default function PaymentScreen({ state, navigate, goBack }: Props) {
   // ── SUCCESS ──
   if (done) {
     return (
-      <div className="h-full flex flex-col items-center justify-center" style={{ background: '#EFEFEF', padding: '0 24px' }}>
+      <div className="h-full flex flex-col items-center justify-center" style={{ background: '#F5F5F5', padding: '0 24px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-          <div style={{ width: 96, height: 96, borderRadius: 30, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 32px rgba(193,232,213,0.5)' }}>
-            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div style={{ width: 96, height: 96, borderRadius: 30, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 10px 32px rgba(193,232,213,0.5)' }}>
+            <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 28, color: '#0A0A0A', letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: 10 }}>
+            <h1 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', letterSpacing: '-0.04em', lineHeight: 1.0, marginBottom: 10 }}>
               ¡Pago retenido<br />en escrow!
             </h1>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#6A6A6A', lineHeight: 1.65 }}>
+            <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 14, color: '#6B6B6B', lineHeight: 1.65 }}>
               {provider?.name} ha sido notificado y está en camino
             </p>
           </div>
@@ -55,14 +55,14 @@ export default function PaymentScreen({ state, navigate, goBack }: Props) {
               { label: 'Proveedor', value: provider?.name ?? '—' },
             ].map((row, i, arr) => (
               <div key={row.label} className="flex items-center justify-between py-3" style={{ borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
-                <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6A6A6A' }}>{row.label}</span>
-                <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 13, color: '#0A0A0A' }}>{row.value}</span>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#6B6B6B' }}>{row.label}</span>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 13, color: '#1F1F1F' }}>{row.value}</span>
               </div>
             ))}
           </div>
 
           <div style={{ background: 'rgba(193,232,213,0.2)', borderRadius: 18, padding: '14px 16px', width: '100%', border: '1.5px solid rgba(193,232,213,0.4)' }}>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#0A0A0A', lineHeight: 1.6, textAlign: 'center', margin: 0 }}>
+            <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#1F1F1F', lineHeight: 1.6, textAlign: 'center', margin: 0 }}>
               El dinero se libera solo cuando <strong>tú confirmas</strong> que el servicio quedó perfecto. Tienes 24 horas para validar.
             </p>
           </div>
@@ -82,21 +82,21 @@ export default function PaymentScreen({ state, navigate, goBack }: Props) {
   ] as const;
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
       <Navbar title="Pago seguro" showBack onBack={goBack} />
 
       <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: '0 20px 120px' }}>
 
         {/* Order summary */}
-        <div style={{ background: '#0A0A0A', borderRadius: 22, padding: '18px', marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: '#C1E8D5', opacity: 0.08, filter: 'blur(20px)', pointerEvents: 'none' }} />
-          <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>Resumen del pedido</p>
+        <div style={{ background: '#1F1F1F', borderRadius: 22, padding: '18px', marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: '#3DB87A', opacity: 0.08, filter: 'blur(20px)', pointerEvents: 'none' }} />
+          <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>Resumen del pedido</p>
           <div className="flex items-center justify-between">
             <div>
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', margin: '0 0 3px' }}>{service?.name ?? 'Servicio'}</p>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>con {provider?.name}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', margin: '0 0 3px' }}>{service?.name ?? 'Servicio'}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>con {provider?.name}</p>
             </div>
-            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 22, color: '#C1E8D5', letterSpacing: '-0.04em', margin: 0 }}>
+            <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 22, color: '#3DB87A', letterSpacing: '-0.04em', margin: 0 }}>
               ${amount.toLocaleString('es-MX')}
             </p>
           </div>
@@ -110,38 +110,38 @@ export default function PaymentScreen({ state, navigate, goBack }: Props) {
             { label: 'Total a pagar', value: `$${total.toLocaleString('es-MX')}`, bold: true },
           ].map((r, i, arr) => (
             <div key={r.label} className="flex items-center justify-between py-2.5" style={{ borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
-              <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6A6A6A' }}>{r.label}</span>
-              <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: r.bold ? 900 : 700, fontSize: r.bold ? 18 : 14, color: '#0A0A0A', letterSpacing: '-0.03em' }}>{r.value}</span>
+              <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#6B6B6B' }}>{r.label}</span>
+              <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: r.bold ? 900 : 700, fontSize: r.bold ? 18 : 14, color: '#1F1F1F', letterSpacing: '-0.03em' }}>{r.value}</span>
             </div>
           ))}
         </div>
 
         {/* Escrow badge */}
         <div style={{ background: 'rgba(193,232,213,0.2)', borderRadius: 18, padding: '14px 16px', marginBottom: 16, border: '1.5px solid rgba(193,232,213,0.4)', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-          <div style={{ width: 32, height: 32, borderRadius: 11, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <div style={{ width: 32, height: 32, borderRadius: 11, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#0A0A0A', lineHeight: 1.6, margin: 0 }}>
+          <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#1F1F1F', lineHeight: 1.6, margin: 0 }}>
             Tu dinero está protegido en <strong>escrow</strong>. Se libera solo cuando confirmes que el servicio quedó perfecto.
           </p>
         </div>
 
         {/* Payment methods */}
-        <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', letterSpacing: '-0.02em', marginBottom: 12 }}>Método de pago</p>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: '#1F1F1F', letterSpacing: '-0.02em', marginBottom: 12 }}>Método de pago</p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 16 }}>
           {METHODS.map(m => (
             <button key={m.id} onClick={() => setMethod(m.id)}
-              style={{ background: 'white', borderRadius: 18, padding: '16px', display: 'flex', alignItems: 'center', gap: 14, border: `2px solid ${method === m.id ? '#0A0A0A' : 'transparent'}`, cursor: 'pointer', textAlign: 'left', boxShadow: method === m.id ? '4px 6px 14px rgba(0,0,0,0.12)' : '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)', width: '100%', transition: 'all 0.2s ease' }}>
-              <div style={{ width: 40, height: 40, borderRadius: 13, background: method === m.id ? '#0A0A0A' : '#EFEFEF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: method === m.id ? 'white' : '#6A6A6A', transition: 'all 0.2s ease' }}>
+              style={{ background: 'white', borderRadius: 18, padding: '16px', display: 'flex', alignItems: 'center', gap: 14, border: `2px solid ${method === m.id ? '#1F1F1F' : 'transparent'}`, cursor: 'pointer', textAlign: 'left', boxShadow: method === m.id ? '4px 6px 14px rgba(0,0,0,0.12)' : '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)', width: '100%', transition: 'all 0.2s ease' }}>
+              <div style={{ width: 40, height: 40, borderRadius: 13, background: method === m.id ? '#1F1F1F' : '#F5F5F5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: method === m.id ? 'white' : '#6B6B6B', transition: 'all 0.2s ease' }}>
                 {m.icon}
               </div>
               <div style={{ flex: 1 }}>
-                <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', margin: '0 0 2px' }}>{m.label}</p>
-                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#B0B0B0', margin: 0 }}>{m.fee}</p>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: '#1F1F1F', margin: '0 0 2px' }}>{m.label}</p>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#A8A8A8', margin: 0 }}>{m.fee}</p>
               </div>
               {method === m.id && (
-                <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
               )}
             </button>

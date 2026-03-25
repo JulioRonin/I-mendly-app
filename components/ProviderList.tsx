@@ -39,7 +39,7 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
   const handleSelect = (p: Provider) => { setProvider(p); navigate(AppView.PROVIDER_PROFILE); };
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
       <Navbar title={cat?.name ?? 'Proveedores'} showBack onBack={goBack} />
 
       {/* Filters */}
@@ -50,9 +50,9 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
             <button key={z} onClick={() => setZone(z)}
               style={{
                 flexShrink: 0, padding: '9px 18px', border: 'none', borderRadius: 9999, cursor: 'pointer',
-                fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 12,
-                background: zone === z ? '#0A0A0A' : 'white',
-                color: zone === z ? 'white' : '#6A6A6A',
+                fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 12,
+                background: zone === z ? '#1F1F1F' : 'white',
+                color: zone === z ? 'white' : '#6B6B6B',
                 boxShadow: zone === z ? '4px 6px 14px rgba(0,0,0,0.22)' : '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)',
                 whiteSpace: 'nowrap', transition: 'all 0.2s ease',
               }}>
@@ -70,9 +70,9 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
             <button key={s.key} onClick={() => setSortBy(s.key as any)}
               style={{
                 padding: '7px 14px', border: 'none', borderRadius: 9999, cursor: 'pointer',
-                fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 12,
+                fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 12,
                 background: sortBy === s.key ? 'rgba(193,232,213,0.5)' : 'transparent',
-                color: sortBy === s.key ? '#0A0A0A' : '#B0B0B0',
+                color: sortBy === s.key ? '#1F1F1F' : '#A8A8A8',
                 transition: 'all 0.2s ease',
               }}>
               {s.label}
@@ -83,7 +83,7 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
 
       {/* Count */}
       <div style={{ padding: '0 20px 10px' }}>
-        <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: 12, fontWeight: 500, color: '#B0B0B0', margin: 0 }}>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, fontWeight: 500, color: '#A8A8A8', margin: 0 }}>
           {providers.length} proveedor{providers.length !== 1 ? 'es' : ''}{cat ? ` · ${cat.name}` : ''}
         </p>
       </div>
@@ -94,9 +94,9 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
           {providers.length === 0 ? (
             <div className="flex flex-col items-center gap-4" style={{ paddingTop: 80 }}>
               <div style={{ width: 64, height: 64, borderRadius: 20, background: 'white', boxShadow: '4px 4px 12px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
               </div>
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 16, color: '#B0B0B0', textAlign: 'center', margin: 0 }}>Sin proveedores disponibles</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 16, color: '#A8A8A8', textAlign: 'center', margin: 0 }}>Sin proveedores disponibles</p>
             </div>
           ) : providers.map((p, i) => (
             <button key={p.id} onClick={() => handleSelect(p)}
@@ -108,37 +108,37 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
                   onError={e => {
                     const el = e.target as HTMLImageElement;
                     el.parentElement!.style.background = p.avatarColor;
-                    el.parentElement!.innerHTML = `<span style="font-family:Outfit;font-weight:800;font-size:18px;color:white;display:flex;align-items:center;justify-content:center;height:100%">${p.initials}</span>`;
+                    el.parentElement!.innerHTML = `<span style="font-family:Urbanist;font-weight:800;font-size:18px;color:white;display:flex;align-items:center;justify-content:center;height:100%">${p.initials}</span>`;
                   }} />
               </div>
 
               {/* Info */}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="flex items-center gap-2" style={{ marginBottom: 3 }}>
-                  <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 15, color: '#0A0A0A', letterSpacing: '-0.02em', margin: 0 }}>{p.name}</p>
+                  <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: '#1F1F1F', letterSpacing: '-0.02em', margin: 0 }}>{p.name}</p>
                   {p.imendlyCertified && (
-                    <div style={{ width: 17, height: 17, borderRadius: '50%', background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <div style={{ width: 17, height: 17, borderRadius: '50%', background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                   )}
                 </div>
-                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#6A6A6A', margin: '0 0 10px' }}>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', margin: '0 0 10px' }}>
                   {p.categories.slice(0, 2).map(c => SERVICE_CATEGORIES.find(sc => sc.id === c)?.name).filter(Boolean).join(' · ')}
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#0A0A0A" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 12, color: '#0A0A0A' }}>{p.rating}</span>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#1F1F1F" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: '#1F1F1F' }}>{p.rating}</span>
                   </div>
-                  <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#B0B0B0' }}>{p.completedJobs} trabajos</span>
-                  <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#B0B0B0' }}>{p.zone}</span>
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#A8A8A8' }}>{p.completedJobs} trabajos</span>
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#A8A8A8' }}>{p.zone}</span>
                 </div>
               </div>
 
               {/* Price + arrow */}
               <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
-                <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: 16, color: '#0A0A0A', letterSpacing: '-0.03em' }}>${p.startingPrice.toLocaleString('es-MX')}</span>
-                <div style={{ width: 32, height: 32, borderRadius: 12, background: '#0A0A0A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 16, color: '#1F1F1F', letterSpacing: '-0.03em' }}>${p.startingPrice.toLocaleString('es-MX')}</span>
+                <div style={{ width: 32, height: 32, borderRadius: 12, background: '#1F1F1F', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </div>
               </div>

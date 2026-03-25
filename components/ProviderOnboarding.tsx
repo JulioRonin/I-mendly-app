@@ -24,7 +24,7 @@ function StepIndicator({ current, total }: { current: number; total: number }) {
         <div key={i} style={{
           height: 4, borderRadius: 9999,
           width: i === current ? 28 : i < current ? 16 : 8,
-          background: i < current ? '#C1E8D5' : i === current ? '#0A0A0A' : '#D4D4D4',
+          background: i < current ? '#3DB87A' : i === current ? '#1F1F1F' : '#D4D4D4',
           transition: 'all 0.3s ease',
         }} />
       ))}
@@ -47,15 +47,15 @@ function StepWelcome({ onStart, onLogin }: { onStart: () => void; onLogin: () =>
   return (
     <div className="flex flex-col" style={{ gap: 28 }}>
       {/* Hero card */}
-      <div style={{ background: '#0A0A0A', borderRadius: 28, padding: '32px 24px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -50, right: -40, width: 180, height: 180, borderRadius: '50%', background: '#C1E8D5', opacity: 0.08, filter: 'blur(40px)', pointerEvents: 'none' }} />
-        <div style={{ width: 52, height: 52, borderRadius: 16, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <div style={{ background: '#1F1F1F', borderRadius: 28, padding: '32px 24px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -50, right: -40, width: 180, height: 180, borderRadius: '50%', background: '#3DB87A', opacity: 0.08, filter: 'blur(40px)', pointerEvents: 'none' }} />
+        <div style={{ width: 52, height: 52, borderRadius: 16, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
-        <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 32, color: 'white', letterSpacing: '-0.05em', lineHeight: 0.95, marginBottom: 14 }}>
-          Trabaja con<br /><span style={{ color: '#C1E8D5' }}>confianza.</span><br />Gana con certeza.
+        <h1 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 32, color: 'white', letterSpacing: '-0.05em', lineHeight: 0.95, marginBottom: 14 }}>
+          Trabaja con<br /><span style={{ color: '#3DB87A' }}>confianza.</span><br />Gana con certeza.
         </h1>
-        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.45)', lineHeight: 1.65 }}>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.45)', lineHeight: 1.65 }}>
           Únete a la red de profesionales verificados de imendly y accede a clientes en tu zona con pagos garantizados.
         </p>
       </div>
@@ -66,13 +66,13 @@ function StepWelcome({ onStart, onLogin }: { onStart: () => void; onLogin: () =>
           <div key={i} style={{ display: 'flex', gap: 16, paddingBottom: i < 5 ? 20 : 0 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 40, flexShrink: 0 }}>
               <div style={{ width: 40, height: 40, borderRadius: 14, background: 'white', boxShadow: '4px 4px 10px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 800, fontSize: 13, color: '#0A0A0A' }}>0{i + 1}</span>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 13, color: '#1F1F1F' }}>0{i + 1}</span>
               </div>
               {i < 5 && <div style={{ width: 1, flex: 1, marginTop: 6, background: 'rgba(0,0,0,0.08)' }} />}
             </div>
             <div style={{ paddingTop: 10 }}>
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', letterSpacing: '-0.02em', margin: '0 0 3px' }}>{s.title}</p>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#6A6A6A', lineHeight: 1.6, margin: 0 }}>{s.description}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: '#1F1F1F', letterSpacing: '-0.02em', margin: '0 0 3px' }}>{s.title}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', lineHeight: 1.6, margin: 0 }}>{s.description}</p>
             </div>
           </div>
         ))}
@@ -128,25 +128,25 @@ function Step2({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6A6A6A', lineHeight: 1.65, marginBottom: 6 }}>
+      <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#6B6B6B', lineHeight: 1.65, marginBottom: 6 }}>
         Todos los documentos son encriptados y solo usados para verificar tu identidad.
       </p>
       {DOCS.map(doc => {
         const uploaded = data[doc.key];
         return (
           <button key={doc.key} onClick={() => onChange({ [doc.key]: !uploaded })}
-            style={{ background: uploaded ? 'rgba(193,232,213,0.15)' : 'white', borderRadius: 18, padding: '16px', display: 'flex', alignItems: 'center', gap: 14, border: `2px solid ${uploaded ? '#C1E8D5' : 'rgba(0,0,0,0.05)'}`, cursor: 'pointer', boxShadow: '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)', width: '100%', textAlign: 'left', transition: 'all 0.2s ease' }}>
-            <div style={{ width: 44, height: 44, borderRadius: 14, background: uploaded ? '#C1E8D5' : '#EFEFEF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            style={{ background: uploaded ? 'rgba(193,232,213,0.15)' : 'white', borderRadius: 18, padding: '16px', display: 'flex', alignItems: 'center', gap: 14, border: `2px solid ${uploaded ? '#3DB87A' : 'rgba(0,0,0,0.05)'}`, cursor: 'pointer', boxShadow: '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)', width: '100%', textAlign: 'left', transition: 'all 0.2s ease' }}>
+            <div style={{ width: 44, height: 44, borderRadius: 14, background: uploaded ? '#3DB87A' : '#F5F5F5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               {uploaded
-                ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" strokeWidth="1.5" strokeLinecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
               }
             </div>
             <div style={{ flex: 1 }}>
-              <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: '#0A0A0A', letterSpacing: '-0.02em', margin: '0 0 2px' }}>{doc.label}</p>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#6A6A6A', margin: 0 }}>{doc.sub}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: '#1F1F1F', letterSpacing: '-0.02em', margin: '0 0 2px' }}>{doc.label}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', margin: 0 }}>{doc.sub}</p>
             </div>
-            <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 12, fontWeight: 700, color: uploaded ? '#0A0A0A' : '#B0B0B0' }}>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, fontWeight: 700, color: uploaded ? '#1F1F1F' : '#A8A8A8' }}>
               {uploaded ? 'Listo' : 'Subir'}
             </span>
           </button>
@@ -176,7 +176,7 @@ function Step3({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
             const active = (data.selectedServices as string[]).includes(cat.id);
             return (
               <button key={cat.id} onClick={() => toggle(cat.id)}
-                style={{ padding: '9px 18px', border: 'none', borderRadius: 9999, cursor: 'pointer', fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 13, background: active ? '#0A0A0A' : 'white', color: active ? 'white' : '#6A6A6A', boxShadow: active ? '4px 6px 14px rgba(0,0,0,0.22)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)', transition: 'all 0.2s ease' }}>
+                style={{ padding: '9px 18px', border: 'none', borderRadius: 9999, cursor: 'pointer', fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 13, background: active ? '#1F1F1F' : 'white', color: active ? 'white' : '#6B6B6B', boxShadow: active ? '4px 6px 14px rgba(0,0,0,0.22)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)', transition: 'all 0.2s ease' }}>
                 {cat.name}
               </button>
             );
@@ -191,7 +191,7 @@ function Step3({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
             const active = data.selectedZones.includes(z);
             return (
               <button key={z} onClick={() => toggleZone(z)}
-                style={{ padding: '9px 18px', border: 'none', borderRadius: 9999, cursor: 'pointer', fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 13, background: active ? '#C1E8D5' : 'white', color: active ? '#0A0A0A' : '#6A6A6A', boxShadow: active ? '0 4px 14px rgba(193,232,213,0.5)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)', transition: 'all 0.2s ease' }}>
+                style={{ padding: '9px 18px', border: 'none', borderRadius: 9999, cursor: 'pointer', fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 13, background: active ? '#3DB87A' : 'white', color: active ? '#1F1F1F' : '#6B6B6B', boxShadow: active ? '0 4px 14px rgba(193,232,213,0.5)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)', transition: 'all 0.2s ease' }}>
                 {z}
               </button>
             );
@@ -203,17 +203,17 @@ function Step3({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
         <label className="field-label">Tarifa por hora (MXN)</label>
         <div style={{ background: 'white', borderRadius: 16, padding: '16px 20px', boxShadow: '4px 4px 12px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)' }}>
           <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
-            <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 28, color: '#0A0A0A', letterSpacing: '-0.04em' }}>${data.hourlyRate.toLocaleString('es-MX')}<span style={{ fontSize: 14, fontWeight: 400, color: '#6A6A6A' }}>/hr</span></span>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', letterSpacing: '-0.04em' }}>${data.hourlyRate.toLocaleString('es-MX')}<span style={{ fontSize: 14, fontWeight: 400, color: '#6B6B6B' }}>/hr</span></span>
             <div className="flex gap-2">
               <button onClick={() => onChange({ hourlyRate: Math.max(100, data.hourlyRate - 50) })}
-                style={{ width: 36, height: 36, borderRadius: 12, background: '#EFEFEF', border: 'none', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)', fontWeight: 700, color: '#0A0A0A' }}>−</button>
+                style={{ width: 36, height: 36, borderRadius: 12, background: '#F5F5F5', border: 'none', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)', fontWeight: 700, color: '#1F1F1F' }}>−</button>
               <button onClick={() => onChange({ hourlyRate: data.hourlyRate + 50 })}
-                style={{ width: 36, height: 36, borderRadius: 12, background: '#0A0A0A', border: 'none', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: 'white' }}>+</button>
+                style={{ width: 36, height: 36, borderRadius: 12, background: '#1F1F1F', border: 'none', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: 'white' }}>+</button>
             </div>
           </div>
           <input type="range" min={100} max={3000} step={50} value={data.hourlyRate}
             onChange={e => onChange({ hourlyRate: Number(e.target.value) })}
-            style={{ width: '100%', accentColor: '#0A0A0A' }} />
+            style={{ width: '100%', accentColor: '#1F1F1F' }} />
         </div>
       </div>
 
@@ -235,15 +235,15 @@ function Step4({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-      <div style={{ background: '#0A0A0A', borderRadius: 20, padding: '20px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: '#C1E8D5', opacity: 0.08, filter: 'blur(20px)', pointerEvents: 'none' }} />
+      <div style={{ background: '#1F1F1F', borderRadius: 20, padding: '20px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: '#3DB87A', opacity: 0.08, filter: 'blur(20px)', pointerEvents: 'none' }} />
         <div className="flex items-start gap-3">
-          <div style={{ width: 40, height: 40, borderRadius: 14, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2" strokeLinecap="round"><path d="M15 10l-4 4l6 6l4-16-18 7l4 2l2 6l3-4"/></svg>
+          <div style={{ width: 40, height: 40, borderRadius: 14, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2" strokeLinecap="round"><path d="M15 10l-4 4l6 6l4-16-18 7l4 2l2 6l3-4"/></svg>
           </div>
           <div>
-            <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 14, color: 'white', marginBottom: 4 }}>Entrevista rápida por video</p>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>Una breve llamada de 15 min para conocerte y explicarte los estándares de calidad imendly.</p>
+            <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: 'white', marginBottom: 4 }}>Entrevista rápida por video</p>
+            <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>Una breve llamada de 15 min para conocerte y explicarte los estándares de calidad imendly.</p>
           </div>
         </div>
       </div>
@@ -253,7 +253,7 @@ function Step4({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {dates.map(d => (
             <button key={d} onClick={() => onChange({ interviewDate: d, interviewTime: '' })}
-              style={{ padding: '10px 16px', border: 'none', borderRadius: 14, cursor: 'pointer', fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 13, background: data.interviewDate === d ? '#0A0A0A' : 'white', color: data.interviewDate === d ? 'white' : '#6A6A6A', boxShadow: data.interviewDate === d ? '4px 6px 14px rgba(0,0,0,0.22)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)', transition: 'all 0.2s ease' }}>
+              style={{ padding: '10px 16px', border: 'none', borderRadius: 14, cursor: 'pointer', fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 13, background: data.interviewDate === d ? '#1F1F1F' : 'white', color: data.interviewDate === d ? 'white' : '#6B6B6B', boxShadow: data.interviewDate === d ? '4px 6px 14px rgba(0,0,0,0.22)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)', transition: 'all 0.2s ease' }}>
               {d}
             </button>
           ))}
@@ -266,7 +266,7 @@ function Step4({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {times.map(t => (
               <button key={t} onClick={() => onChange({ interviewTime: t })}
-                style={{ padding: '10px 16px', border: 'none', borderRadius: 14, cursor: 'pointer', fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 13, background: data.interviewTime === t ? '#C1E8D5' : 'white', color: data.interviewTime === t ? '#0A0A0A' : '#6A6A6A', boxShadow: data.interviewTime === t ? '0 4px 14px rgba(193,232,213,0.4)' : '3px 3px 8px rgba(0,0,0,0.06)', transition: 'all 0.2s ease' }}>
+                style={{ padding: '10px 16px', border: 'none', borderRadius: 14, cursor: 'pointer', fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 13, background: data.interviewTime === t ? '#3DB87A' : 'white', color: data.interviewTime === t ? '#1F1F1F' : '#6B6B6B', boxShadow: data.interviewTime === t ? '0 4px 14px rgba(193,232,213,0.4)' : '3px 3px 8px rgba(0,0,0,0.06)', transition: 'all 0.2s ease' }}>
                 {t}
               </button>
             ))}
@@ -281,14 +281,14 @@ function Step4({ data, onChange }: { data: OnboardingData; onChange: (d: Partial
 function StepComplete({ onDone }: { onDone: () => void }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, paddingTop: 20 }}>
-      <div style={{ width: 90, height: 90, borderRadius: 28, background: '#C1E8D5', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 28px rgba(193,232,213,0.45)' }}>
-        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <div style={{ width: 90, height: 90, borderRadius: 28, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 28px rgba(193,232,213,0.45)' }}>
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <div style={{ textAlign: 'center' }}>
-        <h2 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 28, color: '#0A0A0A', letterSpacing: '-0.04em', marginBottom: 12 }}>
+        <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', letterSpacing: '-0.04em', marginBottom: 12 }}>
           ¡Registro enviado!
         </h2>
-        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#6A6A6A', lineHeight: 1.7, maxWidth: 300, margin: '0 auto' }}>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 14, color: '#6B6B6B', lineHeight: 1.7, maxWidth: 300, margin: '0 auto' }}>
           Nuestro equipo revisará tu solicitud en las próximas 48 horas. Recibirás un correo con los siguientes pasos.
         </p>
       </div>
@@ -300,8 +300,8 @@ function StepComplete({ onDone }: { onDone: () => void }) {
           { label: 'Activación de tu perfil', time: '3-5 días' },
         ].map((item, i) => (
           <div key={i} className="flex items-center justify-between py-3" style={{ borderBottom: i < 2 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6A6A6A' }}>{item.label}</span>
-            <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 12, color: '#0A0A0A', background: '#EFEFEF', padding: '4px 12px', borderRadius: 9999 }}>{item.time}</span>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#6B6B6B' }}>{item.label}</span>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: '#1F1F1F', background: '#F5F5F5', padding: '4px 12px', borderRadius: 9999 }}>{item.time}</span>
           </div>
         ))}
       </div>
@@ -325,7 +325,7 @@ export default function ProviderOnboarding({ onComplete, onLogin }: Props) {
 
   if (data.step === 0) {
     return (
-      <div className="h-full overflow-y-auto no-scrollbar" style={{ background: '#EFEFEF' }}>
+      <div className="h-full overflow-y-auto no-scrollbar" style={{ background: '#F5F5F5' }}>
         <div style={{ padding: '52px 20px 40px' }}>
           <StepWelcome onStart={next} onLogin={onLogin} />
         </div>
@@ -335,7 +335,7 @@ export default function ProviderOnboarding({ onComplete, onLogin }: Props) {
 
   if (data.step === 5) {
     return (
-      <div className="h-full overflow-y-auto no-scrollbar" style={{ background: '#EFEFEF' }}>
+      <div className="h-full overflow-y-auto no-scrollbar" style={{ background: '#F5F5F5' }}>
         <div style={{ padding: '52px 20px 40px' }}>
           <StepComplete onDone={onComplete} />
         </div>
@@ -347,19 +347,19 @@ export default function ProviderOnboarding({ onComplete, onLogin }: Props) {
   const StepComp = STEPS_COMPONENTS[data.step];
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#EFEFEF' }}>
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
       {/* Header */}
-      <div style={{ padding: '52px 20px 20px', background: '#EFEFEF', flexShrink: 0 }}>
+      <div style={{ padding: '52px 20px 20px', background: '#F5F5F5', flexShrink: 0 }}>
         <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
           <button onClick={prev}
             style={{ width: 40, height: 40, borderRadius: 14, background: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '4px 4px 10px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
           </button>
           <StepIndicator current={data.step - 1} total={4} />
-          <span style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 12, color: '#B0B0B0' }}>{data.step}/4</span>
+          <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: '#A8A8A8' }}>{data.step}/4</span>
         </div>
-        <p style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, fontSize: 11, color: '#6A6A6A', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 6 }}>Paso {data.step}</p>
-        <h1 style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 900, fontSize: 28, color: '#0A0A0A', letterSpacing: '-0.04em', margin: 0 }}>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 11, color: '#6B6B6B', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 6 }}>Paso {data.step}</p>
+        <h1 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', letterSpacing: '-0.04em', margin: 0 }}>
           {stepTitles[data.step]}
         </h1>
       </div>
