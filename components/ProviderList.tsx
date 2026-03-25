@@ -39,29 +39,29 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
   const handleSelect = (p: Provider) => { setProvider(p); navigate(AppView.PROVIDER_PROFILE); };
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#F6F5F2' }}>
+    <div className="h-full flex flex-col" style={{ background: '#F2F1F8' }}>
       <Navbar title={cat?.name ?? 'Proveedores'} showBack onBack={goBack} />
 
       {/* Filters */}
-      <div className="px-5 py-3" style={{ borderBottom: '1px solid #EEEDF0' }}>
+      <div className="px-5 py-3" style={{ background: 'white', borderBottom: '1px solid #E8E7F0' }}>
         <div className="flex gap-2 overflow-x-auto no-scrollbar mb-2">
           {ZONES.slice(0, 6).map(z => (
             <button key={z} onClick={() => setZone(z)}
               className="flex-shrink-0 px-3.5 py-2 text-xs transition-all duration-200"
               style={{
                 fontFamily: 'Inter, sans-serif', fontWeight: 600,
-                background: zone === z ? '#6C5CE7' : 'white',
-                color: zone === z ? 'white' : '#9A9AAF',
-                border: zone === z ? 'none' : '1.5px solid #EEEDF0',
+                background: zone === z ? '#6B4EFF' : 'transparent',
+                color: zone === z ? 'white' : '#AAAABB',
+                border: zone === z ? 'none' : '1.5px solid #E8E7F0',
                 borderRadius: 9999, cursor: 'pointer',
-                boxShadow: zone === z ? '0 4px 12px rgba(108,92,231,0.30)' : '0 1px 3px rgba(22,22,42,0.04)',
+                boxShadow: zone === z ? '0 4px 12px rgba(107,78,255,0.30)' : 'none',
                 whiteSpace: 'nowrap',
               }}>
               {z}
             </button>
           ))}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           {[
             { key: 'rating', label: 'Top rated' },
             { key: 'price',  label: 'Menor precio' },
@@ -71,8 +71,8 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
               className="flex-shrink-0 px-3 py-1.5 text-xs transition-all duration-200"
               style={{
                 fontFamily: 'Inter, sans-serif', fontWeight: 600,
-                background: sortBy === s.key ? 'rgba(108,92,231,0.08)' : 'transparent',
-                color: sortBy === s.key ? '#6C5CE7' : '#9A9AAF',
+                background: sortBy === s.key ? 'rgba(107,78,255,0.08)' : 'transparent',
+                color: sortBy === s.key ? '#6B4EFF' : '#AAAABB',
                 border: 'none', borderRadius: 9999, cursor: 'pointer',
               }}>
               {s.label}
@@ -83,8 +83,8 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
 
       {/* Count */}
       <div className="px-5 py-2">
-        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#9A9AAF', fontWeight: 500 }}>
-          {providers.length} proveedores{cat ? ` en ${cat.name}` : ''}
+        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#AAAABB', fontWeight: 500 }}>
+          {providers.length} proveedor{providers.length !== 1 ? 'es' : ''}{cat ? ` en ${cat.name}` : ''}
         </p>
       </div>
 
@@ -93,8 +93,10 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
         <div className="flex flex-col gap-3 px-5 pb-8">
           {providers.length === 0 ? (
             <div className="flex flex-col items-center gap-4 py-20">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C8C8D4" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-              <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 16, color: '#9A9AAF', textAlign: 'center' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C8C8D4" strokeWidth="1.5" strokeLinecap="round">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 16, color: '#AAAABB', textAlign: 'center' }}>
                 Sin proveedores disponibles
               </p>
             </div>
@@ -102,15 +104,15 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
             const facePhoto = FACE_PHOTOS[i % FACE_PHOTOS.length];
             return (
               <button key={p.id} onClick={() => handleSelect(p)}
-                className="hover-lift"
                 style={{
-                  background: 'white', border: '1px solid #EEEDF0',
+                  background: 'white', border: '1px solid #E8E7F0',
                   borderRadius: 22, padding: '16px', cursor: 'pointer',
                   textAlign: 'left', width: '100%', display: 'flex', gap: 14,
-                  boxShadow: '0 2px 8px rgba(22,22,42,0.04)',
+                  boxShadow: '0 2px 12px rgba(107,78,255,0.06)',
+                  transition: 'transform 0.15s ease, box-shadow 0.15s ease',
                 }}>
                 {/* Photo */}
-                <div style={{ width: 60, height: 60, borderRadius: 18, overflow: 'hidden', flexShrink: 0 }}>
+                <div style={{ width: 62, height: 62, borderRadius: 18, overflow: 'hidden', flexShrink: 0, border: '2px solid #E8E7F0' }}>
                   <img src={facePhoto} alt={p.name} className="w-full h-full object-cover"
                     onError={e => {
                       const el = e.target as HTMLImageElement;
@@ -122,27 +124,32 @@ export default function ProviderList({ state, navigate, goBack, setProvider }: P
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 15, color: '#16162A', letterSpacing: '-0.02em' }}>{p.name}</p>
+                    <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 15, color: '#1A1A2E', letterSpacing: '-0.02em' }}>{p.name}</p>
                     {p.imendlyCertified && (
-                      <div style={{ width: 18, height: 18, borderRadius: '50%', background: '#6C5CE7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: 18, height: 18, borderRadius: '50%', background: '#6B4EFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                       </div>
                     )}
                   </div>
-                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#9A9AAF', marginBottom: 8, fontWeight: 500 }}>
+                  <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#7B7B8E', marginBottom: 8, fontWeight: 500 }}>
                     {p.categories.map(c => SERVICE_CATEGORIES.find(sc => sc.id === c)?.name).filter(Boolean).slice(0, 2).join(' · ')}
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="#F59E0B" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                        <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 12, color: '#16162A' }}>{p.rating}</span>
+                        <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 12, color: '#1A1A2E' }}>{p.rating}</span>
                       </div>
-                      <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#C8C8D4' }}>{p.completedJobs} trabajos</span>
+                      <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#AAAABB' }}>{p.completedJobs} trabajos</span>
                     </div>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 15, color: '#16162A', letterSpacing: '-0.03em' }}>
-                      ${p.startingPrice.toLocaleString('es-MX')}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 15, color: '#1A1A2E', letterSpacing: '-0.03em' }}>
+                        ${p.startingPrice.toLocaleString('es-MX')}
+                      </span>
+                      <div style={{ width: 28, height: 28, borderRadius: 10, background: '#6B4EFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </button>

@@ -39,8 +39,8 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
   const [activeTab, setActiveTab] = useState<'services' | 'reviews' | 'about'>('services');
 
   if (!p) return (
-    <div className="h-full flex items-center justify-center" style={{ background: '#F6F5F2' }}>
-      <p style={{ color: '#9A9AAF', fontFamily: 'Inter, sans-serif' }}>Proveedor no encontrado</p>
+    <div className="h-full flex items-center justify-center" style={{ background: '#F2F1F8' }}>
+      <p style={{ color: '#AAAABB', fontFamily: 'Inter, sans-serif' }}>Proveedor no encontrado</p>
     </div>
   );
 
@@ -62,19 +62,18 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
   ] as const;
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#F6F5F2' }}>
+    <div className="h-full flex flex-col" style={{ background: '#F2F1F8' }}>
 
       <div className="flex-1 overflow-y-auto no-scrollbar">
 
         {/* ── HERO PHOTO ── */}
         <div style={{ position: 'relative', height: 300 }}>
           <img src={heroPhoto} alt="Service" className="w-full h-full object-cover"
-            onError={e => { (e.target as HTMLImageElement).parentElement!.style.background = '#6C5CE7'; }}
+            onError={e => { (e.target as HTMLImageElement).parentElement!.style.background = 'linear-gradient(135deg, #6B4EFF, #2D1569)'; }}
           />
-          {/* Dark overlay bottom */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 40%, rgba(0,0,0,0.5) 100%)',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 40%, rgba(0,0,0,0.55) 100%)',
           }} />
 
           {/* Back + actions */}
@@ -82,17 +81,17 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
             <div className="flex items-center justify-between">
               <button onClick={goBack}
                 className="w-10 h-10 rounded-2xl flex items-center justify-center"
-                style={{ background: 'rgba(255,255,255,0.9)', cursor: 'pointer', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16162A" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                style={{ background: 'rgba(255,255,255,0.92)', cursor: 'pointer', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
               </button>
               <div className="flex gap-2">
                 <button className="w-10 h-10 rounded-2xl flex items-center justify-center"
-                  style={{ background: 'rgba(255,255,255,0.9)', cursor: 'pointer', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16162A" strokeWidth="2" strokeLinecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  style={{ background: 'rgba(255,255,255,0.92)', cursor: 'pointer', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" strokeWidth="2" strokeLinecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button className="w-10 h-10 rounded-2xl flex items-center justify-center"
-                  style={{ background: 'rgba(255,255,255,0.9)', cursor: 'pointer', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16162A" strokeWidth="2" strokeLinecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                  style={{ background: 'rgba(255,255,255,0.92)', cursor: 'pointer', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" strokeWidth="2" strokeLinecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                 </button>
               </div>
             </div>
@@ -116,7 +115,7 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
           position: 'relative',
           zIndex: 1,
           minHeight: 500,
-          boxShadow: '0 -8px 40px rgba(22,22,42,0.06)',
+          boxShadow: '0 -8px 40px rgba(107,78,255,0.08)',
         }}>
           {/* Provider avatar overlapping */}
           <div style={{
@@ -124,7 +123,7 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
             width: 56, height: 56, borderRadius: 18,
             overflow: 'hidden',
             border: '3px solid white',
-            boxShadow: '0 4px 16px rgba(22,22,42,0.12)',
+            boxShadow: '0 4px 16px rgba(107,78,255,0.20)',
           }}>
             <img src={facePhoto} alt={p.name} className="w-full h-full object-cover"
               onError={e => {
@@ -140,37 +139,37 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
             <div className="flex items-start justify-between mb-1">
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 22, color: '#16162A', letterSpacing: '-0.04em' }}>{p.name}</h1>
+                  <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: 22, color: '#1A1A2E', letterSpacing: '-0.04em' }}>{p.name}</h1>
                   {p.imendlyCertified && (
-                    <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#6C5CE7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: 22, height: 22, borderRadius: '50%', background: '#6B4EFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                   )}
                 </div>
                 <div className="flex items-center gap-3 mt-1">
                   <div className="flex items-center gap-1">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9A9AAF" strokeWidth="2" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#9A9AAF', fontWeight: 500 }}>{p.location}</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#AAAABB" strokeWidth="2" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#7B7B8E', fontWeight: 500 }}>{p.location}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="#F59E0B" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 13, color: '#16162A' }}>{p.rating}</span>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#C8C8D4' }}>({p.reviewCount})</span>
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 13, color: '#1A1A2E' }}>{p.rating}</span>
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#AAAABB' }}>({p.reviewCount})</span>
                   </div>
                 </div>
               </div>
               <div className="flex gap-2">
-                <button style={{ width: 40, height: 40, borderRadius: 14, background: '#F6F5F2', border: '1px solid #EEEDF0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16162A" strokeWidth="2" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+                <button style={{ width: 40, height: 40, borderRadius: 14, background: '#F2F1F8', border: '1px solid #E8E7F0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" strokeWidth="2" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
                 </button>
-                <button style={{ width: 40, height: 40, borderRadius: 14, background: '#F6F5F2', border: '1px solid #EEEDF0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16162A" strokeWidth="2" strokeLinecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <button style={{ width: 40, height: 40, borderRadius: 14, background: '#F2F1F8', border: '1px solid #E8E7F0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" strokeWidth="2" strokeLinecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 </button>
               </div>
             </div>
 
             {/* Description */}
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#6B6B80', lineHeight: 1.7, fontWeight: 400, marginTop: 14, marginBottom: 16 }}>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#7B7B8E', lineHeight: 1.7, fontWeight: 400, marginTop: 14, marginBottom: 16 }}>
               {p.description}
             </p>
 
@@ -179,33 +178,28 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
               {p.categories.map(catId => {
                 const cat = SERVICE_CATEGORIES.find(c => c.id === catId);
                 return cat ? (
-                  <span key={catId} style={{
-                    fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 600,
-                    color: '#6B6B80', background: '#F6F5F2',
-                    border: '1px solid #EEEDF0',
-                    borderRadius: 9999, padding: '7px 16px',
-                  }}>
+                  <span key={catId} className="badge-pill" style={{ fontSize: 12, padding: '6px 14px' }}>
                     {cat.name}
                   </span>
                 ) : null;
               })}
             </div>
 
-            {/* Divider */}
-            <div style={{ height: 1, background: '#EEEDF0', marginBottom: 0 }} />
+            <div style={{ height: 1, background: '#E8E7F0' }} />
           </div>
 
           {/* ── TABS ── */}
-          <div className="flex px-5 py-2 gap-1">
+          <div className="flex px-5 py-2 gap-1" style={{ background: '#F2F1F8', margin: '0 20px', borderRadius: 16 }}>
             {TABS.map(tab => (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)}
                 className="flex-1 py-2.5 transition-all duration-200"
                 style={{
                   fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 13,
-                  background: activeTab === tab.id ? '#6C5CE7' : 'transparent',
-                  color: activeTab === tab.id ? 'white' : '#9A9AAF',
+                  background: activeTab === tab.id ? '#6B4EFF' : 'transparent',
+                  color: activeTab === tab.id ? 'white' : '#AAAABB',
                   border: 'none', borderRadius: 12, cursor: 'pointer',
-                  boxShadow: activeTab === tab.id ? '0 4px 12px rgba(108,92,231,0.30)' : 'none',
+                  boxShadow: activeTab === tab.id ? '0 4px 12px rgba(107,78,255,0.30)' : 'none',
+                  letterSpacing: '-0.01em',
                 }}>
                 {tab.label}
               </button>
@@ -213,21 +207,21 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
           </div>
 
           {/* ── TAB CONTENT ── */}
-          <div className="px-5 pb-40 pt-3">
+          <div className="px-5 pb-40 pt-4">
             {activeTab === 'services' && (
               <div className="flex flex-col gap-3">
                 {p.services.map(svc => (
-                  <div key={svc.id} style={{ background: '#F6F5F2', border: '1px solid #EEEDF0', borderRadius: 20, padding: '16px' }}>
+                  <div key={svc.id} style={{ background: '#F2F1F8', border: '1px solid #E8E7F0', borderRadius: 20, padding: '16px' }}>
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex-1 pr-3">
-                        <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 14, color: '#16162A', letterSpacing: '-0.02em' }}>{svc.name}</p>
-                        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#9A9AAF', marginTop: 4, lineHeight: 1.5 }}>{svc.description}</p>
+                        <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 14, color: '#1A1A2E', letterSpacing: '-0.02em' }}>{svc.name}</p>
+                        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#7B7B8E', marginTop: 4, lineHeight: 1.5 }}>{svc.description}</p>
                       </div>
                       <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                        <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 16, color: '#16162A', letterSpacing: '-0.03em' }}>
+                        <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 17, color: '#1A1A2E', letterSpacing: '-0.03em' }}>
                           ${svc.minPrice.toLocaleString('es-MX')}
                         </p>
-                        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#C8C8D4', fontWeight: 500 }}>{svc.unit}</p>
+                        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#AAAABB', fontWeight: 500 }}>{svc.unit}</p>
                       </div>
                     </div>
                     <button onClick={() => handleBook(svc)}
@@ -247,15 +241,15 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
                   { name: 'Carlos R.', rating: 5, comment: 'Muy buen trabajo, dejó todo limpio y en orden. Precios justos.', date: 'hace 1 semana' },
                   { name: 'Ana P.',    rating: 4, comment: 'Buen servicio, cumplió con lo acordado.', date: 'hace 2 semanas' },
                 ].map((r, i) => (
-                  <div key={i} style={{ background: '#F6F5F2', border: '1px solid #EEEDF0', borderRadius: 20, padding: '16px' }}>
+                  <div key={i} style={{ background: '#F2F1F8', border: '1px solid #E8E7F0', borderRadius: 20, padding: '16px' }}>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <div style={{ width: 36, height: 36, borderRadius: 12, background: '#EEEDF0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 13, color: '#9A9AAF' }}>{r.name[0]}</span>
+                        <div style={{ width: 36, height: 36, borderRadius: 12, background: 'rgba(107,78,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 13, color: '#6B4EFF' }}>{r.name[0]}</span>
                         </div>
                         <div>
-                          <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 13, color: '#16162A' }}>{r.name}</p>
-                          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#C8C8D4' }}>{r.date}</p>
+                          <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 13, color: '#1A1A2E' }}>{r.name}</p>
+                          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#AAAABB' }}>{r.date}</p>
                         </div>
                       </div>
                       <div className="flex gap-0.5">
@@ -264,7 +258,7 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
                         ))}
                       </div>
                     </div>
-                    <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#6B6B80', lineHeight: 1.6 }}>{r.comment}</p>
+                    <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#7B7B8E', lineHeight: 1.6 }}>{r.comment}</p>
                   </div>
                 ))}
               </div>
@@ -272,16 +266,16 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
 
             {activeTab === 'about' && (
               <div className="flex flex-col gap-3">
-                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#6B6B80', lineHeight: 1.7 }}>{p.description}</p>
+                <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#7B7B8E', lineHeight: 1.7 }}>{p.description}</p>
                 {[
                   { label: 'Experiencia', value: `${p.yearsExperience} años` },
                   { label: 'Tiempo de respuesta', value: `${p.responseTimeMinutes} min` },
                   { label: 'Zona de servicio', value: p.zone },
                   { label: 'Certificación', value: p.certificationStatus === 'approved' ? 'Verificado' : 'En proceso' },
                 ].map(item => (
-                  <div key={item.label} className="flex items-center justify-between py-3" style={{ borderBottom: '1px solid #EEEDF0' }}>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#9A9AAF', fontWeight: 500 }}>{item.label}</span>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#16162A', fontWeight: 700 }}>{item.value}</span>
+                  <div key={item.label} className="flex items-center justify-between py-3" style={{ borderBottom: '1px solid #E8E7F0' }}>
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#7B7B8E', fontWeight: 500 }}>{item.label}</span>
+                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#1A1A2E', fontWeight: 700 }}>{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -292,18 +286,18 @@ export default function ProviderProfile({ state, navigate, goBack, setService, s
 
       {/* ── STICKY CTA ── */}
       <div style={{
-        background: 'rgba(255,255,255,0.95)',
+        background: 'rgba(255,255,255,0.96)',
         backdropFilter: 'blur(20px)',
-        borderTop: '1px solid #EEEDF0',
+        borderTop: '1px solid #E8E7F0',
         padding: '16px 20px',
         paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
       }}>
         <div className="flex items-center justify-between">
           <div>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#9A9AAF', fontWeight: 500 }}>Precio:</span>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 24, color: '#16162A', letterSpacing: '-0.04em', lineHeight: 1 }}>
+            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: '#AAAABB', fontWeight: 500 }}>Precio:</span>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: 24, color: '#1A1A2E', letterSpacing: '-0.04em', lineHeight: 1 }}>
               ${p.startingPrice.toLocaleString('es-MX')}
-              <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: 14, color: '#C8C8D4' }}>/hr</span>
+              <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: 14, color: '#AAAABB' }}>/hr</span>
             </p>
           </div>
           <button
