@@ -1,90 +1,77 @@
 import React from 'react';
-import { ArrowLeft, Tag, Clock, CheckCircle2 } from 'lucide-react';
+import { AppState, AppView } from '../types';
+import Navbar from './Navbar';
+import BottomNav from './BottomNav';
 
-interface OffersScreenProps {
-    onBack: () => void;
-    onRedeem: () => void;
+interface Props {
+  state: AppState;
+  navigate: (v: AppView) => void;
+  goBack: () => void;
+  setCategory: (c: any) => void;
+  setProvider: (p: any) => void;
+  setService: (s: any) => void;
+  setBooking: (b: any) => void;
 }
 
-const OffersScreen: React.FC<OffersScreenProps> = ({ onBack, onRedeem }) => {
-    return (
-        <div className="h-full bg-canvas flex flex-col animate-fade-in relative">
-            {/* Header Image */}
-            <div className="h-1/3 relative">
-                <img
-                    src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=1000"
-                    alt="Special Offer"
-                    className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-canvas" />
-                <button
-                    onClick={onBack}
-                    className="absolute top-6 left-5 w-10 h-10 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center text-ink hover:bg-white transition-colors border border-white/50"
-                >
-                    <ArrowLeft size={18} />
-                </button>
-            </div>
+const OFFERS = [
+  { id: 1, title: 'Primera limpieza profunda', discount: '20% OFF', emoji: '🧹', color: '#10B981', bg: 'rgba(16,185,129,0.12)', code: 'LIMPIA20', validUntil: '31 Mar 2026', service: 'Limpieza' },
+  { id: 2, title: 'Mantenimiento AC antes del verano', discount: '$100 OFF', emoji: '❄️', color: '#06B6D4', bg: 'rgba(6,182,212,0.12)', code: 'AC100', validUntil: '15 Abr 2026', service: 'Climas/AC' },
+  { id: 3, title: 'Diagnóstico eléctrico gratis', discount: 'GRATIS', emoji: '⚡', color: '#F59E0B', bg: 'rgba(245,158,11,0.12)', code: 'ELEC0', validUntil: '5 Abr 2026', service: 'Electricidad' },
+  { id: 4, title: 'Pintura de recámara express', discount: '15% OFF', emoji: '🎨', color: '#A855F7', bg: 'rgba(168,85,247,0.12)', code: 'PINTA15', validUntil: '30 Abr 2026', service: 'Pintura' },
+];
 
-            {/* Content Container */}
-            <div className="flex-1 bg-white rounded-t-3xl -mt-8 p-6 relative z-10 border border-black/5 overflow-y-auto no-scrollbar">
+export default function OffersScreen({ state, navigate }: Props) {
+  return (
+    <div className="h-full flex flex-col" style={{ background: '#060D16' }}>
+      <Navbar title="Ofertas especiales" notifCount={state.notifCount} />
 
-                {/* Badge & Title */}
-                <div className="flex items-center gap-2 mb-3">
-                    <span className="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-                        <Tag size={10} />
-                        Oferta Especial
+      <div className="flex-1 overflow-y-auto no-scrollbar">
+        <div className="flex flex-col gap-4 p-4 pb-24">
+          <p style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+            Descuentos exclusivos para usuarios I mendly ·  {OFFERS.length} disponibles
+          </p>
+
+          {OFFERS.map((offer, i) => (
+            <div key={offer.id} className="rounded-2xl overflow-hidden hover-lift"
+              style={{ background: `linear-gradient(135deg, ${offer.bg}, rgba(15,52,96,0.4))`, border: `1.5px solid ${offer.color}25`, animationDelay: `${i * 60}ms` }}>
+              <div className="p-4">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex flex-col gap-1.5">
+                    <span className="px-2.5 py-1 rounded-full text-xs font-bold w-fit"
+                      style={{ background: offer.bg, color: offer.color, border: `1px solid ${offer.color}30`, fontFamily: 'Plus Jakarta Sans, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                      {offer.service}
                     </span>
-                    <span className="bg-red-50 text-red-500 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider flex items-center gap-1">
-                        <Clock size={10} />
-                        Expira en 24h
-                    </span>
+                    <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 16, color: 'white', lineHeight: 1.2 }}>{offer.title}</h3>
+                  </div>
+                  <div className="flex flex-col items-center justify-center w-16 h-16 rounded-2xl flex-shrink-0"
+                    style={{ background: offer.bg, border: `1.5px solid ${offer.color}30` }}>
+                    <span style={{ fontSize: 24 }}>{offer.emoji}</span>
+                    <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 11, color: offer.color, lineHeight: 1 }}>{offer.discount}</span>
+                  </div>
                 </div>
 
-                <h1 className="text-2xl font-black text-ink mb-1.5">
-                    30% de Descuento
-                </h1>
-                <p className="text-ink-secondary text-sm mb-6 leading-relaxed">
-                    En todos los servicios de limpieza profunda y organización.
-                </p>
-
-                {/* Details List */}
-                <div className="space-y-4 mb-8">
-                    <h3 className="font-black text-ink text-xs uppercase tracking-widest">Lo que incluye</h3>
-                    <ul className="space-y-3">
-                        {[
-                            "Limpieza profunda de cocina y baños",
-                            "Desinfección de superficies de alto contacto",
-                            "Aspirado y lavado de alfombras",
-                            "Organización básica de espacios comunes"
-                        ].map((item, index) => (
-                            <li key={index} className="flex items-start gap-2.5">
-                                <CheckCircle2 className="text-green-500 shrink-0 mt-0.5" size={16} />
-                                <span className="text-ink-secondary text-sm">{item}</span>
-                            </li>
-                        ))}
-                    </ul>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>📅 Válido hasta {offer.validUntil}</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    <span style={{ fontFamily: 'Plus Jakarta Sans, sans-serif', fontWeight: 700, fontSize: 12, color: offer.color, letterSpacing: '0.08em' }}>{offer.code}</span>
+                    <button style={{ fontSize: 12, background: 'none', border: 'none', cursor: 'pointer' }}>📋</button>
+                  </div>
                 </div>
+              </div>
 
-                {/* Terms */}
-                <div className="bg-canvas p-5 rounded-2xl mb-24">
-                    <h4 className="font-black text-ink text-[10px] uppercase tracking-widest mb-1.5">Términos y condiciones</h4>
-                    <p className="text-[11px] text-ink-muted leading-relaxed">
-                        Válido solo para nuevos usuarios en su primera reserva. No acumulable con otras promociones. Sujeto a disponibilidad de proveedores en tu zona.
-                    </p>
-                </div>
+              <button onClick={() => navigate(AppView.CLIENT_HOME)}
+                className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold"
+                style={{ background: offer.color, color: 'white', border: 'none', cursor: 'pointer', fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
+                Usar oferta →
+              </button>
             </div>
-
-            {/* Floating Action Button */}
-            <div className="fixed bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-white via-white to-transparent z-50">
-                <button
-                    onClick={onRedeem}
-                    className="btn-primary w-full py-4 text-sm font-bold tracking-wide"
-                >
-                    Reclamar Oferta
-                </button>
-            </div>
+          ))}
         </div>
-    );
-};
+      </div>
 
-export default OffersScreen;
+      <BottomNav current={AppView.CLIENT_HOME} navigate={navigate} role="client" />
+    </div>
+  );
+}

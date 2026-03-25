@@ -1,62 +1,59 @@
 import React from 'react';
-import { Home, FileText, ShieldCheck, Calendar, User } from 'lucide-react';
 import { AppView } from '../types';
 
-interface BottomNavProps {
-    currentView: AppView;
-    onNavigate: (view: AppView) => void;
+interface Props {
+  role: 'client' | 'provider';
+  current: AppView;
+  navigate: (v: AppView) => void;
 }
 
-const BottomNav: React.FC<BottomNavProps> = ({ currentView, onNavigate }) => {
-    const isActive = (view: AppView) =>
-        currentView === view || (view === AppView.SERVICES && currentView === AppView.PROVIDER_LIST);
+const G = '#3DB87A';
+const OFF = '#A8A8A8';
+const ON = '#1F1F1F';
 
-    const navItems = [
-        { id: AppView.SERVICES, icon: Home, tip: 'Inicio' },
-        { id: AppView.ORDERS, icon: FileText, tip: 'Pedidos' },
-        { id: AppView.ADMIN, icon: ShieldCheck, tip: 'Admin' },
-        { id: AppView.CALENDAR, icon: Calendar, tip: 'Agenda' },
-        { id: AppView.PROFILE, icon: User, tip: 'Perfil' },
-    ];
+const HomeIcon    = ({ a }: { a: boolean }) => <svg width="22" height="22" viewBox="0 0 24 24" fill={a ? ON : 'none'} stroke={a ? ON : OFF} strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>;
+const SearchIcon  = ({ a }: { a: boolean }) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? ON : OFF} strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>;
+const CalIcon     = ({ a }: { a: boolean }) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? ON : OFF} strokeWidth="2" strokeLinecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
+const ChartIcon   = ({ a }: { a: boolean }) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? G : OFF} strokeWidth="2" strokeLinecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>;
+const UserIcon    = ({ a }: { a: boolean }) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? ON : OFF} strokeWidth="2" strokeLinecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+const DollarIcon  = ({ a }: { a: boolean }) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? ON : OFF} strokeWidth="2" strokeLinecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>;
 
-    return (
-        <div className="fixed bottom-6 inset-x-0 z-50 flex justify-center pointer-events-none">
-            <div
-                className="bg-white rounded-full shadow-float border border-black/5 px-5 py-3 flex items-center gap-2 pointer-events-auto"
-                style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
-            >
-                {navItems.map((item) => {
-                    const active = isActive(item.id);
-                    const Icon = item.icon;
-                    return (
-                        <button
-                            key={item.id}
-                            onClick={() => onNavigate(item.id)}
-                            className={`relative flex items-center justify-center transition-all duration-300 ${active ? 'w-12 h-12' : 'w-11 h-11'
-                                }`}
-                            title={item.tip}
-                        >
-                            {/* Active pill background */}
-                            <span
-                                className={`absolute inset-0 rounded-full transition-all duration-300 ${active ? 'bg-ink scale-100' : 'scale-0 bg-ink'
-                                    }`}
-                            />
-                            <Icon
-                                size={active ? 19 : 20}
-                                strokeWidth={active ? 2.5 : 1.8}
-                                className={`relative z-10 transition-colors duration-300 ${active ? 'text-white' : 'text-ink-secondary hover:text-ink'
-                                    }`}
-                            />
-                            {/* Active green dot */}
-                            {active && (
-                                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse-dot" />
-                            )}
-                        </button>
-                    );
-                })}
-            </div>
-        </div>
-    );
-};
+const CLIENT_TABS = [
+  { view: AppView.CLIENT_HOME,    Icon: HomeIcon,   label: 'inicio'   },
+  { view: AppView.PROVIDER_LIST,  Icon: SearchIcon, label: 'explorar' },
+  { view: AppView.ORDERS,         Icon: CalIcon,    label: 'pedidos'  },
+  { view: AppView.CLIENT_REPORTS, Icon: ChartIcon,  label: 'reportes' },
+  { view: AppView.CLIENT_PROFILE, Icon: UserIcon,   label: 'perfil'   },
+];
 
-export default BottomNav;
+const PROVIDER_TABS = [
+  { view: AppView.PROVIDER_DASHBOARD, Icon: HomeIcon,   label: 'Inicio'   },
+  { view: AppView.SCHEDULE,           Icon: CalIcon,    label: 'Agenda'   },
+  { view: AppView.EARNINGS,           Icon: DollarIcon, label: 'Ganancias'},
+  { view: AppView.REVIEWS,            Icon: StarIcon,   label: 'Reseñas'  },
+  { view: AppView.PROFILE,            Icon: UserIcon,   label: 'Perfil'   },
+];
+
+export default function BottomNav({ role, current, navigate }: Props) {
+  const tabs = role === 'client' ? CLIENT_TABS : PROVIDER_TABS;
+
+  return (
+    <div className="floating-nav flex" style={{ padding: '10px 0', paddingBottom: 'calc(10px + env(safe-area-inset-bottom, 0px))' }}>
+      {tabs.map(({ view, Icon, label }) => {
+        const active = current === view;
+        return (
+          <button key={`${view}-${label}`} onClick={() => navigate(view)}
+            style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, border: 'none', background: 'none', cursor: 'pointer', padding: '6px 0', position: 'relative' }}>
+            {active && (
+              <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 28, height: 3, borderRadius: '0 0 3px 3px', background: '#3DB87A' }} />
+            )}
+            <Icon a={active} />
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 10, fontWeight: active ? 700 : 400, color: active ? ON : OFF, letterSpacing: '0em', textTransform: 'lowercase' }}>
+              {label}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}

@@ -1,415 +1,321 @@
 import React, { useState } from 'react';
-import {
-    DollarSign, Star, Package, CheckCircle2, Clock, Plus,
-    ChevronRight, Bell, LogOut, ArrowUpRight, MoreHorizontal, Zap, TrendingUp
-} from 'lucide-react';
+import { AppState, AppView } from '../types';
+import { DEMO_REVIEWS, DEMO_WEEKLY_EARNINGS, SERVICE_CATEGORIES } from '../constants';
 
-interface KPICardProps {
-    label: string;
-    value: string;
-    trend: string;
-    trendUp: boolean;
-    icon: React.ReactNode;
-    bg: string;
-    color: string;
+interface Props {
+  state: AppState;
+  navigate: (v: AppView) => void;
+  goBack: () => void;
+  setCategory: (c: any) => void;
+  setProvider: (p: any) => void;
+  setService: (s: any) => void;
+  setBooking: (b: any) => void;
 }
 
-const KPICard: React.FC<KPICardProps> = ({ label, value, trend, trendUp, icon, bg, color }) => (
-    <div className="card-hover bg-white rounded-3xl border border-black/5 p-5 animate-card-in">
-        <div className="flex justify-between items-start mb-5">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: bg, color }}>
-                {icon}
+const maxBar = Math.max(...DEMO_WEEKLY_EARNINGS.map(d => d.amount));
+
+export default function ProviderDashboard({ state, navigate }: Props) {
+  const [tab, setTab] = useState<'home' | 'orders' | 'earnings' | 'reviews' | 'profile'>('home');
+  const provider = state.providerUser;
+  const activeOrder = state.orders.find(o => o.status === 'in_progress');
+  const completedOrders = state.orders.filter(o => o.escrow?.status === 'released');
+  const weekEarnings = DEMO_WEEKLY_EARNINGS.reduce((s, d) => s + d.amount, 0);
+  const monthGrowth = Math.round(((provider?.earnedThisMonth ?? 0) - (provider?.earnedLastMonth ?? 0)) / (provider?.earnedLastMonth ?? 1) * 100);
+
+  // ── HOME ──
+  const renderHome = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+      {/* Dark header card */}
+      <div style={{ background: '#1F1F1F', margin: '0', padding: '52px 20px 24px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -60, right: -40, width: 220, height: 220, borderRadius: '50%', background: '#3DB87A', opacity: 0.06, filter: 'blur(50px)', pointerEvents: 'none' }} />
+        {/* Top row */}
+        <div className="flex items-center justify-between" style={{ marginBottom: 24 }}>
+          <div className="flex items-center gap-3">
+            <div style={{ width: 46, height: 46, borderRadius: 16, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 16, color: '#1F1F1F' }}>
+              {provider?.initials}
             </div>
-            <span className={`text-[9px] font-black uppercase tracking-wide px-2 py-1 rounded-full flex items-center gap-1 ${trendUp ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-500'}`}>
-                <ArrowUpRight size={9} className={trendUp ? '' : 'rotate-90'} />
-                {trend}
-            </span>
+            <div>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, fontWeight: 500, color: 'rgba(255,255,255,0.35)', margin: 0 }}>Panel proveedor</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 17, color: 'white', letterSpacing: '-0.03em', margin: 0 }}>{provider?.name?.split(' ')[0]}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {provider?.imendlyCertified && (
+              <div style={{ background: '#3DB87A', borderRadius: 9999, padding: '5px 12px', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 10, color: '#1F1F1F' }}>Verificado</span>
+              </div>
+            )}
+            <button style={{ width: 38, height: 38, borderRadius: 13, background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.08)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </button>
+          </div>
         </div>
-        <p className="text-xs text-ink-muted mb-1">{label}</p>
-        <h3 className="text-2xl font-black text-ink">{value}</h3>
+
+        {/* Metrics grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+          {[
+            { label: 'Ganancias este mes', value: `$${(provider?.earnedThisMonth ?? 0).toLocaleString('es-MX')}`, sub: `${monthGrowth > 0 ? '+' : ''}${monthGrowth}% vs anterior`, hi: true },
+            { label: 'Completados', value: String(provider?.totalServices ?? 0), sub: `+${completedOrders.length} este mes`, hi: false },
+            { label: 'Calificación', value: `${provider?.ratingAvg}`, sub: 'Top 5% de la red', hi: false },
+            { label: 'Tasa éxito', value: `${provider?.completionRate}%`, sub: (provider?.completionRate ?? 0) >= 90 ? 'Badge activo' : 'Mejorar', hi: false },
+          ].map(m => (
+            <div key={m.label} style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 18, padding: '14px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 10, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.04em', margin: '0 0 6px' }}>{m.label}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 22, color: m.hi ? '#3DB87A' : 'white', letterSpacing: '-0.04em', margin: '0 0 3px' }}>{m.value}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.28)', margin: 0 }}>{m.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+        {/* Active order */}
+        {activeOrder && (
+          <div style={{ background: 'white', borderRadius: 20, padding: '16px', boxShadow: '5px 5px 14px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)', border: '2px solid #3DB87A' }}>
+            <div className="flex items-center gap-2" style={{ marginBottom: 12 }}>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#3DB87A', animation: 'pulse 2s infinite' }} />
+              <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 11, color: '#1F1F1F', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Servicio activo</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: '#1F1F1F', margin: '0 0 4px' }}>{activeOrder.serviceName}</p>
+                <div className="flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B' }}>{activeOrder.zone}</span>
+                </div>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 18, color: '#1F1F1F', letterSpacing: '-0.04em', marginTop: 8 }}>
+                  ${(activeOrder.escrow?.netProviderAmount ?? 0).toLocaleString('es-MX')}
+                </p>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <button className="btn-primary" style={{ padding: '10px 16px', fontSize: 13 }}>Completar</button>
+                <button className="btn-ghost" style={{ padding: '8px 16px', fontSize: 12 }}>Chat</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Earnings chart */}
+        <div style={{ background: 'white', borderRadius: 20, padding: '18px', boxShadow: '5px 5px 14px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: 16 }}>
+            <div>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 11, color: '#6B6B6B', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 4 }}>Esta semana</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 24, color: '#1F1F1F', letterSpacing: '-0.04em', margin: 0 }}>
+                ${weekEarnings.toLocaleString('es-MX')}
+              </p>
+            </div>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, fontWeight: 700, color: '#1F1F1F', background: '#3DB87A', borderRadius: 9999, padding: '5px 14px' }}>+12%</span>
+          </div>
+          <div className="flex items-end justify-between gap-2" style={{ height: 72 }}>
+            {DEMO_WEEKLY_EARNINGS.map(d => {
+              const isMax = d.amount === maxBar;
+              const pct = (d.amount / maxBar) * 100;
+              return (
+                <div key={d.day} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, height: '100%', justifyContent: 'flex-end' }}>
+                  <div style={{ width: '100%', borderRadius: '6px 6px 0 0', background: isMax ? '#1F1F1F' : '#F5F5F5', height: `${Math.max(pct, 8)}%`, transition: 'height 0.7s ease', minHeight: 4 }} />
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 10, color: isMax ? '#1F1F1F' : '#A8A8A8', fontWeight: isMax ? 700 : 500 }}>{d.day}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Recent reviews */}
+        <div>
+          <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+            <h3 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 16, color: '#1F1F1F', letterSpacing: '-0.02em', margin: 0 }}>Últimas reseñas</h3>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, fontWeight: 600, color: '#6B6B6B', cursor: 'pointer' }}>Ver todas →</span>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {DEMO_REVIEWS.slice(0, 2).map(r => (
+              <div key={r.id} style={{ background: 'white', borderRadius: 18, padding: '14px', boxShadow: '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)' }}>
+                <div className="flex items-center justify-between" style={{ marginBottom: 8 }}>
+                  <div className="flex items-center gap-2">
+                    <div style={{ width: 32, height: 32, borderRadius: 12, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 12, color: '#1F1F1F' }}>{r.reviewerInitials}</span>
+                    </div>
+                    <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 13, color: '#1F1F1F' }}>{r.reviewerName}</span>
+                  </div>
+                  <div className="flex gap-0.5">
+                    {[1,2,3,4,5].map(s => <svg key={s} width="10" height="10" viewBox="0 0 24 24" fill={s <= r.rating ? '#1F1F1F' : '#E0E0E0'} stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>)}
+                  </div>
+                </div>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', lineHeight: 1.5, margin: 0 }}>{r.comment.substring(0, 80)}…</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
-);
+  );
 
-const ProviderDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
-    const [activeTab, setActiveTab] = useState<'dashboard' | 'orders' | 'services'>('dashboard');
-    const [isAddingService, setIsAddingService] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState<any>(null);
-    const [isModifying, setIsModifying] = useState(false);
-    const [modifiedData, setModifiedData] = useState({ service: '', price: 0, materials: '' });
-
-    const kpis: KPICardProps[] = [
-        { label: 'Ingresos', value: '$12,450', trend: '+12.5%', trendUp: true, icon: <DollarSign size={18} />, bg: '#E8FBF1', color: '#10C96D' },
-        { label: 'Rating', value: '4.9', trend: '+0.2', trendUp: true, icon: <Star size={18} />, bg: '#FFF8E1', color: '#D97706' },
-        { label: 'Activas', value: '8', trend: '-2', trendUp: false, icon: <Package size={18} />, bg: '#F5F0FF', color: '#7C3AED' },
-        { label: 'Éxito', value: '98%', trend: '+1%', trendUp: true, icon: <CheckCircle2 size={18} />, bg: '#EBF4FF', color: '#2563EB' },
-    ];
-
-    const services = [
-        { id: '1', name: 'Limpieza Profunda', price: 800, status: 'Activo' },
-        { id: '2', name: 'Limpieza Express', price: 400, status: 'Activo' },
-        { id: '3', name: 'Desinfección', price: 1200, status: 'Revisión' },
-    ];
-
-    const [orders, setOrders] = useState([
-        { id: 'ORD-001', client: 'Julio R.', service: 'Limpieza Profunda', date: 'Mañana, 2pm', price: 800, status: 'Escrow', materials: '' },
-        { id: 'ORD-002', client: 'María C.', service: 'Limpieza Express', date: 'Hoy, 5pm', price: 400, status: 'En Camino', materials: '' },
-    ]);
-
-    const barData = [60, 80, 45, 95, 70, 100, 55, 88, 72, 65, 90, 85];
-    const months = ['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
-
-    return (
-        <div className="h-full bg-canvas flex flex-col overflow-hidden animate-fade-in">
-            {/* Header */}
-            <div className="bg-white px-5 pt-14 pb-4 border-b border-black/5 shrink-0">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 bg-ink rounded-2xl flex items-center justify-center">
-                            <Zap size={18} className="text-green-400" />
-                        </div>
-                        <div>
-                            <h1 className="text-lg font-black text-ink">Provider Hub</h1>
-                            <div className="flex items-center gap-1.5">
-                                <span className="green-dot" style={{ width: 6, height: 6 }} />
-                                <p className="text-[10px] text-ink-secondary font-mono">Modo Profesional</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        <button className="w-10 h-10 bg-canvas rounded-xl border border-black/5 flex items-center justify-center text-ink-secondary hover:bg-black/5 transition-colors">
-                            <Bell size={17} />
-                        </button>
-                        <button
-                            onClick={onLogout}
-                            className="w-10 h-10 bg-canvas rounded-xl border border-black/5 flex items-center justify-center text-red-400 hover:bg-red-50 transition-colors"
-                        >
-                            <LogOut size={17} />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Tabs */}
-                <div className="flex gap-1 mt-4 bg-canvas rounded-xl p-1">
-                    {(['dashboard', 'orders', 'services'] as const).map(tab => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`flex-1 py-2.5 rounded-lg text-[11px] font-bold capitalize transition-all ${activeTab === tab ? 'bg-white shadow-xs text-ink' : 'text-ink-muted'
-                                }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto no-scrollbar p-5 pb-36 space-y-4">
-                {activeTab === 'dashboard' && (
-                    <>
-                        {/* KPI Grid */}
-                        <div className="grid grid-cols-2 gap-3">
-                            {kpis.map((kpi, i) => (
-                                <KPICard key={i} {...kpi} />
-                            ))}
-                        </div>
-
-                        {/* Revenue chart */}
-                        <div className="bg-white rounded-3xl border border-black/5 p-5">
-                            <div className="flex justify-between items-center mb-5">
-                                <div>
-                                    <p className="text-xs text-ink-muted mb-0.5 flex items-center gap-1.5"><TrendingUp size={12} className="text-green-500" /> Ingresos</p>
-                                    <p className="text-2xl font-black text-ink">$12,450</p>
-                                </div>
-                                <span className="text-[9px] font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+12.5%</span>
-                            </div>
-                            <div className="flex items-end gap-1.5 h-20">
-                                {barData.map((h, i) => (
-                                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                                        <div
-                                            className="w-full rounded-t-md transition-all hover:opacity-100"
-                                            style={{
-                                                height: `${h}%`,
-                                                background: i === 11 ? '#10C96D' : `rgba(16,201,109,${0.2 + (h / 100) * 0.35})`,
-                                                opacity: i === 11 ? 1 : 0.75
-                                            }}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex justify-between mt-2">
-                                {months.map((m, i) => (
-                                    <span key={i} className="text-[8px] text-ink-muted flex-1 text-center">{m}</span>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Recent orders */}
-                        <div className="bg-white rounded-3xl border border-black/5 p-5">
-                            <div className="flex justify-between mb-4">
-                                <p className="text-xs font-black text-ink-muted uppercase tracking-widest flex items-center gap-1.5"><Clock size={11} /> Recientes</p>
-                                <button onClick={() => setActiveTab('orders')} className="text-xs font-semibold text-green-600 flex items-center gap-1">Ver todas <ChevronRight size={12} /></button>
-                            </div>
-                            <div className="space-y-3">
-                                {orders.map(o => (
-                                    <div
-                                        key={o.id}
-                                        onClick={() => setSelectedOrder(o)}
-                                        className="flex items-center gap-3 p-3 bg-canvas rounded-2xl hover:bg-black/5 transition-colors cursor-pointer"
-                                    >
-                                        <div className="w-9 h-9 bg-ink rounded-xl flex items-center justify-center text-white font-black text-sm">{o.client[0]}</div>
-                                        <div className="flex-1">
-                                            <p className="text-sm font-semibold text-ink">{o.service}</p>
-                                            <p className="text-xs text-ink-muted">{o.client} · {o.date}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-sm font-bold text-green-600">${o.price}</p>
-                                            <span className="text-[8px] font-bold text-green-700 bg-green-50 px-1.5 py-0.5 rounded-full">{o.status}</span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </>
-                )}
-
-                {activeTab === 'services' && (
-                    <>
-                        <div className="flex items-center justify-between mb-1">
-                            <h2 className="text-2xl font-black text-ink">Servicios</h2>
-                            <button
-                                onClick={() => setIsAddingService(true)}
-                                className="btn-primary flex items-center gap-2 px-4 py-2.5 text-xs"
-                            >
-                                <Plus size={14} /> Nueva
-                            </button>
-                        </div>
-                        <div className="bg-white rounded-3xl border border-black/5 overflow-hidden">
-                            {services.map((s, idx) => (
-                                <div key={s.id} className={`flex items-center gap-4 px-5 py-4 hover:bg-canvas transition-colors ${idx < services.length - 1 ? 'border-b border-black/5' : ''}`}>
-                                    <span className={`w-2 h-2 rounded-full shrink-0 ${s.status === 'Activo' ? 'bg-green-500' : 'bg-yellow-400'}`} />
-                                    <div className="flex-1">
-                                        <p className="font-semibold text-sm text-ink">{s.name}</p>
-                                        <p className="text-xs text-ink-muted">{s.status} · ${s.price}</p>
-                                    </div>
-                                    <MoreHorizontal size={16} className="text-ink-muted" />
-                                </div>
-                            ))}
-                        </div>
-                        <div className="bg-yellow-50 border border-yellow-100 rounded-2xl p-4">
-                            <p className="text-xs text-yellow-700 font-medium">1 servicio en revisión por el staff de I Mendly.</p>
-                        </div>
-                    </>
-                )}
-
-                {activeTab === 'orders' && (
-                    <>
-                        <h2 className="text-2xl font-black text-ink mb-1">Órdenes</h2>
-                        <div className="space-y-3">
-                            {orders.map(o => (
-                                <div
-                                    key={o.id}
-                                    onClick={() => setSelectedOrder(o)}
-                                    className="card-hover bg-white rounded-3xl border border-black/5 p-5 cursor-pointer"
-                                >
-                                    <div className="flex items-center gap-4 mb-4">
-                                        <div className="w-12 h-12 bg-ink rounded-2xl flex items-center justify-center text-xl font-black text-white">{o.client[0]}</div>
-                                        <div className="flex-1">
-                                            <p className="text-[9px] text-ink-muted font-mono">{o.id}</p>
-                                            <p className="font-bold text-sm text-ink">{o.service}</p>
-                                            <p className="text-xs text-ink-muted">{o.client}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-lg font-black text-green-600">${o.price}</p>
-                                            <span className="text-[8px] font-bold text-green-700 bg-green-50 px-1.5 py-0.5 rounded-full">{o.status}</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2 pt-3 border-t border-black/5">
-                                        <Clock size={12} className="text-ink-muted" />
-                                        <span className="text-xs text-ink-muted">{o.date}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )}
-            </div>
-
-            {/* Add Service Modal */}
-            {isAddingService && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-end animate-fade-in">
-                    <div className="bg-white w-full rounded-t-[2rem] p-7 animate-slide-up shadow-float">
-                        <div className="w-10 h-1 bg-black/10 rounded-full mx-auto mb-7" />
-                        <h2 className="text-2xl font-black text-ink mb-1">Nuevo Servicio</h2>
-                        <p className="text-sm text-ink-muted mb-6">Tu solicitud será revisada por el equipo.</p>
-                        <div className="space-y-4 mb-6">
-                            <div>
-                                <label className="block text-xs font-semibold text-ink-secondary mb-1.5 uppercase tracking-wider">Nombre</label>
-                                <input type="text" placeholder="Ej. Instalación Solar" className="input-field w-full" />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-semibold text-ink-secondary mb-1.5 uppercase tracking-wider">Precio estimado</label>
-                                <input type="number" placeholder="$0.00" className="input-field w-full text-xl font-bold" />
-                            </div>
-                        </div>
-                        <div className="flex gap-3">
-                            <button onClick={() => setIsAddingService(false)} className="btn-ghost flex-1 py-4 text-sm font-bold">Cancelar</button>
-                            <button onClick={() => setIsAddingService(false)} className="btn-primary flex-1 py-4 text-sm font-bold">Enviar solicitud</button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Order Details Modal/Screen */}
-            {selectedOrder && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex items-end animate-fade-in">
-                    <div className="bg-white w-full h-[90vh] rounded-t-[2rem] p-7 animate-slide-up shadow-float overflow-y-auto no-scrollbar">
-                        <div className="w-10 h-1 bg-black/10 rounded-full mx-auto mb-7" />
-
-                        {!isModifying ? (
-                            <>
-                                <div className="flex justify-between items-start mb-6">
-                                    <div>
-                                        <p className="text-[10px] text-ink-muted font-mono mb-1">{selectedOrder.id}</p>
-                                        <h2 className="text-2xl font-black text-ink">{selectedOrder.service}</h2>
-                                        <p className="text-sm text-ink-muted">Cliente: {selectedOrder.client}</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-2xl font-black text-green-600">${selectedOrder.price}</p>
-                                        <span className="text-[9px] font-bold text-green-700 bg-green-50 px-2.5 py-1 rounded-full">{selectedOrder.status}</span>
-                                    </div>
-                                </div>
-
-                                <div className="bg-canvas/50 rounded-2xl p-4 mb-6 border border-black/5">
-                                    <p className="text-xs font-bold text-ink-secondary mb-2 uppercase tracking-wider">Detalles del Trabajo</p>
-                                    <div className="space-y-3">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-ink/70">
-                                                <Clock size={14} />
-                                            </div>
-                                            <p className="text-sm text-ink">{selectedOrder.date}</p>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-ink/70">
-                                                <TrendingUp size={14} />
-                                            </div>
-                                            <p className="text-sm text-ink">Verificación requerida en sitio</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <button
-                                        onClick={() => {
-                                            // Confirm as is
-                                            setOrders(prev => prev.map(ord =>
-                                                ord.id === selectedOrder.id ? { ...ord, status: 'Confirmado' } : ord
-                                            ));
-                                            setSelectedOrder(null);
-                                        }}
-                                        className="btn-primary w-full py-4 text-sm font-bold flex items-center justify-center gap-2"
-                                    >
-                                        <CheckCircle2 size={16} /> Confirmar Servicio como Solicitado
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setModifiedData({
-                                                service: selectedOrder.service,
-                                                price: selectedOrder.price,
-                                                materials: selectedOrder.materials || ''
-                                            });
-                                            setIsModifying(true);
-                                        }}
-                                        className="btn-ghost w-full py-4 text-sm font-bold bg-canvas border-black/5"
-                                    >
-                                        Modificar Servicio / Costo
-                                    </button>
-                                    <button
-                                        onClick={() => setSelectedOrder(null)}
-                                        className="w-full text-xs font-semibold text-ink-muted py-2"
-                                    >
-                                        Cerrar
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <h2 className="text-2xl font-black text-ink mb-1">Ajustar Orden</h2>
-                                <p className="text-sm text-ink-muted mb-8">Modifica los detalles según la verificación en campo.</p>
-
-                                <div className="space-y-6 mb-8">
-                                    <div>
-                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Servicio Final</label>
-                                        <select
-                                            value={modifiedData.service}
-                                            onChange={(e) => {
-                                                const selectedService = services.find(s => s.name === e.target.value);
-                                                if (selectedService) {
-                                                    setModifiedData({
-                                                        ...modifiedData,
-                                                        service: selectedService.name,
-                                                        price: selectedService.price
-                                                    });
-                                                }
-                                            }}
-                                            className="input-field w-full appearance-none bg-no-repeat bg-[right_1rem_center] bg-[length:1em_1em]"
-                                            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")` }}
-                                        >
-                                            {services.map(s => (
-                                                <option key={s.id} value={s.name}>{s.name} - ${s.price}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Materiales / Extras</label>
-                                        <textarea
-                                            value={modifiedData.materials}
-                                            onChange={(e) => setModifiedData({ ...modifiedData, materials: e.target.value })}
-                                            placeholder="Detalla materiales adicionales o cargos por complejidad..."
-                                            className="input-field w-full min-h-[100px] py-3"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-[10px] font-black text-ink-secondary mb-2 uppercase tracking-widest">Costo Total Final</label>
-                                        <input
-                                            type="number"
-                                            value={modifiedData.price}
-                                            onChange={(e) => setModifiedData({ ...modifiedData, price: parseInt(e.target.value) })}
-                                            className="input-field w-full text-2xl font-black text-green-600"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-3">
-                                    <button
-                                        onClick={() => setIsModifying(false)}
-                                        className="btn-ghost flex-1 py-4 text-sm font-bold"
-                                    >
-                                        Atrás
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            // Persist changes to local state
-                                            setOrders(prev => prev.map(ord =>
-                                                ord.id === selectedOrder.id
-                                                    ? { ...ord, service: modifiedData.service, price: modifiedData.price, materials: modifiedData.materials, status: 'Confirmado' }
-                                                    : ord
-                                            ));
-                                            setSelectedOrder(null);
-                                            setIsModifying(false);
-                                        }}
-                                        className="btn-primary flex-1 py-4 text-sm font-bold"
-                                    >
-                                        Actualizar y Confirmar
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </div>
-            )}
+  // ── EARNINGS ──
+  const renderEarnings = () => (
+    <div style={{ padding: '52px 20px 120px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', letterSpacing: '-0.04em', margin: 0 }}>Mis ganancias</h2>
+      <div style={{ background: '#1F1F1F', borderRadius: 22, padding: '22px 20px', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -40, right: -30, width: 150, height: 150, borderRadius: '50%', background: '#3DB87A', opacity: 0.1, filter: 'blur(30px)', pointerEvents: 'none' }} />
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 11, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>Este mes</p>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 40, color: '#3DB87A', letterSpacing: '-0.05em', margin: '0 0 6px' }}>${(provider?.earnedThisMonth ?? 0).toLocaleString('es-MX')}</p>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>+{monthGrowth}% vs mes anterior</p>
+      </div>
+      {[
+        { label: 'Ganancias hoy', value: 2400 },
+        { label: 'Esta semana', value: weekEarnings },
+        { label: 'Total acumulado', value: 184000 },
+      ].map(s => (
+        <div key={s.label} style={{ background: 'white', borderRadius: 18, padding: '18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', boxShadow: '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)' }}>
+          <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 14, color: '#6B6B6B' }}>{s.label}</span>
+          <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 20, color: '#1F1F1F', letterSpacing: '-0.04em' }}>${s.value.toLocaleString('es-MX')}</span>
         </div>
-    );
-};
+      ))}
+      <div style={{ background: 'white', borderRadius: 18, padding: '18px', boxShadow: '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)' }}>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 13, color: '#1F1F1F', marginBottom: 8 }}>Comisión imendly</p>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', lineHeight: 1.6, margin: 0 }}>
+          7% en {'>'} $3,000 · 11% de $1,500–$3,000 · 14% de $800–$1,500 · 17% {'<'} $800 MXN
+        </p>
+      </div>
+    </div>
+  );
 
-export default ProviderDashboard;
+  // ── REVIEWS ──
+  const renderReviews = () => (
+    <div style={{ padding: '52px 20px 120px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', letterSpacing: '-0.04em', margin: 0 }}>Reseñas</h2>
+      {/* Rating summary */}
+      <div style={{ background: 'white', borderRadius: 20, padding: '20px', display: 'flex', gap: 16, boxShadow: '5px 5px 14px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+          <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 44, color: '#1F1F1F', letterSpacing: '-0.05em' }}>{provider?.ratingAvg}</span>
+          <div className="flex gap-0.5">{[1,2,3,4,5].map(i => <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#1F1F1F" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>)}</div>
+          <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, fontWeight: 600, color: '#6B6B6B' }}>{DEMO_REVIEWS.length * 45} reseñas</span>
+        </div>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6, justifyContent: 'center' }}>
+          {[5,4,3,2,1].map(star => (
+            <div key={star} className="flex items-center gap-2">
+              <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, fontWeight: 600, color: '#1F1F1F', width: 8 }}>{star}</span>
+              <div style={{ flex: 1, height: 6, borderRadius: 9999, background: '#F5F5F5', overflow: 'hidden', boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.07)' }}>
+                <div style={{ height: '100%', background: '#1F1F1F', borderRadius: 9999, width: `${star === 5 ? 85 : star === 4 ? 10 : 5}%`, transition: 'width 0.5s ease' }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {DEMO_REVIEWS.map(r => (
+        <div key={r.id} style={{ background: 'white', borderRadius: 20, padding: '16px', boxShadow: '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)' }}>
+          <div className="flex items-center gap-3" style={{ marginBottom: 10 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 14, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 14, color: '#1F1F1F' }}>{r.reviewerInitials}</span>
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 13, color: '#1F1F1F', margin: 0 }}>{r.reviewerName}</p>
+              <div className="flex gap-0.5">{[1,2,3,4,5].map(s => <svg key={s} width="10" height="10" viewBox="0 0 24 24" fill={s <= r.rating ? '#1F1F1F' : '#E0E0E0'} stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>)}</div>
+            </div>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 15, color: '#1F1F1F', letterSpacing: '-0.03em' }}>${r.amount.toLocaleString('es-MX')}</span>
+          </div>
+          <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#6B6B6B', lineHeight: 1.55, margin: 0 }}>{r.comment}</p>
+          <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, fontWeight: 600, color: '#A8A8A8', marginTop: 8 }}>{r.serviceName}</p>
+        </div>
+      ))}
+    </div>
+  );
+
+  // ── PROFILE ──
+  const renderProfile = () => (
+    <div style={{ padding: '52px 20px 120px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, paddingBottom: 16 }}>
+        <div style={{ width: 80, height: 80, borderRadius: 26, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', boxShadow: '0 8px 24px rgba(193,232,213,0.45)' }}>
+          {provider?.initials}
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 22, color: '#1F1F1F', letterSpacing: '-0.04em', margin: '0 0 4px' }}>{provider?.name}</h2>
+          <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: '#6B6B6B', margin: 0 }}>{provider?.email}</p>
+        </div>
+        {provider?.imendlyCertified && (
+          <div style={{ background: '#3DB87A', borderRadius: 9999, padding: '8px 20px', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 13, color: '#1F1F1F' }}>Certificado imendly</span>
+          </div>
+        )}
+      </div>
+
+      <div style={{ background: 'white', borderRadius: 22, overflow: 'hidden', boxShadow: '5px 5px 14px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)' }}>
+        {[
+          { label: 'Mis servicios y tarifas', sub: `${provider?.categories.length} categorías activas`, icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> },
+          { label: 'Zonas de cobertura', sub: provider?.zone, icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> },
+          { label: 'Mis documentos', sub: 'INE, antecedentes, portafolio', icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> },
+          { label: 'Cuenta bancaria / SPEI', sub: 'Para recibir tus pagos', icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> },
+          { label: 'Soporte imendly', sub: 'Ayuda y centro de soporte', icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> },
+        ].map((item, i, arr) => (
+          <button key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 18px', width: '100%', background: 'none', border: 'none', cursor: 'pointer', borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.04)' : 'none', textAlign: 'left' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 12, background: '#F5F5F5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{item.icon}</div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: '#1F1F1F', margin: '0 0 2px' }}>{item.label}</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#6B6B6B', margin: 0 }}>{item.sub}</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4D4D4" strokeWidth="2" strokeLinecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        ))}
+      </div>
+
+      <button style={{ width: '100%', padding: '15px', background: 'rgba(239,68,68,0.06)', border: '1.5px solid rgba(239,68,68,0.15)', borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 14, color: '#EF4444', cursor: 'pointer' }}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Cerrar sesión
+      </button>
+    </div>
+  );
+
+  const NAV_TABS = [
+    { id: 'home',     label: 'Inicio',    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
+    { id: 'orders',   label: 'Servicios', icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> },
+    { id: 'earnings', label: 'Ganancias', icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> },
+    { id: 'reviews',  label: 'Reseñas',   icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> },
+    { id: 'profile',  label: 'Perfil',    icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> },
+  ] as const;
+
+  return (
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ paddingBottom: 80 }}>
+        {tab === 'home'     && renderHome()}
+        {tab === 'earnings' && renderEarnings()}
+        {tab === 'reviews'  && renderReviews()}
+        {tab === 'profile'  && renderProfile()}
+        {tab === 'orders'   && (
+          <div style={{ padding: '52px 20px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 28, color: '#1F1F1F', letterSpacing: '-0.04em', margin: 0 }}>Mis servicios</h2>
+            {state.orders.map(o => (
+              <div key={o.id} style={{ background: 'white', borderRadius: 20, padding: '16px', boxShadow: '4px 4px 10px rgba(0,0,0,0.06), -2px -2px 8px rgba(255,255,255,0.9)' }}>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: '#1F1F1F', margin: '0 0 4px' }}>{o.serviceName}</p>
+                    <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', margin: 0 }}>{o.zone}</p>
+                  </div>
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 18, color: '#1F1F1F', letterSpacing: '-0.03em' }}>${(o.escrow?.netProviderAmount ?? o.quotedAmount).toLocaleString('es-MX')}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Bottom Nav */}
+      <div style={{ background: 'white', boxShadow: '0 -4px 24px rgba(0,0,0,0.06)', borderTop: '1px solid rgba(0,0,0,0.04)', display: 'flex', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        {NAV_TABS.map(t => {
+          const isActive = tab === t.id;
+          return (
+            <button key={t.id} onClick={() => setTab(t.id as any)}
+              style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, border: 'none', background: 'none', cursor: 'pointer', padding: '10px 0', position: 'relative' }}>
+              {isActive && <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: 28, height: 3, borderRadius: '0 0 3px 3px', background: '#3DB87A' }} />}
+              <svg viewBox={t.icon.props.viewBox} width="22" height="22" fill={isActive ? '#1F1F1F' : 'none'} stroke={isActive ? '#1F1F1F' : '#A8A8A8'} strokeWidth="2" strokeLinecap="round">
+                {t.icon.props.children}
+              </svg>
+              <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 10, fontWeight: isActive ? 700 : 500, color: isActive ? '#1F1F1F' : '#A8A8A8' }}>{t.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

@@ -1,52 +1,43 @@
 import React from 'react';
-import { Home, Grid, Map, Calendar, User } from 'lucide-react';
-import { AppView } from '../types';
 
-interface NavbarProps {
-  currentView: AppView;
-  onChangeView: (view: AppView) => void;
+interface Props {
+  title?: string;
+  showBack?: boolean;
+  onBack?: () => void;
+  rightElement?: React.ReactNode;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentView, onChangeView }) => {
-  const navItems = [
-    { view: AppView.SERVICES, icon: <Home size={22} />, label: 'Home' },
-    { view: AppView.CALENDAR, icon: <Calendar size={22} />, label: 'Calendar' },
-    { view: AppView.CHAT, icon: <div className="w-11 h-11 bg-green-500 rounded-2xl flex items-center justify-center text-white shadow-green transform -translate-y-4 hover:scale-110 transition-transform"><Grid size={20} /></div>, label: '', isAction: true },
-    { view: AppView.MAP, icon: <Map size={22} />, label: 'Pro' },
-    { view: AppView.PROFILE, icon: <User size={22} />, label: 'Profile' },
-  ];
-
+export default function Navbar({ title, showBack, onBack, rightElement }: Props) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 pb-6 pt-4 px-4 pointer-events-none z-50">
-      <div className="bg-white/90 backdrop-blur-xl border border-black/5 rounded-full shadow-float mx-auto max-w-sm pointer-events-auto h-16 flex justify-between items-center px-5">
-        {navItems.map((item, idx) => {
-          const isActive = currentView === item.view;
+    <div style={{ background: '#F5F5F5', padding: '52px 20px 16px', display: 'flex', alignItems: 'center', gap: 14, flexShrink: 0 }}>
+      {showBack && (
+        <button onClick={onBack}
+          style={{ width: 40, height: 40, borderRadius: 14, background: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '4px 4px 10px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)', flexShrink: 0 }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2.5" strokeLinecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </button>
+      )}
 
-          if (item.isAction) {
-            return (
-              <button key={idx} onClick={() => onChangeView(item.view)} className="outline-none">
-                {item.icon}
-              </button>
-            )
-          }
+      {!showBack && (
+        <div className="flex items-center gap-1.5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 18, color: '#1F1F1F', letterSpacing: '-0.03em' }}>imendly</span>
+        </div>
+      )}
 
-          return (
-            <button
-              key={idx}
-              onClick={() => onChangeView(item.view)}
-              className={`flex flex-col items-center gap-1 transition-all duration-300 outline-none ${isActive ? 'text-ink' : 'text-ink-muted hover:text-ink-secondary'
-                }`}
-            >
-              <div className={`transition-transform duration-300 ${isActive ? 'scale-110' : 'scale-100'}`}>
-                {item.icon}
-              </div>
-              {isActive && <div className="w-1 h-1 bg-green-500 rounded-full" />}
-            </button>
-          );
-        })}
+      {title && (
+        <h1 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 17, color: '#1F1F1F', letterSpacing: '-0.03em', margin: 0, flex: 1 }}>
+          {title}
+        </h1>
+      )}
+
+      <div style={{ marginLeft: 'auto' }}>
+        {rightElement ?? (
+          <button style={{ width: 40, height: 40, borderRadius: 14, background: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '4px 4px 10px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)', position: 'relative' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2" strokeLinecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <div style={{ position: 'absolute', top: 8, right: 9, width: 8, height: 8, borderRadius: '50%', background: '#3DB87A', border: '2px solid #F5F5F5' }} />
+          </button>
+        )}
       </div>
     </div>
   );
-};
-
-export default Navbar;
+}

@@ -1,119 +1,151 @@
-import React from 'react';
-import { MOCK_PROVIDERS } from '../constants';
-import { Provider, ServiceCategory } from '../types';
-import { ArrowLeft, Star, MapPin, Search, Filter, Heart, ChevronRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { AppState, AppView, Provider, ServiceCategory } from '../types';
+import { MOCK_PROVIDERS, SERVICE_CATEGORIES, ZONES } from '../constants';
+import Navbar from './Navbar';
 
-interface ProviderListProps {
-    category: ServiceCategory;
-    onBack: () => void;
-    onSelectProvider: (provider: Provider) => void;
-    selectedZone: string | null;
+interface Props {
+  state: AppState;
+  navigate: (v: AppView) => void;
+  goBack: () => void;
+  setCategory: (c: ServiceCategory | null) => void;
+  setProvider: (p: Provider | null) => void;
+  setService: (s: any) => void;
+  setBooking: (b: any) => void;
 }
 
-const ProviderList: React.FC<ProviderListProps> = ({ category, onBack, onSelectProvider, selectedZone }) => {
+const FACE_PHOTOS = [
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&q=80&fit=crop&crop=face',
+  'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&q=80&fit=crop&crop=face',
+];
 
-    const providers = MOCK_PROVIDERS.filter(p =>
-        p.categoryId === category.id &&
-        (!selectedZone || selectedZone === "Ubicación Actual (Detectada)" || p.zone === selectedZone)
-    );
+export default function ProviderList({ state, navigate, goBack, setProvider }: Props) {
+  const [zone, setZone] = useState('Todas las zonas');
+  const [sortBy, setSortBy] = useState<'rating' | 'price' | 'jobs'>('rating');
 
-    return (
-        <div className="h-full overflow-y-auto no-scrollbar pb-36 bg-canvas relative animate-fade-in">
-            {/* Header */}
-            <div className="pt-14 px-5 pb-5">
-                <div className="flex justify-between items-center mb-6">
-                    <button
-                        onClick={onBack}
-                        className="w-10 h-10 bg-white rounded-xl border border-black/5 flex items-center justify-center text-ink hover:bg-black/5 transition-colors"
-                    >
-                        <ArrowLeft size={18} />
-                    </button>
-                    <button className="w-10 h-10 bg-white rounded-xl border border-black/5 flex items-center justify-center text-ink-secondary hover:bg-black/5 transition-colors">
-                        <Filter size={17} />
-                    </button>
-                </div>
+  const cat = state.selectedCategory;
+  const providers = MOCK_PROVIDERS
+    .filter(p => !cat || p.categories.includes(cat.id))
+    .filter(p => zone === 'Todas las zonas' || p.zone === zone)
+    .sort((a, b) => {
+      if (sortBy === 'rating') return b.rating - a.rating;
+      if (sortBy === 'price')  return a.startingPrice - b.startingPrice;
+      return b.completedJobs - a.completedJobs;
+    });
 
-                <div className="mb-5">
-                    <p className="text-xs text-green-600 font-bold uppercase tracking-widest mb-1">Explorar</p>
-                    <h1 className="text-3xl font-black text-ink leading-tight">
-                        Expertos en<br />
-                        <span className="text-green-600">{category.name}</span>
-                    </h1>
-                </div>
+  const handleSelect = (p: Provider) => { setProvider(p); navigate(AppView.PROVIDER_PROFILE); };
 
-                {/* Search */}
-                <div className="bg-white rounded-2xl border border-black/5 shadow-xs flex items-center gap-3 px-4 py-3.5">
-                    <Search size={17} className="text-ink-muted shrink-0" />
-                    <input
-                        type="text"
-                        placeholder="Buscar por nombre o servicio..."
-                        className="bg-transparent flex-1 outline-none text-sm text-ink placeholder:text-ink-muted"
-                    />
-                </div>
-            </div>
+  return (
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
+      <Navbar title={cat?.name ?? 'Proveedores'} showBack onBack={goBack} />
 
-            {/* Provider List */}
-            <div className="px-5 space-y-3">
-                <div className="flex justify-between items-end mb-1">
-                    <h3 className="text-sm font-black text-ink">Resultados</h3>
-                    <span className="text-xs font-semibold text-ink-muted">{providers.length} Expertos</span>
-                </div>
-
-                {providers.length > 0 ? (
-                    providers.map((provider, idx) => (
-                        <div
-                            key={provider.id}
-                            onClick={() => onSelectProvider(provider)}
-                            className="card-hover bg-white rounded-3xl p-5 border border-black/5 shadow-xs animate-card-in cursor-pointer"
-                            style={{ animationDelay: `${idx * 0.05}s` }}
-                        >
-                            <div className="flex gap-4">
-                                <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 bg-canvas border border-black/5 flex items-center justify-center">
-                                    <img
-                                        src={provider.avatarUrl}
-                                        alt={provider.name}
-                                        className="w-full h-full object-contain p-1.5"
-                                    />
-                                    {provider.mendlyReady && (
-                                        <div className="absolute top-1 right-1 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white" />
-                                    )}
-                                </div>
-
-                                <div className="flex-1 flex flex-col justify-center">
-                                    <h2 className="text-base font-bold text-ink mb-0.5">{provider.specialty}</h2>
-                                    <p className="text-sm text-ink-secondary mb-2">{provider.name}</p>
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex items-center gap-1 bg-yellow-50 px-2 py-0.5 rounded-full">
-                                            <Star size={11} className="text-yellow-500 fill-yellow-500" />
-                                            <span className="text-xs font-bold text-ink">{provider.rating}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1 text-ink-muted text-xs">
-                                            <MapPin size={11} />
-                                            <span>{provider.distance || '2.5 km'}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="flex flex-col justify-between items-end">
-                                    <button className="w-8 h-8 rounded-full bg-canvas flex items-center justify-center text-ink-muted hover:text-red-400 hover:bg-red-50 transition-colors">
-                                        <Heart size={14} />
-                                    </button>
-                                    <div className="text-right">
-                                        <span className="block text-[9px] text-ink-muted uppercase tracking-wider">desde</span>
-                                        <span className="block text-base font-black text-green-600">${provider.pricePerHour}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <div className="text-center py-20">
-                        <p className="font-bold text-ink-muted text-base">No se encontraron resultados</p>
-                    </div>
-                )}
-            </div>
+      {/* Filters */}
+      <div style={{ padding: '0 20px 16px' }}>
+        {/* Zone chips */}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar" style={{ marginBottom: 12 }}>
+          {ZONES.slice(0, 6).map(z => (
+            <button key={z} onClick={() => setZone(z)}
+              style={{
+                flexShrink: 0, padding: '9px 18px', border: 'none', borderRadius: 9999, cursor: 'pointer',
+                fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 12,
+                background: zone === z ? '#1F1F1F' : 'white',
+                color: zone === z ? 'white' : '#6B6B6B',
+                boxShadow: zone === z ? '4px 6px 14px rgba(0,0,0,0.22)' : '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)',
+                whiteSpace: 'nowrap', transition: 'all 0.2s ease',
+              }}>
+              {z}
+            </button>
+          ))}
         </div>
-    );
-};
+        {/* Sort chips */}
+        <div className="flex gap-2">
+          {[
+            { key: 'rating', label: 'Top rated' },
+            { key: 'price',  label: 'Menor precio' },
+            { key: 'jobs',   label: 'Más trabajos' },
+          ].map(s => (
+            <button key={s.key} onClick={() => setSortBy(s.key as any)}
+              style={{
+                padding: '7px 14px', border: 'none', borderRadius: 9999, cursor: 'pointer',
+                fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 12,
+                background: sortBy === s.key ? 'rgba(193,232,213,0.5)' : 'transparent',
+                color: sortBy === s.key ? '#1F1F1F' : '#A8A8A8',
+                transition: 'all 0.2s ease',
+              }}>
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
-export default ProviderList;
+      {/* Count */}
+      <div style={{ padding: '0 20px 10px' }}>
+        <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, fontWeight: 500, color: '#A8A8A8', margin: 0 }}>
+          {providers.length} proveedor{providers.length !== 1 ? 'es' : ''}{cat ? ` · ${cat.name}` : ''}
+        </p>
+      </div>
+
+      {/* List */}
+      <div className="flex-1 overflow-y-auto no-scrollbar">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '4px 20px 120px' }}>
+          {providers.length === 0 ? (
+            <div className="flex flex-col items-center gap-4" style={{ paddingTop: 80 }}>
+              <div style={{ width: 64, height: 64, borderRadius: 20, background: 'white', boxShadow: '4px 4px 12px rgba(0,0,0,0.07), -2px -2px 8px rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A8A8A8" strokeWidth="1.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              </div>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 16, color: '#A8A8A8', textAlign: 'center', margin: 0 }}>Sin proveedores disponibles</p>
+            </div>
+          ) : providers.map((p, i) => (
+            <button key={p.id} onClick={() => handleSelect(p)}
+              style={{ background: 'white', borderRadius: 22, padding: '18px', border: 'none', cursor: 'pointer', display: 'flex', gap: 14, alignItems: 'center', textAlign: 'left', boxShadow: '5px 5px 16px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)', width: '100%', transition: 'transform 0.15s ease' }}>
+
+              {/* Photo */}
+              <div style={{ width: 64, height: 64, borderRadius: 20, overflow: 'hidden', flexShrink: 0, background: '#E8E8E8' }}>
+                <img src={FACE_PHOTOS[i % FACE_PHOTOS.length]} alt={p.name} className="w-full h-full object-cover"
+                  onError={e => {
+                    const el = e.target as HTMLImageElement;
+                    el.parentElement!.style.background = p.avatarColor;
+                    el.parentElement!.innerHTML = `<span style="font-family:Urbanist;font-weight:800;font-size:18px;color:white;display:flex;align-items:center;justify-content:center;height:100%">${p.initials}</span>`;
+                  }} />
+              </div>
+
+              {/* Info */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="flex items-center gap-2" style={{ marginBottom: 3 }}>
+                  <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: '#1F1F1F', letterSpacing: '-0.02em', margin: 0 }}>{p.name}</p>
+                  {p.imendlyCertified && (
+                    <div style={{ width: 17, height: 17, borderRadius: '50%', background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                  )}
+                </div>
+                <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', margin: '0 0 10px' }}>
+                  {p.categories.slice(0, 2).map(c => SERVICE_CATEGORIES.find(sc => sc.id === c)?.name).filter(Boolean).join(' · ')}
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="#1F1F1F" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: '#1F1F1F' }}>{p.rating}</span>
+                  </div>
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#A8A8A8' }}>{p.completedJobs} trabajos</span>
+                  <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#A8A8A8' }}>{p.zone}</span>
+                </div>
+              </div>
+
+              {/* Price + arrow */}
+              <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 16, color: '#1F1F1F', letterSpacing: '-0.03em' }}>${p.startingPrice.toLocaleString('es-MX')}</span>
+                <div style={{ width: 32, height: 32, borderRadius: 12, background: '#1F1F1F', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

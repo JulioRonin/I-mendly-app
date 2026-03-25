@@ -1,119 +1,140 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Minus, Plus } from 'lucide-react';
-import { ServiceCategory, ServiceItem } from '../types';
+import { AppState, AppView } from '../types';
+import Navbar from './Navbar';
 
-interface ServiceConfigProps {
-    service: ServiceCategory;
-    onBack: () => void;
-    onNext: () => void;
+interface Props {
+  state: AppState;
+  navigate: (v: AppView) => void;
+  goBack: () => void;
+  setCategory: (c: any) => void;
+  setProvider: (p: any) => void;
+  setService: (s: any) => void;
+  setBooking: (b: any) => void;
 }
 
-const ServiceConfig: React.FC<ServiceConfigProps> = ({ service, onBack, onNext }) => {
-    const [items, setItems] = useState<ServiceItem[]>(service.items || []);
-    const [activeTab, setActiveTab] = useState('Repair');
+export default function ServiceConfig({ state, navigate, goBack, setBooking }: Props) {
+  const service = state.selectedService ?? state.bookingDetails.service;
+  const provider = state.selectedProvider ?? state.bookingDetails.provider;
+  const [description, setDescription] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [address, setAddress] = useState('');
+  const [zone, setZone] = useState('Zona Norte');
 
-    const updateCount = (id: string, delta: number) => {
-        setItems(prev => prev.map(item => {
-            if (item.id === id) {
-                return { ...item, count: Math.max(0, item.count + delta) };
-            }
-            return item;
-        }));
-    };
+  if (!service || !provider) return null;
 
-    const total = items.reduce((acc, item) => acc + (item.price * item.count), 0);
+  const basePrice = service.minPrice * quantity;
+  const maxPrice  = service.maxPrice  * quantity;
 
-    return (
-        <div className="h-full bg-canvas flex flex-col animate-fade-in">
-            <div className="p-5 pb-2">
-                <div className="flex items-center mb-5">
-                    <button onClick={onBack} className="w-10 h-10 rounded-xl bg-white border border-black/5 flex items-center justify-center text-ink hover:bg-black/5 transition-colors">
-                        <ChevronLeft size={18} />
-                    </button>
-                    <h2 className="flex-1 text-center font-black text-base text-ink">{service.name}</h2>
-                    <div className="w-10" />
-                </div>
+  const proceed = () => {
+    setBooking({ description, address, zone, quotedAmount: basePrice });
+    navigate(AppView.BOOKING_CALENDAR);
+  };
 
-                {/* Tab Switcher */}
-                <div className="flex bg-white p-1 rounded-2xl border border-black/5 mb-6">
-                    {['Cleaning', 'Repair', 'Laundry'].map(tab => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${activeTab === tab
-                                    ? 'bg-ink text-white shadow-sm'
-                                    : 'text-ink-muted hover:text-ink'
-                                }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
-                </div>
+  const ZONES = ['Zona Norte', 'Zona Centro', 'Zona Sur', 'Las Misiones', 'Cd. Universitaria', 'Las Torres'];
 
-                {/* List of Items */}
-                <div className="space-y-4">
-                    <h3 className="font-black text-sm text-ink">{activeTab}</h3>
+  return (
+    <div className="h-full flex flex-col" style={{ background: '#F5F5F5' }}>
+      <Navbar title="Configurar servicio" showBack onBack={goBack} />
 
-                    {items.map(item => (
-                        <div key={item.id} className="flex items-center justify-between bg-white p-4 rounded-2xl border border-black/5 shadow-xs">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center p-2">
-                                    {item.image ? (
-                                        <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
-                                    ) : (
-                                        <div className="w-4 h-4 bg-green-200 rounded-full" />
-                                    )}
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-sm text-ink">{item.name}</h4>
-                                    <p className="text-green-600 font-bold text-xs">${item.price}</p>
-                                </div>
-                            </div>
+      <div className="flex-1 overflow-y-auto no-scrollbar" style={{ padding: '0 20px 120px' }}>
 
-                            <div className="flex items-center gap-2.5">
-                                <button
-                                    onClick={() => updateCount(item.id, -1)}
-                                    className="w-8 h-8 rounded-xl bg-canvas flex items-center justify-center text-ink-muted hover:bg-black/5 transition-colors"
-                                >
-                                    <Minus size={13} />
-                                </button>
-                                <span className="font-black w-4 text-center text-ink text-sm">{item.count}</span>
-                                <button
-                                    onClick={() => updateCount(item.id, 1)}
-                                    className="w-8 h-8 rounded-xl bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors"
-                                >
-                                    <Plus size={13} />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+        {/* Provider summary card */}
+        <div style={{ background: '#1F1F1F', borderRadius: 22, padding: '18px', marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -30, right: -20, width: 120, height: 120, borderRadius: '50%', background: '#3DB87A', opacity: 0.08, filter: 'blur(20px)', pointerEvents: 'none' }} />
+          <div className="flex items-center gap-3">
+            <div style={{ width: 48, height: 48, borderRadius: 16, background: provider.avatarColor, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Urbanist, sans-serif', fontWeight: 800, fontSize: 17, color: 'white', flexShrink: 0 }}>
+              {provider.initials}
             </div>
-
-            {/* Sub Categories */}
-            <div className="mt-4 px-5 space-y-3">
-                {['Plumbing', 'Furnished'].map(cat => (
-                    <div key={cat} className="flex justify-between items-center bg-white p-4 rounded-2xl border border-black/5">
-                        <h3 className="font-bold text-sm text-ink">{cat}</h3>
-                        <button className="w-7 h-7 bg-canvas rounded-xl flex items-center justify-center text-ink-muted"><Minus size={12} /></button>
-                    </div>
-                ))}
+            <div style={{ flex: 1 }}>
+              <h2 style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 16, color: 'white', letterSpacing: '-0.02em', margin: '0 0 2px' }}>{service.name}</h2>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>con {provider.name}</p>
             </div>
-
-            <div className="mt-auto p-5 bg-white border-t border-black/5">
-                <div className="flex justify-between items-center mb-3">
-                    <span className="text-ink-secondary text-sm">Total</span>
-                    <span className="text-2xl font-black text-ink">${total}</span>
-                </div>
-                <button
-                    onClick={onNext}
-                    className="btn-primary w-full py-4 text-sm font-bold tracking-wide"
-                >
-                    Siguiente Paso
-                </button>
+            <div style={{ textAlign: 'right' }}>
+              <div className="flex items-center gap-1" style={{ justifyContent: 'flex-end', marginBottom: 2 }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="#3DB87A" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 12, color: 'white' }}>{provider.rating}</span>
+              </div>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#3DB87A', margin: 0 }}>~{provider.responseTimeMinutes} min resp.</p>
             </div>
+          </div>
         </div>
-    );
-};
 
-export default ServiceConfig;
+        {/* Quantity */}
+        <div style={{ background: 'white', borderRadius: 20, padding: '18px', marginBottom: 14, boxShadow: '5px 5px 14px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: 14 }}>
+            <div>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 700, fontSize: 15, color: '#1F1F1F', letterSpacing: '-0.02em', margin: '0 0 3px' }}>Cantidad</p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B', margin: 0 }}>{service.unit}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                style={{ width: 38, height: 38, borderRadius: 13, background: '#F5F5F5', border: 'none', cursor: 'pointer', fontSize: 18, fontWeight: 700, color: '#1F1F1F', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '3px 3px 8px rgba(0,0,0,0.07), -2px -2px 6px rgba(255,255,255,0.9)' }}>−</button>
+              <span style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 22, color: '#1F1F1F', minWidth: 28, textAlign: 'center' }}>{quantity}</span>
+              <button onClick={() => setQuantity(quantity + 1)}
+                style={{ width: 38, height: 38, borderRadius: 13, background: '#1F1F1F', border: 'none', cursor: 'pointer', fontSize: 18, fontWeight: 700, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+            </div>
+          </div>
+          <div style={{ height: 5, borderRadius: 9999, background: '#F5F5F5', boxShadow: 'inset 2px 2px 5px rgba(0,0,0,0.07)', overflow: 'hidden' }}>
+            <div style={{ height: '100%', background: '#1F1F1F', borderRadius: 9999, width: `${Math.min(100, quantity * 20)}%`, transition: 'width 0.3s ease' }} />
+          </div>
+        </div>
+
+        {/* Address */}
+        <div style={{ marginBottom: 14 }}>
+          <label className="field-label">Dirección del servicio</label>
+          <input className="input-field" placeholder="Calle, número, colonia..."
+            value={address} onChange={e => setAddress(e.target.value)} />
+        </div>
+
+        {/* Zone */}
+        <div style={{ marginBottom: 14 }}>
+          <label className="field-label">Zona</label>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {ZONES.map(z => (
+              <button key={z} onClick={() => setZone(z)}
+                style={{ padding: '9px 16px', border: 'none', borderRadius: 9999, cursor: 'pointer', fontFamily: 'Urbanist, sans-serif', fontWeight: 600, fontSize: 13, background: zone === z ? '#1F1F1F' : 'white', color: zone === z ? 'white' : '#6B6B6B', boxShadow: zone === z ? '4px 6px 14px rgba(0,0,0,0.22)' : '3px 3px 8px rgba(0,0,0,0.06), -2px -2px 6px rgba(255,255,255,0.9)', transition: 'all 0.2s ease' }}>
+                {z}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Description */}
+        <div style={{ marginBottom: 16 }}>
+          <label className="field-label">Descripción del trabajo <span style={{ fontWeight: 400, color: '#A8A8A8' }}>(opcional)</span></label>
+          <textarea className="input-field" rows={4}
+            placeholder="Ej: Necesito instalar 2 contactos nuevos en sala y revisar el tablero..."
+            value={description} onChange={e => setDescription(e.target.value)}
+            style={{ resize: 'none' }} />
+        </div>
+
+        {/* Price preview */}
+        <div style={{ background: 'white', borderRadius: 20, padding: '18px', boxShadow: '5px 5px 14px rgba(0,0,0,0.07), -3px -3px 10px rgba(255,255,255,0.9)' }}>
+          <div className="flex items-center justify-between" style={{ marginBottom: 12 }}>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, fontWeight: 600, color: '#6B6B6B', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Precio estimado</span>
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 900, fontSize: 24, color: '#1F1F1F', letterSpacing: '-0.04em', margin: 0 }}>
+                ${basePrice.toLocaleString('es-MX')}–${maxPrice.toLocaleString('es-MX')}
+              </p>
+              <p style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 11, color: '#A8A8A8', margin: 0 }}>MXN · cotización final al confirmar</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 pt-2" style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+            <div style={{ width: 28, height: 28, borderRadius: 10, background: '#3DB87A', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F1F1F" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <span style={{ fontFamily: 'Urbanist, sans-serif', fontSize: 12, color: '#6B6B6B' }}>Pago retenido en escrow hasta que confirmes que quedó bien</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky CTA */}
+      <div style={{ padding: '16px 20px', paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))', background: 'rgba(239,239,239,0.95)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+        <button onClick={proceed} disabled={!address} className="btn-primary"
+          style={{ width: '100%', padding: '17px', fontSize: 16, opacity: address ? 1 : 0.45, cursor: address ? 'pointer' : 'not-allowed' }}>
+          Continuar — Elegir fecha y hora
+        </button>
+      </div>
+    </div>
+  );
+}
