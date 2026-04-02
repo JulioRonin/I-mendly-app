@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Estándares de Calidad — Proveedor Certificado I mendly</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Urbanist',sans-serif;background:#F5F5F5;color:#1F1F1F;font-size:14px;line-height:1.6}
+
+/* ── TRIFOLD ── */
+.trifold{display:grid;grid-template-columns:repeat(3,1fr);width:297mm;min-height:210mm;background:#fff;page-break-after:always}
+.panel{padding:32px 28px;border-right:1px solid #E8E8E8;display:flex;flex-direction:column}
+.panel:last-child{border-right:none}
+.panel.dark{background:#1F1F1F;color:#fff}
+.panel.green{background:#3DB87A;color:#fff}
+
+/* Logo */
+.logo-box{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.logo-icon{width:40px;height:40px;background:#3DB87A;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.panel.dark .logo-icon{background:rgba(61,184,122,0.2)}
+.logo-name{font-size:16px;font-weight:800;letter-spacing:-0.03em}
+.panel.dark .logo-name{color:#fff}
+.panel.green .logo-name{color:#fff}
+.panel.green .logo-icon{background:rgba(255,255,255,0.25)}
+
+/* Panel titles */
+.p-title{font-size:20px;font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:8px}
+.p-sub{font-size:12px;opacity:0.6;margin-bottom:20px;font-weight:400}
+.p-body{font-size:12px;line-height:1.65;opacity:0.85}
+
+/* Lists */
+.check-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.check-list li{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.5}
+.check-list li .icon{width:18px;height:18px;border-radius:6px;background:#3DB87A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;margin-top:1px}
+.panel.dark .check-list li .icon{background:rgba(61,184,122,0.3);color:#3DB87A}
+.panel.green .check-list li .icon{background:rgba(255,255,255,0.25);color:#fff}
+
+/* 5S */
+.s-item{background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.panel:not(.dark):not(.green) .s-item{background:#F5F5F5}
+.s-label{font-size:11px;font-weight:800;letter-spacing:0.05em;color:#3DB87A;margin-bottom:2px}
+.panel.dark .s-label{color:#3DB87A}
+.s-text{font-size:12px;line-height:1.5}
+.panel.dark .s-text{color:rgba(255,255,255,0.75)}
+
+/* Badge */
+.badge-box{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);text-align:center}
+.badge-circle{width:64px;height:64px;border-radius:50%;background:#3DB87A;margin:0 auto 8px;display:flex;align-items:center;justify-content:center}
+.panel:not(.dark) .badge-circle{background:#3DB87A}
+.badge-circle svg{width:32px;height:32px}
+.badge-text{font-size:11px;font-weight:700;letter-spacing:0.05em;opacity:0.7}
+
+/* Steps */
+.step{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.step-num{width:22px;height:22px;border-radius:7px;background:#3DB87A;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.panel.dark .step-num{background:rgba(61,184,122,0.25);color:#3DB87A}
+.step-text{font-size:12px;line-height:1.5}
+.panel.dark .step-text{color:rgba(255,255,255,0.8)}
+
+/* ── MANUAL ── */
+.manual{max-width:210mm;margin:0 auto;background:#fff}
+.m-cover{background:#1F1F1F;color:#fff;padding:60px 50px}
+.m-cover h1{font-size:38px;font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:12px}
+.m-cover h1 em{color:#3DB87A;font-style:normal}
+.m-cover p{color:rgba(255,255,255,0.5);font-size:15px;max-width:460px}
+.m-section{padding:44px 50px;border-bottom:2px solid #F5F5F5}
+.m-section h2{font-size:22px;font-weight:700;letter-spacing:-0.03em;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.m-section h2 .num{width:32px;height:32px;background:#3DB87A;border-radius:10px;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.m-section .intro{font-size:13px;color:#6B6B6B;margin-bottom:24px;line-height:1.6}
+.m-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.m-card{background:#F5F5F5;border-radius:16px;padding:20px}
+.m-card h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#3DB87A;margin-bottom:12px}
+.m-card p{font-size:13px;line-height:1.65;color:#1F1F1F}
+.m-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.m-card ul li{font-size:13px;padding-left:16px;position:relative;line-height:1.5}
+.m-card ul li::before{content:"→";position:absolute;left:0;color:#3DB87A;font-weight:700}
+.m-card.dark{background:#1F1F1F;color:#fff}
+.m-card.dark h3{color:#3DB87A}
+.m-card.dark ul li{color:rgba(255,255,255,0.8)}
+.m-card.full{grid-column:1/-1}
+.script-box{background:#fff;border:1.5px solid #E8E8E8;border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.script-box .who{font-size:11px;font-weight:700;color:#3DB87A;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.script-box .text{font-size:13px;color:#1F1F1F;line-height:1.6;font-style:italic}
+.nivel-row{display:flex;gap:0;margin-bottom:20px;border-radius:14px;overflow:hidden}
+.nivel-col{flex:1;padding:16px 14px}
+.nivel-col h4{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px}
+.nivel-col ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.nivel-col ul li{font-size:12px;line-height:1.4;padding-left:12px;position:relative}
+.nivel-col ul li::before{content:"·";position:absolute;left:0;font-weight:800}
+.nivel-col.basico{background:#F5F5F5}
+.nivel-col.basico h4{color:#6B6B6B}
+.nivel-col.pro{background:#1F1F1F;color:#fff}
+.nivel-col.pro h4{color:#3DB87A}
+.nivel-col.insignia{background:#3DB87A;color:#fff}
+.nivel-col.insignia h4{color:#fff;opacity:0.8}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.check-row{display:flex;gap:8px;align-items:flex-start;background:#F5F5F5;border-radius:10px;padding:10px 12px}
+.check-box{width:18px;height:18px;border:2px solid #D1D1D1;border-radius:5px;flex-shrink:0;margin-top:1px}
+.check-label{font-size:12px;line-height:1.4;color:#1F1F1F}
+.cert-box{background:linear-gradient(135deg,#1F1F1F 0%,#2a2a2a 100%);border-radius:20px;padding:32px;color:#fff;text-align:center;margin-top:24px}
+.cert-box h3{font-size:20px;font-weight:800;color:#3DB87A;margin-bottom:8px}
+.cert-box p{color:rgba(255,255,255,0.6);font-size:13px;margin-bottom:20px}
+.cert-steps{display:flex;justify-content:center;gap:0;flex-wrap:wrap}
+.cert-step{padding:12px 20px;text-align:center}
+.cert-step .cs-num{width:36px;height:36px;border-radius:50%;background:#3DB87A;color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.cert-step .cs-label{font-size:11px;color:rgba(255,255,255,0.7);font-weight:500}
+
+@media print{
+  .trifold{page-break-after:always;width:100%}
+  .manual{max-width:100%}
+  .m-section{page-break-inside:avoid}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TRÍPTICO — CARA EXTERIOR (panels 1-3) -->
+<!-- ══════════════════════════════════════ -->
+<div class="trifold">
+
+  <!-- PANEL 1: PORTADA -->
+  <div class="panel dark">
+    <div class="logo-box">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="#3DB87A" stroke-width="2" stroke-linecap="round"/>
+          <polyline points="9 22 9 12 15 12 15 22" stroke="#3DB87A" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="logo-name">i mendly</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#3DB87A;text-transform:uppercase;margin-bottom:12px">certificación oficial</div>
+      <div class="p-title" style="font-size:28px;color:#fff">Proveedor<br/><span style="color:#3DB87A">Insignia</span><br/>I mendly</div>
+      <div style="width:40px;height:3px;background:#3DB87A;border-radius:9999px;margin:20px 0"></div>
+      <p class="p-body">Estándares de calidad, protocolo de servicio y código de ética para proveedores certificados de la plataforma.</p>
+    </div>
+    <div class="badge-box">
+      <div class="badge-circle">
+        <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="badge-text" style="color:rgba(255,255,255,0.5)">imendly.com/certificacion</div>
+    </div>
+  </div>
+
+  <!-- PANEL 2: ¿QUÉ ES? + VALORES -->
+  <div class="panel">
+    <div class="p-title">¿Qué es un Proveedor Insignia?</div>
+    <p class="p-body">Es el más alto reconocimiento que I mendly otorga a sus proveedores. Representa excelencia técnica, trato excepcional y compromiso con la calidad en cada servicio.</p>
+    <ul class="check-list" style="margin-top:20px">
+      <li><div class="icon">✓</div><span><strong>Excelencia técnica</strong> — dominio comprobado de su oficio</span></li>
+      <li><div class="icon">✓</div><span><strong>Trato amable</strong> — cliente siempre en el centro</span></li>
+      <li><div class="icon">✓</div><span><strong>Puntualidad</strong> — respeta el tiempo del cliente</span></li>
+      <li><div class="icon">✓</div><span><strong>Limpieza</strong> — deja el área mejor de como la encontró</span></li>
+      <li><div class="icon">✓</div><span><strong>Honestidad</strong> — presupuesto justo, sin sorpresas</span></li>
+      <li><div class="icon">✓</div><span><strong>Seguridad</strong> — usa EPP y trabaja sin riesgos</span></li>
+    </ul>
+    <div style="margin-top:auto;padding-top:20px;border-top:1px solid #F0F0F0">
+      <div style="font-size:11px;color:#A8A8A8;margin-bottom:6px">BENEFICIOS DEL GAFETE</div>
+      <div style="font-size:12px;color:#1F1F1F;line-height:1.7">
+        ★ Apareces primero en búsquedas<br/>
+        ★ Mayor confianza del cliente<br/>
+        ★ Acceso a servicios premium<br/>
+        ★ Soporte prioritario I mendly
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 3: METODOLOGÍA 5S -->
+  <div class="panel">
+    <div class="p-title">Metodología<br/>5S en Campo</div>
+    <p class="p-sub">Aplicada a cada servicio, sin excepción.</p>
+    <div class="s-item">
+      <div class="s-label">1 · SEIRI — Clasificar</div>
+      <div class="s-text">Lleva solo las herramientas necesarias para el trabajo del día. Nada de más, nada de menos.</div>
+    </div>
+    <div class="s-item">
+      <div class="s-label">2 · SEITON — Ordenar</div>
+      <div class="s-text">Cada herramienta tiene su lugar. Organiza tu área antes de empezar y mantén el orden durante el servicio.</div>
+    </div>
+    <div class="s-item">
+      <div class="s-label">3 · SEISO — Limpiar</div>
+      <div class="s-text">Limpia mientras trabajas. Al terminar, deja el área mejor de como la encontraste. Siempre.</div>
+    </div>
+    <div class="s-item">
+      <div class="s-label">4 · SEIKETSU — Estandarizar</div>
+      <div class="s-text">Aplica el mismo protocolo en cada servicio, en cada cliente, todos los días. La excelencia es un hábito.</div>
+    </div>
+    <div class="s-item">
+      <div class="s-label">5 · SHITSUKE — Disciplina</div>
+      <div class="s-text">Cumples los estándares porque los haces tuyos, no porque alguien te observe. Eso es ser Insignia.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TRÍPTICO — CARA INTERIOR (panels 4-6) -->
+<!-- ══════════════════════════════════════ -->
+<div class="trifold">
+
+  <!-- PANEL 4: PROTOCOLO DE LLEGADA -->
+  <div class="panel">
+    <div class="p-title">Protocolo de Atención al Cliente</div>
+    <p class="p-sub">Cada paso importa — el cliente lo recuerda todo.</p>
+    <div style="font-size:11px;font-weight:700;color:#3DB87A;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Al llegar</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Llega 5 minutos antes. Nunca tarde.</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Presenta tu identificación I mendly antes de entrar.</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Saluda por nombre: <em>"Buenos días [nombre], soy [tu nombre]."</em></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Confirma el servicio y pregunta si hay algo especial a considerar.</div></div>
+    <div style="font-size:11px;font-weight:700;color:#3DB87A;text-transform:uppercase;letter-spacing:0.06em;margin:14px 0 8px">Durante el servicio</div>
+    <div class="step"><div class="step-num">5</div><div class="step-text">Protege muebles, pisos y objetos cercanos al área de trabajo.</div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-text">Si encuentras algo inesperado, comunícalo antes de actuar.</div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-text">Nunca uses baño, cocina o áreas del cliente sin pedir permiso.</div></div>
+    <div style="font-size:11px;font-weight:700;color:#3DB87A;text-transform:uppercase;letter-spacing:0.06em;margin:14px 0 8px">Al terminar</div>
+    <div class="step"><div class="step-num">8</div><div class="step-text">Limpia el área de trabajo completamente antes de llamar al cliente.</div></div>
+    <div class="step"><div class="step-num">9</div><div class="step-text">Haz un recorrido con el cliente para mostrar el trabajo terminado.</div></div>
+    <div class="step"><div class="step-num">10</div><div class="step-text">Confirma el servicio en la app y solicita calificación con amabilidad.</div></div>
+  </div>
+
+  <!-- PANEL 5: SEGURIDAD -->
+  <div class="panel dark">
+    <div class="p-title" style="color:#fff">Protocolos de Seguridad</div>
+    <p class="p-sub">Tu seguridad y la del cliente son primero.</p>
+    <ul class="check-list">
+      <li><div class="icon">🦺</div><span>Usa siempre el EPP correspondiente a tu oficio. Sin excepciones.</span></li>
+      <li><div class="icon">⚠️</div><span>Señaliza el área de trabajo antes de comenzar (conos, cinta, señales).</span></li>
+      <li><div class="icon">🔌</div><span>Electricidad: desenergizan SIEMPRE antes de tocar cualquier circuito.</span></li>
+      <li><div class="icon">🪜</div><span>Trabajo en altura: escalera certificada, punto de apoyo seguro, sin improvisar.</span></li>
+      <li><div class="icon">🧪</div><span>Químicos: nunca mezclar sin verificar compatibilidad. Guantes siempre.</span></li>
+      <li><div class="icon">🚫</div><span>Nunca trabajes bajo efectos de alcohol, medicamentos sedantes u otras sustancias.</span></li>
+      <li><div class="icon">📱</div><span>En caso de accidente: llama primero al 911, luego a soporte I mendly.</span></li>
+    </ul>
+    <div style="margin-top:auto;background:rgba(61,184,122,0.1);border:1px solid rgba(61,184,122,0.2);border-radius:12px;padding:14px;margin-top:20px">
+      <div style="font-size:11px;font-weight:700;color:#3DB87A;margin-bottom:6px">LÍNEA DE SOPORTE I MENDLY</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.8)">soporte@imendly.com<br/>WhatsApp: disponible en app</div>
+    </div>
+  </div>
+
+  <!-- PANEL 6: CONTRAPORTADA -->
+  <div class="panel green">
+    <div class="logo-box">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="#3DB87A" stroke-width="2" stroke-linecap="round"/>
+          <polyline points="9 22 9 12 15 12 15 22" stroke="#3DB87A" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="logo-name">i mendly</span>
+    </div>
+    <div class="p-title" style="color:#fff">¿Cómo obtener el Gafete<br/>Insignia?</div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.75);margin:12px 0 20px">Completa los 4 pasos del programa de certificación:</p>
+    <div class="step"><div class="step-num" style="background:rgba(255,255,255,0.25);color:#fff">1</div><div class="step-text" style="color:rgba(255,255,255,0.9)"><strong style="color:#fff">Entrevista técnica</strong> — evaluación de conocimientos de tu oficio</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(255,255,255,0.25);color:#fff">2</div><div class="step-text" style="color:rgba(255,255,255,0.9)"><strong style="color:#fff">Verificación de identidad</strong> — INE, CURP y antecedentes</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(255,255,255,0.25);color:#fff">3</div><div class="step-text" style="color:rgba(255,255,255,0.9)"><strong style="color:#fff">Servicio de prueba</strong> — evaluado por el equipo I mendly</div></div>
+    <div class="step"><div class="step-num" style="background:rgba(255,255,255,0.25);color:#fff">4</div><div class="step-text" style="color:rgba(255,255,255,0.9)"><strong style="color:#fff">Calificación ≥ 4.7★</strong> — mantenida por al menos 10 servicios</div></div>
+    <div style="margin-top:auto;text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2)">
+      <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:8px">RENOVACIÓN ANUAL · SIN COSTO</div>
+      <div style="font-size:22px;font-weight:800;color:#fff">imendly.com</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px">proveedores@imendly.com</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- MANUAL COMPLETO                        -->
+<!-- ══════════════════════════════════════ -->
+<div class="manual">
+
+  <!-- Portada manual -->
+  <div class="m-cover">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#3DB87A;text-transform:uppercase;margin-bottom:16px">manual de estándares · doc EQ-v1.0</div>
+    <h1>Manual del<br/>Proveedor<br/><em>Certificado</em></h1>
+    <p style="margin-top:16px">Guía completa de estándares de calidad, protocolos de servicio y código de ética para proveedores I mendly Insignia.</p>
+    <div style="display:flex;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.1)">
+      <div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:4px">versión</div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.8)">1.0 — 2026</div></div>
+      <div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:4px">aplicación</div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.8)">todos los oficios</div></div>
+      <div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:4px">renovación</div><div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.8)">anual</div></div>
+    </div>
+  </div>
+
+  <!-- 1. IDENTIDAD -->
+  <div class="m-section">
+    <h2><div class="num">1</div>Identidad del Proveedor Certificado</h2>
+    <p class="intro">Un Proveedor Insignia I mendly no es solo alguien con habilidad técnica. Es una persona que entiende que cada servicio es una experiencia completa para el cliente — desde el primer mensaje hasta el último adiós.</p>
+    <div class="m-grid">
+      <div class="m-card">
+        <h3>Lo que representas</h3>
+        <ul>
+          <li>La imagen de I mendly en casa del cliente</li>
+          <li>Un profesional del hogar de confianza</li>
+          <li>Alguien que resuelve, no solo ejecuta</li>
+          <li>Un aliado del cliente, no solo un proveedor</li>
+        </ul>
+      </div>
+      <div class="m-card dark">
+        <h3>Lo que I mendly te garantiza</h3>
+        <ul>
+          <li>Pago seguro vía escrow — siempre cobras</li>
+          <li>Soporte ante disputas del cliente</li>
+          <li>Visibilidad preferencial en la plataforma</li>
+          <li>Capacitación continua gratuita</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PROTOCOLO DE LLEGADA -->
+  <div class="m-section">
+    <h2><div class="num">2</div>Protocolo de Llegada y Saludo</h2>
+    <p class="intro">La primera impresión se forma en los primeros 7 segundos. Tu saludo, tu presentación y tu actitud al llegar definen el 50% de la calificación que el cliente te dará.</p>
+    <div style="margin-bottom:20px">
+      <div style="font-size:13px;font-weight:700;color:#1F1F1F;margin-bottom:12px">Scripts de conversación recomendados:</div>
+      <div class="script-box">
+        <div class="who">al tocar el timbre / llamar</div>
+        <div class="text">"Buenos días / tardes. Soy [nombre], tu proveedor de I mendly para el servicio de [categoría]. ¿Me permite pasar?"</div>
+      </div>
+      <div class="script-box">
+        <div class="who">si hay un cambio o problema al llegar</div>
+        <div class="text">"Antes de comenzar, noté que [situación]. Quiero comentártelo para que tomemos la mejor decisión juntos, ¿te parece?"</div>
+      </div>
+      <div class="script-box">
+        <div class="who">si el trabajo tendrá un costo adicional</div>
+        <div class="text">"Para hacer el trabajo correctamente necesitaré [descripción]. Eso implicaría un ajuste de aproximadamente $[monto]. ¿Quieres que lo incluya o prefieres solo lo acordado?"</div>
+      </div>
+      <div class="script-box">
+        <div class="who">al terminar el servicio</div>
+        <div class="text">"Ya terminé. ¿Te gustaría que revisáramos juntos el trabajo? También te recomiendo [consejo de mantenimiento] para que dure más tiempo."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 5S PROFUNDO -->
+  <div class="m-section">
+    <h2><div class="num">3</div>Metodología 5S — Aplicación en Campo</div>
+    <p class="intro">La metodología 5S proviene de la manufactura japonesa y ha sido adoptada globalmente como el estándar de orden y calidad en el lugar de trabajo. Para I mendly, la adaptamos al trabajo en el hogar del cliente.</p>
+    <div class="m-grid">
+      <div class="m-card">
+        <h3>Seiri — Clasificar</h3>
+        <p>Antes de entrar, selecciona del vehículo solo las herramientas y materiales que necesitas para ese trabajo específico. No llenes de cosas el espacio del cliente.<br/><br/><strong>Ejemplo electricidad:</strong> si vas a cambiar un contacto, no entres con todo el kit de instalaciones nuevas.<br/><strong>Ejemplo limpieza:</strong> lleva solo los productos para el tipo de superficie que trabajarás.</p>
+      </div>
+      <div class="m-card">
+        <h3>Seiton — Ordenar</h3>
+        <p>Establece una "zona de trabajo" clara al inicio. Coloca una tela o cartón para apoyar herramientas. Agrupa por uso (corte, medición, fijación).<br/><br/><strong>Regla de oro:</strong> cualquier persona que entre al área debe poder identificar qué herramienta está en uso y cuál no en menos de 5 segundos.</p>
+      </div>
+      <div class="m-card">
+        <h3>Seiso — Limpiar</h3>
+        <p>No es solo limpiar al terminar — es limpiar <em>mientras trabajas</em>. Recoge el polvo de perforación antes de hacer la siguiente. Limpia la rebaba antes de instalar.<br/><br/><strong>Estándar I mendly:</strong> al salir, el área debe estar igual o mejor que cuando llegaste. Sin excusas.</p>
+      </div>
+      <div class="m-card">
+        <h3>Seiketsu — Estandarizar</h3>
+        <p>No improvises el orden: tenlo definido desde antes. Tu kit debe estar organizado siempre de la misma manera para que no pierdas tiempo buscando.<br/><br/><strong>Práctica:</strong> fotografia tu kit organizado y úsala como referencia para reacomodarlo después de cada servicio.</p>
+      </div>
+      <div class="m-card full">
+        <h3>Shitsuke — Disciplina</h3>
+        <p>Las 4 S anteriores no valen nada sin esta. La disciplina es hacer las cosas bien incluso cuando nadie te observa, incluso cuando estás cansado, incluso cuando el cliente no parece notarlo.<br/><br/><strong>Proveedores Insignia dicen:</strong> "No limpio porque el cliente me va a calificar. Limpio porque así es como trabajo."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. NIVELES DE CALIDAD -->
+  <div class="m-section">
+    <h2><div class="num">4</div>Estándares de Calidad por Nivel</div>
+    <p class="intro">I mendly reconoce tres niveles de proveedor. Cada uno tiene compromisos y beneficios diferentes.</p>
+    <div class="nivel-row">
+      <div class="nivel-col basico">
+        <h4>⬡ Básico</h4>
+        <ul>
+          <li>Recién incorporado</li>
+          <li>Calificación inicial ≥ 4.0</li>
+          <li>Verificación de identidad completa</li>
+          <li>Acepta política de escrow</li>
+          <li>Responde en max. 2 horas</li>
+          <li>Trae herramienta propia</li>
+        </ul>
+      </div>
+      <div class="nivel-col pro">
+        <h4>◈ Profesional</h4>
+        <ul>
+          <li>Mínimo 20 servicios completados</li>
+          <li>Calificación ≥ 4.5 sostenida</li>
+          <li>Tasa de cancelación &lt; 5%</li>
+          <li>Responde en max. 30 min</li>
+          <li>Foto de trabajo terminado por servicio</li>
+          <li>Uniforme o playera I mendly</li>
+        </ul>
+      </div>
+      <div class="nivel-col insignia">
+        <h4>★ Insignia</h4>
+        <ul>
+          <li>Mínimo 50 servicios completados</li>
+          <li>Calificación ≥ 4.8 sostenida</li>
+          <li>Cero disputas en últimos 6 meses</li>
+          <li>Entrevista técnica aprobada</li>
+          <li>Certificación 5S completada</li>
+          <li>Gafete físico + badge digital</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. SEGURIDAD -->
+  <div class="m-section">
+    <h2><div class="num">5</div>Protocolos de Seguridad por Oficio</div>
+    <p class="intro">El EPP (Equipo de Protección Personal) no es opcional. Su uso es requisito para mantener la certificación I mendly.</p>
+    <div class="m-grid">
+      <div class="m-card">
+        <h3>Electricidad</h3>
+        <ul><li>Guantes dieléctricos clase 0 (1,000V)</li><li>Herramientas con mangos aislados 1,000V</li><li>Lentes de seguridad</li><li>Calzado dieléctrico (deseable)</li><li>Señalización "Trabajo Eléctrico"</li></ul>
+      </div>
+      <div class="m-card">
+        <h3>Plomería</h3>
+        <ul><li>Guantes de nitrilo para soldadura</li><li>Lentes para soldar (cuando aplique)</li><li>Mascarilla para fluxo y soldadura</li><li>Rodilleras para trabajo en piso</li><li>Señalización de área mojada</li></ul>
+      </div>
+      <div class="m-card">
+        <h3>Albañilería / Pintura</h3>
+        <ul><li>Casco en obra con riesgo de caída de objetos</li><li>Mascarilla N95 para polvo y solventes</li><li>Guantes de carnaza o látex grueso</li><li>Lentes de seguridad antipartículas</li><li>Andamio certificado (no improvisado)</li></ul>
+      </div>
+      <div class="m-card">
+        <h3>Fumigación</h3>
+        <ul><li>Respirador de media cara con filtros P100+OV</li><li>Guantes de nitrilo grueso (30cm)</li><li>Gogles sellados contra químicos</li><li>Overol desechable o ropa específica</li><li>Hoja MSDS de cada producto aplicado</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. COMUNICACIÓN -->
+  <div class="m-section">
+    <h2><div class="num">6</div>Comunicación con el Cliente</div>
+    <p class="intro">La comunicación es tan importante como el trabajo técnico. Un cliente que se siente informado y respetado te dará 5 estrellas incluso si hubo un imprevisto.</p>
+    <div class="m-grid">
+      <div class="m-card">
+        <h3>Tiempos de respuesta</h3>
+        <ul>
+          <li>Confirmar solicitud: máximo 30 minutos</li>
+          <li>Confirmar llegada el día del servicio: mínimo 1 hora antes</li>
+          <li>Si llegarás tarde: avisar con 20 min de anticipación mínimo</li>
+          <li>Responder mensajes post-servicio: máximo 24 horas</li>
+        </ul>
+      </div>
+      <div class="m-card">
+        <h3>Manejo de quejas</h3>
+        <ul>
+          <li>Escucha sin interrumpir — el cliente tiene razón hasta que no la tiene</li>
+          <li>Nunca te pongas a la defensiva en el momento</li>
+          <li>Propón solución antes de que el cliente la exija</li>
+          <li>Si no puedes resolverlo: escala a soporte I mendly inmediatamente</li>
+          <li>No ofrezcas descuentos fuera de la plataforma</li>
+        </ul>
+      </div>
+      <div class="m-card full">
+        <h3>Lenguaje y conducta</h3>
+        <ul>
+          <li>Trato de "usted" hasta que el cliente pida cambiar</li>
+          <li>No comentar temas políticos, religiosos o personales del cliente</li>
+          <li>No hacer comentarios sobre otras pertenencias del cliente</li>
+          <li>No usar el teléfono durante el servicio salvo emergencia</li>
+          <li>No fumar, comer ni beber en el área de trabajo sin permiso</li>
+          <li>No pedir propina directamente — agradecer si el cliente la ofrece espontáneamente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. GARANTÍA -->
+  <div class="m-section">
+    <h2><div class="num">7</div>Política de Garantía del Trabajo</div>
+    <p class="intro">I mendly exige que todo trabajo tenga una garantía mínima. Esto no es opcional — es parte del contrato con el cliente que se formaliza a través de la app.</p>
+    <div class="m-grid">
+      <div class="m-card">
+        <h3>Garantías mínimas por categoría</h3>
+        <ul>
+          <li>Electricidad: 30 días en instalaciones</li>
+          <li>Plomería: 15 días en reparaciones, 30 en instalaciones</li>
+          <li>Pintura: 60 días contra descascaramiento</li>
+          <li>Impermeabilización: según sistema (1-10 años)</li>
+          <li>Albañilería: 30 días en acabados</li>
+          <li>AC: 30 días en mantenimiento, 90 en instalación</li>
+          <li>Limpieza / Auto / Mascotas: sin garantía formal</li>
+        </ul>
+      </div>
+      <div class="m-card dark">
+        <h3>Procedimiento de garantía</h3>
+        <ul>
+          <li>Cliente reporta en la app dentro del plazo</li>
+          <li>I mendly notifica al proveedor en 24 horas</li>
+          <li>Proveedor tiene 48 horas para responder y agendar visita</li>
+          <li>Revisita sin costo si el fallo es atribuible al proveedor</li>
+          <li>Disputa si el proveedor no responde: penalización en calificación</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. CÓDIGO DE ÉTICA -->
+  <div class="m-section">
+    <h2><div class="num">8</div>Código de Ética y Conducta</div>
+    <p class="intro">Estas reglas son condición de permanencia en la plataforma. Su violación puede resultar en suspensión temporal o baja definitiva.</p>
+    <div class="m-grid">
+      <div class="m-card">
+        <h3>Obligaciones</h3>
+        <ul>
+          <li>Tratar con respeto a todos los clientes, sin excepción</li>
+          <li>Informar si algo está fuera de tu alcance técnico</li>
+          <li>No subcontratar sin autorización del cliente</li>
+          <li>Respetar la privacidad del hogar del cliente</li>
+          <li>Reportar cualquier daño accidental inmediatamente</li>
+          <li>Mantener tus datos y certificaciones actualizados en la app</li>
+        </ul>
+      </div>
+      <div class="m-card" style="background:#FFF5F5;border:1px solid rgba(220,38,38,0.15)">
+        <h3 style="color:#DC2626">Causas de suspensión inmediata</h3>
+        <ul>
+          <li>Robo o daño intencional en casa del cliente</li>
+          <li>Violencia verbal o física</li>
+          <li>Compartir datos del cliente con terceros</li>
+          <li>Acordar pagos fuera de la plataforma</li>
+          <li>Falsificar documentos o certificaciones</li>
+          <li>Presentarse en estado de ebriedad o bajo efectos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. CHECKLIST -->
+  <div class="m-section">
+    <h2><div class="num">9</div>Checklist de Autoevaluación — 20 Puntos</div>
+    <p class="intro">Completa mentalmente esta lista antes de cada servicio. Un Proveedor Insignia responde "sí" a todas las preguntas.</p>
+    <div class="checklist">
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Llegué o llegaré a tiempo (máximo 5 min antes)</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Conozco el nombre del cliente y el servicio solicitado</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Mis herramientas están limpias y en buen estado</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Traigo el EPP necesario para este trabajo</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Mi ropa de trabajo está limpia y presentable</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Traigo solo las herramientas necesarias (Seiri)</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Tengo material de protección (cartón, tela, cinta)</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Leí bien el servicio solicitado en la app</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Sé cómo llegar — no llegaré tarde por mapas</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Mi teléfono está cargado para registrar el servicio</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Conozco el protocolo de llegada y saludo</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Sé qué preguntar al cliente al llegar</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Tengo bolsa para recoger mis residuos</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Conozco el precio acordado y los límites del servicio</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Sé cómo registrar el inicio del servicio en la app</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Tengo número de soporte I mendly guardado</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Estoy descansado y en condiciones de trabajar bien</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">No tengo nada que me distraiga en este momento</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Al terminar dejaré el área limpia y ordenada</div></div>
+      <div class="check-row"><div class="check-box"></div><div class="check-label">Voy a pedir calificación con amabilidad al terminar</div></div>
+    </div>
+  </div>
+
+  <!-- 10. CRITERIOS CERTIFICACIÓN -->
+  <div class="m-section" style="border-bottom:none">
+    <h2><div class="num">10</div>Criterios de Certificación y Renovación</div>
+    <p class="intro">El Gafete I mendly Insignia se otorga una vez y se renueva anualmente. A continuación los criterios completos.</p>
+    <div class="cert-box">
+      <h3>Gafete I mendly Insignia ★</h3>
+      <p>Para obtener y mantener el reconocimiento más alto de la plataforma</p>
+      <div class="cert-steps">
+        <div class="cert-step"><div class="cs-num">1</div><div class="cs-label">Entrevista técnica<br/>aprobada (≥70%)</div></div>
+        <div class="cert-step"><div class="cs-num">2</div><div class="cs-label">Verificación INE<br/>CURP + Antecedentes</div></div>
+        <div class="cert-step"><div class="cs-num">3</div><div class="cs-label">50+ servicios<br/>completados</div></div>
+        <div class="cert-step"><div class="cs-num">4</div><div class="cs-label">Calificación<br/>≥ 4.8 sostenida</div></div>
+        <div class="cert-step"><div class="cs-num">5</div><div class="cs-num" style="background:rgba(255,255,255,0.15)">0</div><div class="cs-label">Disputas en<br/>últimos 6 meses</div></div>
+        <div class="cert-step"><div class="cs-num">6</div><div class="cs-label">Taller 5S<br/>presencial/online</div></div>
+      </div>
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px">RENOVACIÓN ANUAL — Requisitos</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.8">
+          Mantener calificación ≥ 4.8 · Cero disputas no resueltas · 12+ servicios en el año ·<br/>
+          Actualizar documentos vigentes · Completar capacitación anual
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /manual -->
+</body>
+</html>

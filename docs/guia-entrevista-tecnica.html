@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Guía de Entrevista Técnica — I mendly</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Urbanist',sans-serif;background:#F5F5F5;color:#1F1F1F;font-size:14px;line-height:1.6}
+.page{background:#fff;max-width:210mm;margin:0 auto;padding:0}
+/* COVER */
+.cover{background:#1F1F1F;color:#fff;padding:60px 50px;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between}
+.logo-mark{width:56px;height:56px;background:#3DB87A;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:40px}
+.logo-mark svg{width:32px;height:32px}
+.cover h1{font-size:42px;font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:16px}
+.cover h1 span{color:#3DB87A}
+.cover p{color:rgba(255,255,255,0.55);font-size:16px;font-weight:400;max-width:480px}
+.cover-meta{display:flex;gap:40px;margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.1)}
+.cover-meta div{display:flex;flex-direction:column;gap:4px}
+.cover-meta .label{font-size:11px;color:rgba(255,255,255,0.35);text-transform:lowercase;letter-spacing:0.08em}
+.cover-meta .value{font-size:14px;font-weight:600;color:rgba(255,255,255,0.85)}
+/* SECTION */
+.section{padding:50px;border-bottom:1px solid #F0F0F0;page-break-inside:avoid}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+.cat-badge{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.section-title{font-size:26px;font-weight:700;letter-spacing:-0.03em}
+.section-sub{font-size:13px;color:#6B6B6B;margin-top:4px}
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+.block{background:#F5F5F5;border-radius:16px;padding:20px}
+.block h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#3DB87A;margin-bottom:14px}
+.block ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.block ul li{font-size:13px;color:#1F1F1F;padding-left:16px;position:relative;line-height:1.5}
+.block ul li::before{content:"→";position:absolute;left:0;color:#3DB87A;font-weight:700}
+.block.dark{background:#1F1F1F;color:#fff}
+.block.dark h3{color:#3DB87A}
+.block.dark ul li{color:rgba(255,255,255,0.85)}
+.block.red{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15)}
+.block.red h3{color:#DC2626}
+.block.red ul li::before{color:#DC2626;content:"✗"}
+.full{grid-column:1/-1}
+.q-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.q-item{background:#fff;border:1px solid #E8E8E8;border-radius:12px;padding:14px 18px;display:flex;gap:12px;align-items:flex-start}
+.q-num{width:24px;height:24px;background:#3DB87A;border-radius:8px;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.q-text{font-size:13px;line-height:1.55;color:#1F1F1F}
+.q-eval{font-size:11px;color:#6B6B6B;margin-top:4px}
+.divider{height:1px;background:#F0F0F0;margin:32px 0}
+.tag{display:inline-block;background:rgba(61,184,122,0.1);color:#2a9460;border-radius:9999px;padding:3px 12px;font-size:11px;font-weight:600;margin-right:6px;margin-bottom:6px}
+@media print{
+  .cover{min-height:100vh;page-break-after:always}
+  .section{page-break-before:auto;page-break-inside:avoid}
+  body{background:#fff}
+  .page{max-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div>
+    <div class="logo-mark">
+      <svg viewBox="0 0 32 32" fill="none">
+        <path d="M6 26V12l10-8 10 8v14" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 26v-8h8v8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h1>Guía de Entrevista<br/><span>Técnica</span><br/>por Oficio</h1>
+    <p>Protocolo oficial para la evaluación técnica de proveedores durante el proceso de incorporación a la plataforma I mendly.</p>
+  </div>
+  <div class="cover-meta">
+    <div><span class="label">documento</span><span class="value">ENT-TEC-v1.0</span></div>
+    <div><span class="label">categorías</span><span class="value">12 oficios</span></div>
+    <div><span class="label">uso</span><span class="value">entrevistador interno</span></div>
+    <div><span class="label">año</span><span class="value">2026</span></div>
+  </div>
+</div>
+
+<!-- ELECTRICIDAD -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(245,158,11,0.12)">⚡</div>
+    <div><div class="section-title">Electricidad</div><div class="section-sub">Instalaciones residenciales y comerciales · NOM-001-SEDE</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cuál es el calibre mínimo de cable que utilizarías para un circuito de iluminación de 15A y por qué?</div><div class="q-eval">Esperar: calibre 14 AWG (mínimo NOM). Bonus si menciona caída de tensión y distancia.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">Si llegas a una casa y el cliente reporta que se van los fusibles frecuentemente, ¿cuál es tu proceso de diagnóstico?</div><div class="q-eval">Esperar: revisión de carga total, identificar cortocircuito vs sobrecarga, uso de multímetro.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cómo verificas si un tablero de distribución está correctamente balanceado entre fases?</div><div class="q-eval">Esperar: medición de amperaje por fase con pinza amperimétrica, diferencia máx. 10%.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Qué es una línea de tierra física y en qué situaciones es obligatoria su instalación?</div><div class="q-eval">Esperar: equipos de cocina, baño, electrodomésticos, NOM-001-SEDE artículo 250.</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">¿Cuántos contactos máximo puedes conectar a un circuito de 20A bajo la norma mexicana?</div><div class="q-eval">Esperar: máximo 13 contactos por circuito (carga máx. 1,440W al 80% = 1,920W).</div></div></div>
+    <div class="q-item"><div class="q-num">6</div><div><div class="q-text">¿Cuál es la diferencia entre un interruptor termo-magnético y un GFCI? ¿Cuándo usarías cada uno?</div><div class="q-eval">Esperar: termo-magnético = sobrecarga/cortocircuito; GFCI = protección contra electrocución en zonas húmedas.</div></div></div>
+    <div class="q-item"><div class="q-num">7</div><div><div class="q-text">Describe el procedimiento de seguridad que sigues antes de comenzar cualquier trabajo eléctrico.</div><div class="q-eval">Esperar: desenergizan el circuito, prueba con voltímetro, señalización, EPP (guantes dieléctricos).</div></div></div>
+    <div class="q-item"><div class="q-num">8</div><div><div class="q-text">Un cliente quiere instalar un minisplit de 1.5 toneladas. ¿Qué acometida eléctrica requiere y cómo la calculas?</div><div class="q-eval">Esperar: 1.5 ton ≈ 1,800W / 127V = ~14A, circuito dedicado calibre 12 AWG, interruptor 15-20A.</div></div></div>
+    <div class="q-item"><div class="q-num">9</div><div><div class="q-text">¿Qué herramientas traes siempre en tu kit básico para trabajo eléctrico residencial?</div><div class="q-eval">Esperar: multímetro, pinza amperimétrica, desarmadores aislados, pelacables, cinta, detectores de voltaje.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block">
+      <h3>Herramientas que debe traer</h3>
+      <ul>
+        <li>Multímetro digital con categoría CAT III</li>
+        <li>Pinza amperimétrica</li>
+        <li>Detector de voltaje sin contacto</li>
+        <li>Juego de desarmadores aislados 1000V</li>
+        <li>Pelacables y pinzas de corte</li>
+        <li>Cinta aislante 3M o equiv. (temp. 90°C)</li>
+        <li>Taladro y brocas para concreto</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>Certificaciones opcionales a preguntar</h3>
+      <ul>
+        <li>CONALEP / CECYTE — electricidad industrial</li>
+        <li>CFE — instalador certificado</li>
+        <li>ANCE — verificador de instalaciones</li>
+        <li>Curso NOM-001-SEDE (mínimo deseable)</li>
+        <li>IMSS — seguridad eléctrica en obra</li>
+      </ul>
+    </div>
+    <div class="block red full">
+      <h3>Señales de alerta — descalificar si...</h3>
+      <ul>
+        <li>Desconoce qué es la norma NOM-001-SEDE</li>
+        <li>Dice que no usa EPP porque "ya está acostumbrado"</li>
+        <li>No sabe usar multímetro o pinza amperimétrica</li>
+        <li>Propone hacer conexiones sin desenergizan el circuito</li>
+        <li>No distingue entre calibres de cable o los usa indistintamente</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PLOMERÍA -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(59,130,246,0.12)">🔧</div>
+    <div><div class="section-title">Plomería</div><div class="section-sub">Instalaciones hidráulicas y sanitarias · Residencial y comercial</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cuál es la diferencia entre la instalación hidráulica y la sanitaria de una casa? ¿Qué materiales usas en cada una?</div><div class="q-eval">Esperar: hidráulica = agua a presión (CPVC, cobre, multicapa); sanitaria = desagüe por gravedad (PVC sanitario).</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">Si un cliente reporta baja presión de agua solo en la regadera, ¿cómo diagnósticas y resuelves el problema?</div><div class="q-eval">Esperar: revisar llave de paso individual, aireadores obstruidos, tubo oxidado/calcificado, comparar con otros puntos.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cómo detectas una fuga en tubería empotrada sin romper paredes innecesariamente?</div><div class="q-eval">Esperar: cierre llaves, lectura de medidor, escuchar con estetoscopio o detector, corte mínimo de exploración.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Qué pendiente mínima debe tener un tubo de drenaje sanitario de 4 pulgadas y por qué?</div><div class="q-eval">Esperar: 2% mínimo (2 cm por metro). Menos = acumulación de sólidos; más = el líquido corre solo y deja sólidos.</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">Describe cómo instalas una llave de jardín de cobre. ¿Qué materiales y técnica usas para sellar las uniones?</div><div class="q-eval">Esperar: soldadura de estaño (fontanería), fluxo, mechero, o conexiones compresión/push-fit correctamente.</div></div></div>
+    <div class="q-item"><div class="q-num">6</div><div><div class="q-text">¿Qué haces cuando llegas y el boiler del cliente no calienta pero el piloto sí está encendido?</div><div class="q-eval">Esperar: revisar termostato, ánodo de magnesio, resistencia eléctrica (eléctrico) o quemador/termocupla (gas).</div></div></div>
+    <div class="q-item"><div class="q-num">7</div><div><div class="q-text">Un tinaco de 1,100 litros en azotea pierde el flotador. ¿Cómo cambias la válvula de bola sin vaciar todo el tinaco?</div><div class="q-eval">Esperar: cierre válvula de entrada, vaciado parcial, técnica de recambio con válvula de bola o llave esférica.</div></div></div>
+    <div class="q-item"><div class="q-num">8</div><div><div class="q-text">¿Cuándo recomiendas usar CPVC en lugar de PVC hidráulico? ¿Cuál es la diferencia en temperatura de trabajo?</div><div class="q-eval">Esperar: PVC hidráulico hasta 60°C, CPVC hasta 93°C — obligatorio en instalaciones con boiler de paso o solar.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block">
+      <h3>Herramientas que debe traer</h3>
+      <ul>
+        <li>Cortatubos para cobre y PVC</li>
+        <li>Kit de soldadura (mechero, fluxo, estaño)</li>
+        <li>Llave Stilson y llave de canería</li>
+        <li>Sello de teflón y pasta de hule</li>
+        <li>Nivel de burbuja</li>
+        <li>Detector de humedad (deseable)</li>
+        <li>Pegamento PVC y lija</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>Certificaciones opcionales</h3>
+      <ul>
+        <li>INFONAVIT / CONAVI — instalador sanitario</li>
+        <li>SEMARNAT — manejo eficiente de agua</li>
+        <li>Cursos IMSS de trabajo en alturas</li>
+        <li>Fabricantes: Rotoplas, Cinsa (instalador certificado)</li>
+      </ul>
+    </div>
+    <div class="block red full">
+      <h3>Señales de alerta — descalificar si...</h3>
+      <ul>
+        <li>Desconoce la diferencia entre PVC hidráulico y sanitario</li>
+        <li>Propone no usar teflón o sello en roscas</li>
+        <li>Dice que la pendiente del drenaje "se ve a ojo"</li>
+        <li>No trae herramienta propia o la trae en mal estado</li>
+        <li>Desconoce los materiales adecuados para agua caliente</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PINTURA -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(168,85,247,0.12)">🎨</div>
+    <div><div class="section-title">Pintura</div><div class="section-sub">Interior, exterior y acabados decorativos</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">Un muro tiene manchas de humedad antes de pintar. ¿Cuál es tu proceso completo de preparación antes de aplicar pintura?</div><div class="q-eval">Esperar: tratamiento con antimanchas/sellador, esperar secado, lija, fondo, luego pintura. No pintar directo.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">¿Cuántos litros de pintura vinílica necesitas para cubrir una habitación de 4m x 4m con 2.4m de altura, con dos manos?</div><div class="q-eval">Esperar: área mural ≈ 38m² de muros + 16m² techo = 54m², rendimiento 12m²/L, ÷12 x 2 manos = ~9L.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cuál es la diferencia entre pintura vinílica, esmalte y pintura epóxica? ¿Cuándo usas cada una?</div><div class="q-eval">Esperar: vinílica=interiores lavables; esmalte=madera/metal, semibrill/brillante; epóxica=pisos/areas húmedas.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Cómo preparas una superficie de madera antes de dar esmalte para que el acabado quede liso y dure?</div><div class="q-eval">Esperar: lija 120, limpieza, sellador, lija 220, fondo o imprimante, esmalte (mín. 2 manos con lijado intermedio).</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">¿Cómo proteges pisos, muebles y marcos de ventana al pintar? Describe tu protocolo de protección.</div><div class="q-eval">Esperar: cinta de pintor en bordes, plástico en muebles/pisos, dropcloth, protección en apagadores/chapas.</div></div></div>
+    <div class="q-item"><div class="q-num">6</div><div><div class="q-text">El cliente quiere acabado texturizado tipo "cuerda" o "esponja". ¿Cómo lo aplicas y qué materiales usas?</div><div class="q-eval">Esperar: base sellada, pasta texturizante, técnica de aplicación con llana/esponja/rodillo específico, imprimante previo.</div></div></div>
+    <div class="q-item"><div class="q-num">7</div><div><div class="q-text">¿Cuántas horas dejas secar entre mano y mano de pintura vinílica de interiores en clima normal?</div><div class="q-eval">Esperar: mínimo 2 horas entre manos; en clima húmedo 4 horas; nunca aplicar segunda mano si primera está pegajosa.</div></div></div>
+    <div class="q-item"><div class="q-num">8</div><div><div class="q-text">Estás pintando en exteriores y empieza a llover 3 horas después de aplicar la pintura. ¿Qué haces?</div><div class="q-eval">Esperar: proteger si es posible con plástico, esperar a que seque, evaluar daños al día siguiente y repintar secciones afectadas.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block">
+      <h3>Herramientas que debe traer</h3>
+      <ul><li>Rodillos de diferentes texturas y cubetas</li><li>Brochas planas y de corte (varios tamaños)</li><li>Cinta de pintor azul y verde</li><li>Espátulas para masilla/empaste</li><li>Lija 80, 120, 220</li><li>Cubiertas plásticas (drops)</li><li>Andamio o escalera certificada</li></ul>
+    </div>
+    <div class="block">
+      <h3>Marcas de referencia a preguntar</h3>
+      <ul><li>¿Conoce Comex, Sherwin-Williams, Sayer?</li><li>¿Sabe mezclar colores con colorímetro?</li><li>¿Tiene experiencia con pinturas de bajo VOC?</li><li>¿Ha usado pistola airless o compresor?</li></ul>
+    </div>
+    <div class="block red full">
+      <h3>Señales de alerta</h3>
+      <ul><li>Propone pintar sobre humedad sin tratar</li><li>No protege área de trabajo antes de iniciar</li><li>Desconoce diferencia entre tipos de pintura</li><li>No sabe calcular materiales — "se va viendo"</li><li>No usa andamio o escala de forma segura</li></ul>
+    </div>
+  </div>
+</div>
+
+<!-- CLIMAS / AC -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(6,182,212,0.12)">❄️</div>
+    <div><div class="section-title">Climas / Aire Acondicionado</div><div class="section-sub">Instalación, mantenimiento y diagnóstico · Minisplit y equipos centrales</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cómo calculas las BTU necesarias para un cuarto de 4m x 5m con altura de 2.7m en clima cálido?</div><div class="q-eval">Esperar: área 20m² x 600 BTU/m² (zona cálida) = 12,000 BTU = 1 tonelada. Ajuste por ventanas, personas, equipos.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">El minisplit enciende pero no enfría. ¿Cuáles son las primeras 5 causas que revisas en orden de diagnóstico?</div><div class="q-eval">Esperar: filtros sucios, falta de refrigerante (presión), compresor, expansor, termistor. Orden lógico = bonus.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cuál es la diferencia entre los refrigerantes R-22, R-410A y R-32? ¿Cuál se usa hoy en equipos nuevos en México?</div><div class="q-eval">Esperar: R-22 prohibido (daña ozono), R-410A estándar actual, R-32 más eficiente y ecológico, tendencia actual.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Cómo realizas una prueba de vacío antes de cargar refrigerante en un equipo nuevo?</div><div class="q-eval">Esperar: bomba de vacío mín. 30 min a 500 micrones, verificar con manómetros que no suba presión (sin fugas).</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">¿Qué diámetro de tuberías de cobre usas para un minisplit de 1 tonelada vs 2 toneladas?</div><div class="q-eval">Esperar: 1 ton = 1/4" líquido + 3/8" gas; 2 ton = 1/4" líquido + 1/2" gas (verificar especificación del fabricante).</div></div></div>
+    <div class="q-item"><div class="q-num">6</div><div><div class="q-text">Un cliente dice que su AC gotea agua por la unidad interior. ¿Cuáles son las causas y cómo resuelves cada una?</div><div class="q-eval">Esperar: drenaje obstruido (limpiar), pendiente incorrecta del drenaje, filtro muy sucio que congela el evaporador.</div></div></div>
+    <div class="q-item"><div class="q-num">7</div><div><div class="q-text">¿Qué incluye un mantenimiento preventivo completo de un minisplit residencial?</div><div class="q-eval">Esperar: lavado de filtros y evaporador, limpieza del condensador, revisión de refrigerante, revisión eléctrica, prueba de operación.</div></div></div>
+    <div class="q-item"><div class="q-num">8</div><div><div class="q-num">8</div><div class="q-text">¿Qué acometida eléctrica dedicas para un equipo de 2 toneladas (220V) y cómo la calculas?</div><div class="q-eval">Esperar: 2 ton ≈ 2,400W / 220V = ~11A, circuito dedicado 12 AWG, breaker 15A, tierra física obligatoria.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block">
+      <h3>Equipo que debe traer</h3>
+      <ul><li>Manifold de manómetros (R-410A/R-32)</li><li>Bomba de vacío</li><li>Pinza amperimétrica con temperatura</li><li>Flaring tool y cortador de cobre</li><li>Doblador de tubería</li><li>Detector de fugas electrónico</li><li>Balanza para refrigerante</li></ul>
+    </div>
+    <div class="block">
+      <h3>Certificaciones a preguntar</h3>
+      <ul><li>IMACAC — manejo de refrigerantes</li><li>Carrier, Daikin, LG — instalador certificado</li><li>ASHRAE — certificación internacional</li><li>SEMARNAT — manejo de gases de efecto invernadero</li></ul>
+    </div>
+    <div class="block red full">
+      <h3>Señales de alerta</h3>
+      <ul><li>No hace vacío antes de cargar refrigerante</li><li>No sabe usar manifold de manómetros</li><li>Carga refrigerante "a ojo" o sin balanza</li><li>Desconoce tipos de refrigerante y sus diferencias</li><li>No instala tierra física en el equipo</li></ul>
+    </div>
+  </div>
+</div>
+
+<!-- LIMPIEZA -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(16,185,129,0.12)">🧹</div>
+    <div><div class="section-title">Limpieza</div><div class="section-sub">Limpieza residencial básica y profunda</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cómo organizas tu tiempo para hacer una limpieza básica de una casa de 2 plantas en 3 horas?</div><div class="q-eval">Esperar: orden lógico (de arriba a abajo, de adentro a afuera), empezar por baños, cocina y terminar con pisos.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">¿Qué productos NO debes mezclar nunca al limpiar y por qué?</div><div class="q-eval">Esperar: cloro + amoniaco (gas tóxico), cloro + ácido muriático (cloro gaseoso), vinagre + agua oxigenada.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cómo limpias un horno con grasa acumulada de forma segura y efectiva?</div><div class="q-eval">Esperar: desengrasante específico, tiempo de acción, esponja no abrasiva, enjuague completo, ventilación.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">El cliente tiene piso de madera natural. ¿Qué producto usas y qué evitas a toda costa?</div><div class="q-eval">Esperar: limpiador neutro para madera, paño húmedo (no mojado), evitar cloro, vinagre y agua en exceso.</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">Describes tu protocolo al terminar un servicio para asegurar que el cliente quede satisfecho.</div><div class="q-eval">Esperar: recorrido con cliente, señalar lo hecho, preguntar si faltó algo, recoger sus cosas, cerrar con cortesía.</div></div></div>
+    <div class="q-item"><div class="q-num">6</div><div><div class="q-text">¿Cómo limpias persianas verticales de tela sin dañarlas?</div><div class="q-eval">Esperar: aspirar primero, paño húmedo con jabón neutro, sin restregar, secar con paño limpio, en posición extendida.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block"><h3>Kit básico que debe traer</h3><ul><li>Cubeta, mopa y escurridor</li><li>Desengrasante, multiusos, limpiavidrios</li><li>Esponjas (abrasiva y suave), microfibras</li><li>Guantes de nitrilo (cambio entre áreas)</li><li>Bolsas de basura negras y transparentes</li></ul></div>
+    <div class="block red"><h3>Señales de alerta</h3><ul><li>No trae sus propios productos o herramientas</li><li>Desconoce mezclas peligrosas de químicos</li><li>No diferencia técnicas por tipo de superficie</li><li>No usa guantes o EPP mínimo</li></ul></div>
+  </div>
+</div>
+
+<!-- ALBAÑILERÍA -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(156,163,175,0.15)">🏗️</div>
+    <div><div class="section-title">Albañilería</div><div class="section-sub">Construcción, remodelación y acabados en concreto</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cuál es la dosificación de mezcla para un aplanado de muro y para un colado de firme? ¿Por qué son diferentes?</div><div class="q-eval">Esperar: aplanado 1:4 (cemento:arena); firme 1:2:3 (cemento:arena:grava) para mayor resistencia estructural.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-num">2</div><div class="q-text">¿Cómo verificas que un muro de tabique queda perfectamente a plomo y a nivel?</div><div class="q-eval">Esperar: nivel de burbuja, plomada, tensores de referencia (cuerdas de nivel), revisión constante cada 3-4 hiladas.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">Vas a instalar piso cerámico 60x60 en una sala. ¿Cómo defines el punto de arranque y por qué?</div><div class="q-eval">Esperar: centro visual del cuarto, verificar que piezas en bordes sean simétricas y no menores al 50% de la pieza.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Cuánto tiempo debe curar el concreto de un firme antes de poder trabajar sobre él?</div><div class="q-eval">Esperar: mínimo 28 días para resistencia de diseño; se puede caminar a las 24-48h; no cargas pesadas antes de 7 días.</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">¿Qué es el "fragüe" y por qué es importante aplicarlo correctamente en un piso cerámico?</div><div class="q-eval">Esperar: mortero de junta entre piezas, previene entrada de humedad, movimiento de piezas y da acabado estético.</div></div></div>
+    <div class="q-item"><div class="q-num">6</div><div><div class="q-text">¿Cómo proteges una instalación eléctrica o plomería ya existente mientras haces trabajos de albañilería cerca?</div><div class="q-eval">Esperar: identificar trayectorias antes de romper, usar detector de tuberías/cables, cortes quirúrgicos, señalización.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block"><h3>Herramientas que debe traer</h3><ul><li>Llana, fratás y palustres</li><li>Nivel y plomada</li><li>Cortadora de cerámico manual o eléctrica</li><li>Espatula dentada (medida según pieza)</li><li>Mezcladora o taladro con paleta</li></ul></div>
+    <div class="block red"><h3>Señales de alerta</h3><ul><li>No sabe dosificar mezcla (agrega agua "al tanteo")</li><li>No usa nivel ni plomada</li><li>Propone pegar cerámico directo sin boquilla</li><li>Desconoce tiempos de curado del concreto</li></ul></div>
+  </div>
+</div>
+
+<!-- CARPINTERÍA -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(217,119,6,0.12)">🪵</div>
+    <div><div class="section-title">Carpintería</div><div class="section-sub">Muebles a medida, closets, pisos y reparaciones</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cuál es la diferencia entre MDF, melamina y madera sólida para fabricar un closet? ¿Cuándo recomiendas cada uno?</div><div class="q-eval">Esperar: MDF=liso para pintar; melamina=acabado decorativo listo; madera sólida=durabilidad y lujo. Humedad es factor clave.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">Una puerta de madera está rozando el piso. ¿Cuál es tu proceso de diagnóstico y corrección?</div><div class="q-eval">Esperar: verificar si es deformación, bisagras flojas o piso nuevo. Solución: ajuste bisagras, cepillado o recorte con sierra.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cómo instalas un piso laminado flotante correctamente? ¿Qué es la junta de dilatación y por qué es crítica?</div><div class="q-eval">Esperar: lámina de espuma, instalación flotante, junta 8-10mm en perímetro para expansión térmica, zoclo al final.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Cómo aseguras que un closet fabricado en MDF quede perfectamente a escuadra al instalarlo?</div><div class="q-eval">Esperar: verificar diagonales iguales, nivel en montantes, calzas en piso irregular, tornillería y escuadras metálicas.</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">¿Qué acabado aplicas a una mesa de madera natural para exteriores y en qué se diferencia del acabado interior?</div><div class="q-eval">Esperar: exterior requiere barniz marino o aceite de teka (resistente UV y humedad); interior puede ser barniz normal o laquer.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block"><h3>Herramientas que debe traer</h3><ul><li>Sierra circular y caladora</li><li>Taladro + atornillador de impacto</li><li>Cepillo eléctrico y lijadora orbital</li><li>Metro y escuadra de carpintero</li><li>Nivel de burbuja (1m mínimo)</li></ul></div>
+    <div class="block red"><h3>Señales de alerta</h3><ul><li>No trae sus propias herramientas eléctricas</li><li>Desconoce diferencia entre materiales de tablero</li><li>No menciona junta de dilatación en pisos</li><li>No sabe usar caladora o sierra circular con guía</li></ul></div>
+  </div>
+</div>
+
+<!-- FUMIGACIÓN -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(239,68,68,0.1)">💉</div>
+    <div><div class="section-title">Fumigación</div><div class="section-sub">Control de plagas residencial · COFEPRIS</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Qué información necesitas del cliente antes de comenzar una fumigación? ¿Por qué es importante?</div><div class="q-eval">Esperar: mascotas, menores, embarazadas, alergias, tipo de plaga, áreas críticas, productos alimenticios expuestos.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">¿Cuál es la diferencia entre tratamiento por aspersión, cebo en gel y tratamiento residual? ¿Cuándo usas cada uno?</div><div class="q-eval">Esperar: aspersión=contacto rápido; gel=control específico sin olor (cucarachas); residual=protección prolongada en superficies.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cuánto tiempo debe estar desocupada una casa después de una fumigación general con piretroides?</div><div class="q-eval">Esperar: mínimo 2-4 horas, ventilar antes de regresar, cubrir/retirar alimentos, lavar superficies de contacto de alimentos.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">Llegas a una casa con infestación severa de cucarachas alemanas. ¿Cuál es tu plan de tratamiento?</div><div class="q-eval">Esperar: inspección de focos (detrás refrigerador, cajoneras), gel en grietas, polvo insecticida en áreas ocultas, seguimiento 15 días.</div></div></div>
+    <div class="q-item"><div class="q-num">5</div><div><div class="q-text">¿Cuentas con licencia sanitaria de COFEPRIS para aplicación de plaguicidas? ¿Cada cuánto se renueva?</div><div class="q-eval">Esperar: licencia sanitaria obligatoria por COFEPRIS, renovación anual. Sin esto NO puede operar legalmente.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block"><h3>EPP obligatorio</h3><ul><li>Mascarilla N95 o respirador media cara</li><li>Guantes de nitrilo gruesos</li><li>Gogles de protección química</li><li>Overol desechable o ropa de trabajo</li><li>Botas de hule</li></ul></div>
+    <div class="block red"><h3>Señales de alerta — CRÍTICO</h3><ul><li>No tiene licencia sanitaria COFEPRIS</li><li>No usa EPP durante la aplicación</li><li>No pregunta sobre mascotas o embarazadas</li><li>Desconoce tiempos de desocupación</li><li>No trae hoja de seguridad (MSDS) de productos</li></ul></div>
+  </div>
+</div>
+
+<!-- MASCOTAS, LAVADO AUTO, COSTURA -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(236,72,153,0.12)">🐾</div>
+    <div><div class="section-title">Baño de Mascotas</div><div class="section-sub">Estética y cuidado canino/felino a domicilio</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cómo manejas un perro que se pone agresivo durante el baño? ¿Qué señales detectas con anticipación?</div><div class="q-eval">Esperar: señales de estrés (cola baja, orejas atrás, gruñido), técnicas de contención segura, cuándo no proceder y comunicar al cliente.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">¿Qué shampoos NO debes usar en un cachorro menor de 3 meses y por qué?</div><div class="q-eval">Esperar: shampoos con permetrina, piretrinas o desengrasantes fuertes — sistema inmune inmaduro, piel sensible.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">El cliente tiene un Shih Tzu con pelo muy enredado. ¿Cuál es tu proceso antes de bañarlo?</div><div class="q-eval">Esperar: desenredar en seco con carda o peine de púas, nunca bañar con enredos (se apelmazan), posiblemente rasurar si muy severo.</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Qué señales en la piel o el pelaje de un perro le reportarías al dueño como posible problema de salud?</div><div class="q-eval">Esperar: sarna, hongos, pulgas/garrapatas, heridas, bultos, exceso de descamación, otitis (olor en orejas).</div></div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(79,70,229,0.12)">🚗</div>
+    <div><div class="section-title">Lavado de Auto</div><div class="section-sub">Lavado básico, completo y detailing a domicilio</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Por qué NO debes lavar un auto al sol directo y cuál es la temperatura ideal de la superficie?</div><div class="q-eval">Esperar: el jabón se seca rápido y deja manchas de agua, el calor puede dañar la cera. Ideal: auto frío, sombra o amanecer.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">¿Cuál es la diferencia entre un lavado completo y un detailing básico? Describe qué incluye cada uno.</div><div class="q-eval">Esperar: lavado=limpieza exterior/interior; detailing=descontaminación pintura, pulido, sellado, trato de plásticos y cuero.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cómo limpias los rines de aluminio sin rayarlos ni dañar el acabado?</div><div class="q-eval">Esperar: limpiador de rines específico (no ácido fuerte), cepillo suave, enjuague completo, nunca esponja abrasiva.</div></div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(124,58,237,0.12)">✂️</div>
+    <div><div class="section-title">Costura y Sastrería</div><div class="section-sub">Arreglos, confección a medida y tapicería</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cómo acortas un pantalón de vestir de lana manteniendo la caída y el acabado original?</div><div class="q-eval">Esperar: descoser dobladillo original, medir y cortar dejando margen, dobladillo a mano tipo sastre o invisible según el caso.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">¿Qué tipo de hilo y aguja usas para coser tela de mezclilla gruesa vs seda?</div><div class="q-eval">Esperar: mezclilla = hilo poliéster grueso + aguja 16-18; seda = hilo de seda o poliéster fino + aguja 9-11 ballpoint.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cómo tomas las medidas correctas a un cliente para confeccionar un vestido o traje a medida?</div><div class="q-eval">Esperar: 12+ medidas (busto, cintura, cadera, largo, hombro, manga), postura natural, tomar dos veces para confirmar.</div></div></div>
+  </div>
+</div>
+
+<!-- IMPERMEABILIZACIÓN -->
+<div class="section">
+  <div class="section-header">
+    <div class="cat-badge" style="background:rgba(8,145,178,0.12)">🌊</div>
+    <div><div class="section-title">Impermeabilización</div><div class="section-sub">Azoteas, fachadas y sótanos</div></div>
+  </div>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num">1</div><div><div class="q-text">¿Cuáles son los pasos de preparación de una azotea antes de aplicar cualquier sistema impermeabilizante?</div><div class="q-eval">Esperar: limpieza de mugre/suciedad, eliminación de vegetación, reparación de grietas con mortero o sellador, secado completo.</div></div></div>
+    <div class="q-item"><div class="q-num">2</div><div><div class="q-text">¿Cuál es la diferencia entre impermeabilizante acrílico, de membrana y de poliuretano? ¿Cuándo recomiendas cada uno?</div><div class="q-eval">Esperar: acrílico=mantenimiento económico; membrana=alta durabilidad con tráfico; poliuretano=áreas con movimiento estructural.</div></div></div>
+    <div class="q-item"><div class="q-num">3</div><div><div class="q-text">¿Cuántas manos de impermeabilizante acrílico aplicas y en qué dirección para garantizar cobertura?</div><div class="q-eval">Esperar: mínimo 2 manos cruzadas (primera horizontal, segunda vertical), esperar secado entre manos (2-4 horas).</div></div></div>
+    <div class="q-item"><div class="q-num">4</div><div><div class="q-text">¿Qué garantía ofreces en un trabajo de impermeabilización y de qué factores depende?</div><div class="q-eval">Esperar: acrílico básico 1-2 años; con malla de refuerzo 3-5 años; poliuretano hasta 10 años. Depende de sistema y preparación.</div></div></div>
+  </div>
+  <div class="grid2">
+    <div class="block"><h3>Materiales que debe conocer</h3><ul><li>Impermeabilizante acrílico (Impermax, Nudek, Sika)</li><li>Malla de refuerzo de poliéster</li><li>Sellador de grietas (poliuretano monocomponente)</li><li>Fondo/primer para superficies porosas</li><li>Membrana asfáltica autoadhesiva</li></ul></div>
+    <div class="block red"><h3>Señales de alerta</h3><ul><li>Propone impermeabilizar sobre azotea húmeda</li><li>No trata grietas antes de aplicar</li><li>Aplica una sola mano "gruesa" en vez de dos cruzadas</li><li>No conoce diferencia entre sistemas</li></ul></div>
+  </div>
+</div>
+
+<!-- CIERRE -->
+<div class="section" style="background:#1F1F1F;color:#fff;border-radius:0">
+  <h2 style="font-size:22px;font-weight:700;color:#3DB87A;margin-bottom:12px">Criterios Generales de Aprobación</h2>
+  <p style="color:rgba(255,255,255,0.6);margin-bottom:24px">El entrevistador debe evaluar cada candidato en los siguientes ejes independientemente del oficio:</p>
+  <div class="grid2">
+    <div class="block dark">
+      <h3>✓ Aprobar si...</h3>
+      <ul>
+        <li>Responde correctamente 6/9 preguntas técnicas</li>
+        <li>Trae herramienta propia y en buen estado</li>
+        <li>Demuestra consciencia de seguridad</li>
+        <li>Tiene actitud de servicio y trato amable</li>
+        <li>Acepta los estándares de calidad I mendly</li>
+        <li>Pasa verificación de antecedentes</li>
+      </ul>
+    </div>
+    <div class="block red">
+      <h3>✗ Rechazar si...</h3>
+      <ul>
+        <li>Incumple cualquier señal de alerta crítica</li>
+        <li>No tiene herramienta básica propia</li>
+        <li>Actitud hostil, arrogante o deshonesta</li>
+        <li>No acepta políticas de escrow o comisión</li>
+        <li>Antecedentes penales graves</li>
+        <li>Documentos falsos o inconsistentes</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>
