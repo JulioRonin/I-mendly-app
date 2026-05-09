@@ -1,0 +1,1001 @@
+{
+  "exam": {
+    "id": "imendly-cert-v1",
+    "version": "1.0",
+    "title": "Examen de Certificación I mendly",
+    "subtitle": "Proveedores Certificados — Evaluación oficial",
+    "description": "Examen oficial para obtener el badge 'Proveedor Certificado I mendly'. Demuestra que conoces los valores, protocolos y estándares de calidad que I mendly exige a sus profesionales.",
+    "passing_score": 80,
+    "total_questions": 25,
+    "max_attempts": 2,
+    "time_limit_minutes": 40,
+    "created_at": "2026-03-26",
+    "last_updated": "2026-03-26",
+    "modules": [
+      {
+        "id": "mod-01",
+        "slug": "valores-imendly",
+        "title": "Módulo 1: Los valores I mendly",
+        "description": "Confianza, honestidad y profesionalismo como base del servicio.",
+        "question_count": 5,
+        "icon": "shield-check",
+        "color": "#3DB87A"
+      },
+      {
+        "id": "mod-02",
+        "slug": "antes-del-servicio",
+        "title": "Módulo 2: Antes del servicio",
+        "description": "Protocolo de aceptación, confirmación y preparación.",
+        "question_count": 5,
+        "icon": "calendar-check",
+        "color": "#0891B2"
+      },
+      {
+        "id": "mod-03",
+        "slug": "durante-y-despues",
+        "title": "Módulo 3: Durante y después del servicio",
+        "description": "Conducta en el hogar, documentación de evidencia y cierre.",
+        "question_count": 5,
+        "icon": "home-check",
+        "color": "#7C3AED"
+      },
+      {
+        "id": "mod-04",
+        "slug": "situaciones-dificiles",
+        "title": "Módulo 4: Situaciones difíciles y disputas",
+        "description": "Manejo de conflictos, reclamaciones y protocolos de seguridad.",
+        "question_count": 5,
+        "icon": "alert-triangle",
+        "color": "#F59E0B"
+      },
+      {
+        "id": "mod-05",
+        "slug": "uso-de-la-app",
+        "title": "Módulo 5: Uso de la app I mendly",
+        "description": "Plataforma, pagos escrow, certificación y calificaciones.",
+        "question_count": 5,
+        "icon": "smartphone",
+        "color": "#EF4444"
+      }
+    ],
+    "questions": [
+
+      {
+        "id": "q-01",
+        "module_id": "mod-01",
+        "order": 1,
+        "text": "Un cliente te solicita un servicio de plomería y al revisar el trabajo encuentras que el problema es más complejo de lo indicado. El costo real sería el doble del cotizado. ¿Qué debes hacer?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q01-a",
+            "text": "Realizar el trabajo completo y cobrar el doble al final sin avisar — el cliente verá que era necesario.",
+            "is_correct": false,
+            "rationale": "Cobrar más de lo acordado sin consentimiento previo es una violación al contrato y a los valores de I mendly. El cliente tiene derecho a decidir antes de que se incurra en costos adicionales."
+          },
+          {
+            "id": "q01-b",
+            "text": "Parar el trabajo, informar al cliente del hallazgo y el nuevo costo estimado, y esperar su aprobación antes de continuar.",
+            "is_correct": true,
+            "rationale": "La transparencia ante imprevistos es un valor fundamental de I mendly. El cliente siempre debe aprobar cualquier costo adicional ANTES de que se realice el trabajo extra. Usar el chat de la app para dejar registro escrito."
+          },
+          {
+            "id": "q01-c",
+            "text": "Hacer solo lo que cubre el presupuesto original y dejar el resto sin terminar.",
+            "is_correct": false,
+            "rationale": "Dejar un trabajo a medias sin comunicación puede causar daños adicionales al hogar del cliente y genera una mala experiencia. La comunicación proactiva es siempre la solución."
+          },
+          {
+            "id": "q01-d",
+            "text": "Terminar el trabajo y no cobrar la diferencia para mantener buena calificación.",
+            "is_correct": false,
+            "rationale": "Aunque el gesto parece amable, realizas trabajo extra sin compensación justa y sin el consentimiento informado del cliente. La opción correcta es siempre comunicar y acordar."
+          }
+        ]
+      },
+
+      {
+        "id": "q-02",
+        "module_id": "mod-01",
+        "order": 2,
+        "text": "Un cliente satisfecho con tu trabajo te pide tu número de teléfono personal para contratarte directamente la próxima vez 'para ahorrarse la comisión de I mendly'. ¿Cómo respondes?",
+        "type": "single_choice",
+        "difficulty": "high",
+        "options": [
+          {
+            "id": "q02-a",
+            "text": "Le das tu número — es un buen cliente y la comisión es molesta para ambos.",
+            "is_correct": false,
+            "rationale": "Esto viola directamente la cláusula anti-derivación del Contrato de Proveedor. Puede resultar en baja definitiva de I mendly, pérdida de pagos pendientes y una penalización del 20% del monto desviado."
+          },
+          {
+            "id": "q02-b",
+            "text": "Le explicas amablemente que no puedes dar tu contacto directo, pero que con gusto lo atiendes de nuevo a través de la app, donde además tiene la protección del escrow.",
+            "is_correct": true,
+            "rationale": "Esta es la respuesta correcta. Rechazas la derivación con educación y resaltas el beneficio que tiene el cliente al usar la plataforma (protección de pago, seguridad, historial). Tu reputación en I mendly vale más que un servicio directo."
+          },
+          {
+            "id": "q02-c",
+            "text": "Le dices que sí pero le pides que no lo comente con I mendly.",
+            "is_correct": false,
+            "rationale": "Esto agrava la infracción. Solicitar discreción sobre una conducta prohibida demuestra consciencia de la falta y puede resultar en consecuencias legales además de la baja de la plataforma."
+          },
+          {
+            "id": "q02-d",
+            "text": "Le das el contacto de un colega que no está en I mendly para que lo contraten directamente.",
+            "is_correct": false,
+            "rationale": "Facilitar que el cliente evite la plataforma también viola el espíritu del contrato, aunque sea a través de un tercero. La intención de eludir el sistema es la infracción."
+          }
+        ]
+      },
+
+      {
+        "id": "q-03",
+        "module_id": "mod-01",
+        "order": 3,
+        "text": "¿Cuál de los siguientes comportamientos puede resultar en la PÉRDIDA PERMANENTE de tu badge 'Certificado I mendly'?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q03-a",
+            "text": "Llegar 20 minutos tarde a un servicio sin avisar.",
+            "is_correct": false,
+            "rationale": "Un retraso sin aviso es una falta, pero no causa pérdida del badge directamente. Genera una mala calificación y posiblemente una advertencia. La pérdida del badge requiere incumplimientos más graves o acumulación de faltas."
+          },
+          {
+            "id": "q03-b",
+            "text": "Recibir tres disputas resueltas en tu contra en un período de seis meses.",
+            "is_correct": true,
+            "rationale": "Tres disputas perdidas en seis meses es uno de los criterios que activa la pérdida automática del badge de certificación. El sistema de calidad de I mendly protege la confianza de los clientes: si consistentemente el trabajo no cumple, el badge no puede mantenerse."
+          },
+          {
+            "id": "q03-c",
+            "text": "No responder un mensaje del cliente durante las primeras 2 horas.",
+            "is_correct": false,
+            "rationale": "No responder en 2 horas es un incumplimiento de protocolo, pero el estándar de I mendly es responder en menos de 30 minutos durante un servicio activo. Un solo retraso no causa pérdida del badge."
+          },
+          {
+            "id": "q03-d",
+            "text": "Cobrar en efectivo de manera excepcional cuando la app presenta fallas técnicas.",
+            "is_correct": false,
+            "rationale": "Aunque cobrar fuera de la plataforma es siempre incorrecto, aquí la opción correcta es reportar la falla técnica a soporte y reprogramar. Dicho esto, 'cobrar en efectivo porque la app falló' suele ser un pretexto — y si se comprueba la conducta, puede resultar en baja definitiva."
+          }
+        ]
+      },
+
+      {
+        "id": "q-04",
+        "module_id": "mod-01",
+        "order": 4,
+        "text": "¿Qué significa realmente el badge 'Proveedor Certificado I mendly' para tus clientes?",
+        "type": "single_choice",
+        "difficulty": "low",
+        "options": [
+          {
+            "id": "q04-a",
+            "text": "Que I mendly garantiza que el proveedor siempre hace trabajos perfectos y sin errores.",
+            "is_correct": false,
+            "rationale": "I mendly no garantiza la perfección absoluta de cada trabajo. El badge certifica identidad, antecedentes y actitud de servicio — no la ausencia de errores. Lo que sí garantiza es que el proveedor es una persona verificada y comprometida con la calidad."
+          },
+          {
+            "id": "q04-b",
+            "text": "Que el proveedor es empleado directo de I mendly.",
+            "is_correct": false,
+            "rationale": "Incorrecto. Los proveedores son profesionales independientes. I mendly actúa como plataforma de intermediación, no como empleador. Esta es una distinción legal importante."
+          },
+          {
+            "id": "q04-c",
+            "text": "Que el proveedor tiene identidad verificada, antecedentes limpios, portafolio revisado y fue evaluado en una entrevista de calidad.",
+            "is_correct": true,
+            "rationale": "Esto es exactamente lo que certifica el badge. El proceso de 6 pasos verifica: identidad (INE + CURP + selfie), antecedentes penales, portafolio de trabajos, entrevista de calidad y examen de certificación. Eso es lo que diferencia a I mendly."
+          },
+          {
+            "id": "q04-d",
+            "text": "Que el proveedor tiene más de 10 años de experiencia en su oficio.",
+            "is_correct": false,
+            "rationale": "Los años de experiencia son un factor de evaluación, pero no un requisito mínimo absoluto para la certificación. Un profesional con menos años pero excelentes referencias y actitud puede ser certificado."
+          }
+        ]
+      },
+
+      {
+        "id": "q-05",
+        "module_id": "mod-01",
+        "order": 5,
+        "text": "¿Cómo afecta tu calificación promedio tu posición en los resultados de búsqueda de I mendly?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q05-a",
+            "text": "No afecta — todos los proveedores aparecen en orden alfabético.",
+            "is_correct": false,
+            "rationale": "Incorrecto. El algoritmo de I mendly pondera múltiples factores incluyendo calificación promedio, tasa de completados, tiempo de respuesta y antigüedad. La calificación es el factor de mayor peso."
+          },
+          {
+            "id": "q05-b",
+            "text": "Solo afecta si tienes menos de 4 estrellas.",
+            "is_correct": false,
+            "rationale": "El impacto de la calificación es continuo y diferenciador en toda la escala. La diferencia entre 4.5 y 4.9 estrellas sí impacta en la visibilidad, aunque ambas sean 'buenas' calificaciones."
+          },
+          {
+            "id": "q05-c",
+            "text": "Una calificación más alta te posiciona más arriba en los resultados, lo que genera más solicitudes y mayores ingresos.",
+            "is_correct": true,
+            "rationale": "Correcto. La calificación promedio tiene un peso del 40% en el algoritmo de ranking de I mendly. Los proveedores mejor calificados aparecen primero, reciben más solicitudes y tienen mayores ingresos. Es el ciclo virtuoso de la excelencia."
+          },
+          {
+            "id": "q05-d",
+            "text": "La calificación solo importa para la renovación del badge, no para la visibilidad diaria.",
+            "is_correct": false,
+            "rationale": "Incorrecto. La calificación afecta la visibilidad en tiempo real y también es criterio de renovación del badge. Son dos impactos distintos del mismo factor."
+          }
+        ]
+      },
+
+      {
+        "id": "q-06",
+        "module_id": "mod-02",
+        "order": 6,
+        "text": "Recibes una solicitud de servicio de instalación eléctrica. Al leer la descripción notas que el cliente menciona que su tablero eléctrico 'chispeó' la semana pasada. ¿Cuál es el primer paso correcto?",
+        "type": "single_choice",
+        "difficulty": "high",
+        "options": [
+          {
+            "id": "q06-a",
+            "text": "Aceptar la solicitud inmediatamente para no perder el trabajo — ya evaluarás el riesgo cuando llegues.",
+            "is_correct": false,
+            "rationale": "Aceptar sin entender el alcance del trabajo es un error. Un tablero que 'chispeó' puede indicar un problema grave de seguridad. Primero debes obtener más información para cotizar correctamente y garantizar tu seguridad."
+          },
+          {
+            "id": "q06-b",
+            "text": "Ignorar esa parte de la descripción — los clientes exageran los problemas.",
+            "is_correct": false,
+            "rationale": "Ignorar señales de alerta en la descripción del trabajo es una falta de profesionalismo que puede resultar en situaciones peligrosas para ti y para el cliente, además de reclamaciones posteriores."
+          },
+          {
+            "id": "q06-c",
+            "text": "Usar el chat de la app para preguntar al cliente más detalles sobre el tablero antes de aceptar, para evaluar si es un trabajo dentro de tu capacidad técnica y cotizar correctamente.",
+            "is_correct": true,
+            "rationale": "Siempre es profesional pedir más información antes de aceptar cuando la descripción sugiere complejidad técnica o riesgo. Esto te protege a ti, al cliente y garantiza una cotización justa. El chat de la app deja registro de la comunicación."
+          },
+          {
+            "id": "q06-d",
+            "text": "Rechazar la solicitud — cualquier trabajo con riesgo eléctrico debe evitarse.",
+            "is_correct": false,
+            "rationale": "Rechazar sin investigar es el extremo opuesto al error anterior. Como electricista certificado, eres el profesional indicado para evaluar y resolver problemas eléctricos. El rechazo sin análisis limita innecesariamente tus ingresos."
+          }
+        ]
+      },
+
+      {
+        "id": "q-07",
+        "module_id": "mod-02",
+        "order": 7,
+        "text": "Tienes un servicio confirmado para las 10:00 AM. A las 9:30 AM sabes que llegarás a las 10:45 AM por un problema de tráfico. ¿Qué debes hacer?",
+        "type": "single_choice",
+        "difficulty": "low",
+        "options": [
+          {
+            "id": "q07-a",
+            "text": "Llegar a las 10:45 AM y disculparte en persona — el tráfico le pasa a todos.",
+            "is_correct": false,
+            "rationale": "No avisar del retraso es un faltante de respeto al tiempo del cliente. El protocolo de I mendly establece avisar inmediatamente cuando sabes que habrá un retraso, no cuando ya llegaste tarde."
+          },
+          {
+            "id": "q07-b",
+            "text": "Enviar un mensaje por el chat de la app en ese momento explicando el retraso, la hora estimada de llegada y disculpándote.",
+            "is_correct": true,
+            "rationale": "Correcto. Avisar con anticipación, por el canal oficial (chat de la app), con la nueva hora estimada es exactamente el protocolo correcto. El cliente puede reorganizar su tiempo y la comunicación queda registrada. La puntualidad es importante; la comunicación honesta ante imprevistos también."
+          },
+          {
+            "id": "q07-c",
+            "text": "Cancelar el servicio — si no puedes llegar puntual, mejor no ir.",
+            "is_correct": false,
+            "rationale": "Cancelar por un retraso de 45 minutos cuando tienes oportunidad de comunicarlo es una solución desproporcionada. Las cancelaciones tienen consecuencias en tu historial. La comunicación oportuna generalmente es suficiente."
+          },
+          {
+            "id": "q07-d",
+            "text": "No hacer nada — el cliente entenderá cuando llegues.",
+            "is_correct": false,
+            "rationale": "Nunca asumas que el cliente 'entenderá'. Tu tiempo de respuesta y puntualidad son factores que afectan directamente tu calificación y tu posición en la plataforma."
+          }
+        ]
+      },
+
+      {
+        "id": "q-08",
+        "module_id": "mod-02",
+        "order": 8,
+        "text": "Antes de llegar al servicio, ¿cuál de estas acciones es parte del protocolo recomendado por I mendly?",
+        "type": "single_choice",
+        "difficulty": "low",
+        "options": [
+          {
+            "id": "q08-a",
+            "text": "Llamar al cliente por teléfono la noche anterior para confirmar.",
+            "is_correct": false,
+            "rationale": "Las comunicaciones deben hacerse a través del chat de la app, no por llamada telefónica, para mantener el registro oficial. Además, una llamada la noche anterior puede ser percibida como intrusiva."
+          },
+          {
+            "id": "q08-b",
+            "text": "Enviar un mensaje por el chat de la app 30 minutos antes confirmando que estás en camino.",
+            "is_correct": true,
+            "rationale": "El protocolo I mendly establece enviar confirmación de llegada con aproximadamente 30 minutos de anticipación por el chat oficial. Esto tranquiliza al cliente, demuestra profesionalismo y genera buenas calificaciones."
+          },
+          {
+            "id": "q08-c",
+            "text": "Verificar si el cliente publicó el servicio en otras plataformas para comparar precios.",
+            "is_correct": false,
+            "rationale": "Esta conducta no forma parte del protocolo y puede indicar una intención de competencia desleal o de contactar al cliente fuera de la plataforma, lo cual está prohibido."
+          },
+          {
+            "id": "q08-d",
+            "text": "Esperar a que el cliente te contacte — si no lo hace, es que no necesita confirmación.",
+            "is_correct": false,
+            "rationale": "No esperes a que el cliente tome la iniciativa. La confirmación proactiva de llegada es parte del protocolo de servicio de I mendly y diferencia a los proveedores 5 estrellas."
+          }
+        ]
+      },
+
+      {
+        "id": "q-09",
+        "module_id": "mod-02",
+        "order": 9,
+        "text": "El cliente te envía un mensaje por el chat de la app preguntando si puedes traer un material específico para el servicio. ¿En cuánto tiempo deberías responder?",
+        "type": "single_choice",
+        "difficulty": "low",
+        "options": [
+          {
+            "id": "q09-a",
+            "text": "24 horas — tienes un día completo de margen.",
+            "is_correct": false,
+            "rationale": "24 horas es demasiado tiempo para una consulta de un servicio activo o próximo. Los clientes esperan respuestas ágiles. Un tiempo de respuesta lento afecta directamente tu calificación."
+          },
+          {
+            "id": "q09-b",
+            "text": "Cuando termines tu trabajo actual — el cliente puede esperar.",
+            "is_correct": false,
+            "rationale": "El cliente no debe esperar sin saber si recibirás su mensaje. Si estás en otro servicio, envía al menos un mensaje breve reconociendo que leíste y que responderás en X tiempo."
+          },
+          {
+            "id": "q09-c",
+            "text": "Máximo 30 minutos para mensajes relacionados con un servicio activo o próximo.",
+            "is_correct": true,
+            "rationale": "El estándar de I mendly es responder en máximo 30 minutos durante servicios activos o próximos. Este tiempo de respuesta rápida es uno de los factores que más valoran los clientes y que más impacta en las calificaciones de 5 estrellas."
+          },
+          {
+            "id": "q09-d",
+            "text": "No es necesario responder — si el material es necesario lo llevas, si no, no.",
+            "is_correct": false,
+            "rationale": "No responder mensajes del cliente es una falta grave al protocolo de comunicación. El cliente hizo una pregunta específica que necesita respuesta para prepararse para el servicio."
+          }
+        ]
+      },
+
+      {
+        "id": "q-10",
+        "module_id": "mod-02",
+        "order": 10,
+        "text": "Revisas una solicitud y te das cuenta de que el trabajo descrito supera tu nivel de conocimiento técnico en esa área específica. ¿Cuál es la acción más correcta?",
+        "type": "single_choice",
+        "difficulty": "high",
+        "options": [
+          {
+            "id": "q10-a",
+            "text": "Aceptar de todas formas y aprender en el camino — el cliente no sabrá la diferencia.",
+            "is_correct": false,
+            "rationale": "Aceptar trabajos fuera de tu capacidad técnica es peligroso para el cliente, para ti y para tu reputación. Si el trabajo sale mal, la disputa será muy difícil de ganar y tu calificación sufrirá."
+          },
+          {
+            "id": "q10-b",
+            "text": "Rechazar la solicitud con una explicación honesta al cliente de que ese trabajo específico está fuera de tu especialidad actual.",
+            "is_correct": true,
+            "rationale": "La honestidad protege al cliente y a tu reputación. Un rechazo justificado y comunicado correctamente no impacta negativamente en tu historial. Es mucho mejor rechazar que realizar un trabajo mal hecho que genere una disputa y mala calificación."
+          },
+          {
+            "id": "q10-c",
+            "text": "Aceptar y luego subcontratar a otro profesional sin informar al cliente.",
+            "is_correct": false,
+            "rationale": "El cliente contrató TU servicio certificado. Subcontratar sin informar es un engaño. El subcontratado no está certificado por I mendly y si algo sale mal, tú eres el responsable ante el cliente y ante la plataforma."
+          },
+          {
+            "id": "q10-d",
+            "text": "Aceptar y cobrar el precio más alto para justificar el esfuerzo adicional que implicará aprenderlo.",
+            "is_correct": false,
+            "rationale": "Cobrar más por un trabajo que no dominas técnicamente perjudica al cliente doblemente: paga más y recibe un servicio de calidad inferior. Esto viola los valores de transparencia y honestidad de I mendly."
+          }
+        ]
+      },
+
+      {
+        "id": "q-11",
+        "module_id": "mod-03",
+        "order": 11,
+        "text": "Al llegar al domicilio del cliente para una reparación de plomería, el cliente te ofrece recorrerte toda la casa para mostrarte 'otros detalles' que podrían necesitar atención. ¿Cómo manejas esta situación?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q11-a",
+            "text": "Aceptar el recorrido completo y cotizar todos los trabajos extra en el momento para maximizar ingresos.",
+            "is_correct": false,
+            "rationale": "Aunque el ingreso extra es atractivo, hacer un recorrido completo por la casa sin el trabajo original completado puede distraer y alargar el servicio. La prioridad debe ser el trabajo contratado; el resto puede cotizarse una vez terminado."
+          },
+          {
+            "id": "q11-b",
+            "text": "Agradecer y explicar que primero atenderás el trabajo contratado, y que con gusto revisas los otros puntos al terminar si tiene tiempo.",
+            "is_correct": true,
+            "rationale": "Esta respuesta demuestra profesionalismo y gestión del tiempo. Priorizas el trabajo acordado, estableces un límite claro y mantienes la posibilidad de ampliar el alcance de forma ordenada y con registro en la app si corresponde."
+          },
+          {
+            "id": "q11-c",
+            "text": "Aceptar pero cobrar por el tiempo del recorrido.",
+            "is_correct": false,
+            "rationale": "Cobrar por el tiempo de un recorrido que el cliente propone de buena fe generaría una experiencia negativa. La situación correcta es gestionar el tiempo de forma profesional, no convertirla en un cobro adicional."
+          },
+          {
+            "id": "q11-d",
+            "text": "Rechazar cualquier conversación adicional — solo haces lo que dice la solicitud.",
+            "is_correct": false,
+            "rationale": "Ser inflexible y cerrado al diálogo es igualmente incorrecto. I mendly busca proveedores con actitud de servicio. La clave es el equilibrio: atender lo contratado con prioridad y estar abierto a ampliar el servicio de forma ordenada."
+          }
+        ]
+      },
+
+      {
+        "id": "q-12",
+        "module_id": "mod-03",
+        "order": 12,
+        "text": "Al terminar un trabajo de pintura en la sala del cliente, ¿cuál de las siguientes acciones es OBLIGATORIA antes de marcar el servicio como completado en la app?",
+        "type": "single_choice",
+        "difficulty": "low",
+        "options": [
+          {
+            "id": "q12-a",
+            "text": "Marcar el servicio como completado tan pronto el último trazo de pintura esté listo, para liberar el pago rápidamente.",
+            "is_correct": false,
+            "rationale": "Marcar completado inmediatamente antes de limpiar y mostrar el resultado al cliente es un error. El trabajo no está verdaderamente terminado hasta que el área está limpia y el cliente ha visto el resultado."
+          },
+          {
+            "id": "q12-b",
+            "text": "Limpiar el área de trabajo, retirar protecciones, mostrar el resultado al cliente, subir fotografías de evidencia a la app, y entonces marcar como completado.",
+            "is_correct": true,
+            "rationale": "Este es el procedimiento completo y correcto: (1) limpiar el área, (2) mostrar el trabajo al cliente para obtener retroalimentación en ese momento, (3) subir fotos de evidencia a la app, (4) marcar completado. Las fotos son evidencia invaluable si surge una disputa."
+          },
+          {
+            "id": "q12-c",
+            "text": "Pedir al cliente que firme un papel que diga que el trabajo quedó bien antes de marcar completado.",
+            "is_correct": false,
+            "rationale": "I mendly no utiliza firmas físicas para el cierre de servicios. El mecanismo oficial es la confirmación digital del cliente en la app. Una firma en papel no tiene validez dentro del sistema de la plataforma."
+          },
+          {
+            "id": "q12-d",
+            "text": "Cobrar directamente al cliente en efectivo y luego marcar el servicio como completado en la app.",
+            "is_correct": false,
+            "rationale": "Cobrar en efectivo, además de ser una violación al contrato de proveedor, puede resultar en un pago doble (el cliente ya pagó por escrow). Nunca aceptes pagos fuera de la plataforma."
+          }
+        ]
+      },
+
+      {
+        "id": "q-13",
+        "module_id": "mod-03",
+        "order": 13,
+        "text": "Durante un servicio de limpieza profunda, accidentalmente rompes un adorno del cliente. Nadie lo vio. ¿Qué haces?",
+        "type": "single_choice",
+        "difficulty": "high",
+        "options": [
+          {
+            "id": "q13-a",
+            "text": "Recoger los pedazos discretamente y no decir nada — es un accidente menor.",
+            "is_correct": false,
+            "rationale": "Ocultar un daño accidental es deshonesto y viola los valores fundamentales de I mendly. Si el cliente lo descubre después del servicio, la situación será mucho peor. La honestidad siempre es la mejor política, especialmente en momentos incómodos."
+          },
+          {
+            "id": "q13-b",
+            "text": "Informar inmediatamente al cliente del accidente, mostrarle el objeto dañado, disculparte y usar el chat de la app para documentar el incidente.",
+            "is_correct": true,
+            "rationale": "La honestidad ante accidentes es un valor crítico de I mendly. Informar de inmediato, documentar en el chat de la app y discutir la compensación demuestra integridad. Los clientes suelen responder bien a la honestidad; lo que no perdonan es el engaño."
+          },
+          {
+            "id": "q13-c",
+            "text": "Terminar el servicio y al final, antes de irse, mencionarlo como algo 'que ya estaba así'.",
+            "is_correct": false,
+            "rationale": "Atribuir el daño a una condición preexistente cuando no es verdad es mentir. Esto puede considerarse fraude y resultar en una disputa que perderás, dado que no tienes evidencia de que el objeto ya estaba dañado antes."
+          },
+          {
+            "id": "q13-d",
+            "text": "Dejar dinero en efectivo al lado del objeto roto sin decir nada.",
+            "is_correct": false,
+            "rationale": "Aunque el gesto tiene buena intención, dejar dinero en efectivo sin comunicarlo es evadir la conversación. La situación correcta es comunicarlo directamente y de manera honesta."
+          }
+        ]
+      },
+
+      {
+        "id": "q-14",
+        "module_id": "mod-03",
+        "order": 14,
+        "text": "Terminaste un trabajo de carpintería y el cliente quiere darte una propina en efectivo como agradecimiento. ¿Puedes aceptarla?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q14-a",
+            "text": "No, nunca puedes aceptar dinero en efectivo — el contrato lo prohíbe absolutamente.",
+            "is_correct": false,
+            "rationale": "La prohibición de pagos en efectivo aplica al Monto del Servicio acordado, no a una propina voluntaria del cliente. Una propina es una muestra de aprecio personal, no un pago por el servicio."
+          },
+          {
+            "id": "q14-b",
+            "text": "Sí, una propina voluntaria del cliente es independiente del pago del servicio y puedes aceptarla con agradecimiento.",
+            "is_correct": true,
+            "rationale": "Correcto. La cláusula anti-derivación prohíbe acordar pagos alternativos al servicio contratado. Una propina voluntaria y espontánea del cliente es diferente y no está prohibida. Eso sí, nunca la solicites ni la insinúes."
+          },
+          {
+            "id": "q14-c",
+            "text": "Solo si es menor a $100 pesos.",
+            "is_correct": false,
+            "rationale": "No existe un límite monetario en el monto de una propina voluntaria. La distinción relevante es si el pago es voluntario y adicional (propina) o si es parte del pago por el servicio acordado (prohibido en efectivo)."
+          },
+          {
+            "id": "q14-d",
+            "text": "Sí, pero debes reportarla a I mendly para que se descuente de tu siguiente comisión.",
+            "is_correct": false,
+            "rationale": "No existe ningún mecanismo ni obligación de reportar propinas a I mendly. Las propinas son una compensación directa entre cliente y proveedor, completamente al margen de la plataforma."
+          }
+        ]
+      },
+
+      {
+        "id": "q-15",
+        "module_id": "mod-03",
+        "order": 15,
+        "text": "Al concluir el servicio, el cliente dice que el trabajo 'quedó bien pero podría estar mejor'. No abre una disputa pero tampoco confirma la satisfacción. ¿Qué haces?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q15-a",
+            "text": "Esperar las 24 horas del timeout — si no abre disputa, el pago se libera solo.",
+            "is_correct": false,
+            "rationale": "Aunque técnicamente el pago se liberará por timeout, no aprovechar la oportunidad de resolver la insatisfacción del cliente en ese momento es una oportunidad perdida. Un cliente que dice 'podría estar mejor' puede dejar 3 estrellas en lugar de 5."
+          },
+          {
+            "id": "q15-b",
+            "text": "Preguntar al cliente qué específicamente podría mejorar y, si es algo rápido y dentro de lo acordado, corregirlo en ese momento.",
+            "is_correct": true,
+            "rationale": "Esta respuesta demuestra actitud de servicio genuina. Preguntar qué puede mejorar y resolverlo en el momento convierte una experiencia de 3 estrellas en una de 5. Los proveedores 5 estrellas no esperan el timeout — buscan la satisfacción real del cliente."
+          },
+          {
+            "id": "q15-c",
+            "text": "Decirle al cliente que si no está satisfecho debe abrir una disputa — eso es lo que dice el protocolo.",
+            "is_correct": false,
+            "rationale": "Invitar al cliente a abrir una disputa cuando hay una solución simple disponible es una mala práctica. Las disputas deben ser el último recurso, no la primera respuesta ante una observación menor."
+          },
+          {
+            "id": "q15-d",
+            "text": "Ofrecer un descuento en el próximo servicio para compensar la insatisfacción.",
+            "is_correct": false,
+            "rationale": "Un descuento en el futuro no resuelve el problema presente. El cliente quiere que el trabajo actual quede bien. Resolver en el momento siempre es mejor que compensar después."
+          }
+        ]
+      },
+
+      {
+        "id": "q-16",
+        "module_id": "mod-04",
+        "order": 16,
+        "text": "Un cliente abre una disputa alegando que dejaste manchas de pintura en el piso de su sala, lo cual no es verdad — colocaste protecciones antes de empezar. ¿Cómo respondes dentro de la plataforma?",
+        "type": "single_choice",
+        "difficulty": "high",
+        "options": [
+          {
+            "id": "q16-a",
+            "text": "Responder con enojo en el chat explicando que el cliente miente y exigir que retire la disputa.",
+            "is_correct": false,
+            "rationale": "Responder con enojo es el peor abordaje posible. El equipo de I mendly leerá todas las comunicaciones. Una respuesta emocional y agresiva resta credibilidad a tu versión, incluso si tienes razón."
+          },
+          {
+            "id": "q16-b",
+            "text": "Ignorar la disputa — si no tienes evidencia de que pusiste protecciones, no hay nada que hacer.",
+            "is_correct": false,
+            "rationale": "No responder a una disputa dentro del plazo de 24 horas resulta en que I mendly resuelva solo con la versión del cliente, lo cual muy probablemente será a tu contra."
+          },
+          {
+            "id": "q16-c",
+            "text": "Responder dentro del plazo de 24 horas de forma calmada, describir el protocolo de protección que seguiste, adjuntar las fotografías de evidencia tomadas antes y después del trabajo.",
+            "is_correct": true,
+            "rationale": "Esta es la respuesta correcta. Las fotografías de evidencia tomadas ANTES de empezar (mostrando los plásticos de protección colocados) y DESPUÉS de terminar son tu mejor defensa. Por eso el protocolo I mendly exige documentar fotográficamente. Responder calmado y con evidencia es siempre la estrategia ganadora."
+          },
+          {
+            "id": "q16-d",
+            "text": "Contactar directamente al cliente por teléfono para resolver antes de que I mendly intervenga.",
+            "is_correct": false,
+            "rationale": "Una vez abierta la disputa, toda comunicación debe hacerse a través del canal oficial de la plataforma. Contactar por teléfono puede interpretarse como presión al cliente y puede empeorar tu situación."
+          }
+        ]
+      },
+
+      {
+        "id": "q-17",
+        "module_id": "mod-04",
+        "order": 17,
+        "text": "Llegas a prestar un servicio de instalación de AC y al revisar el espacio encuentras que hay un problema eléctrico previo que hace el trabajo inseguro. El cliente insiste en que lo hagas de todas formas. ¿Qué haces?",
+        "type": "single_choice",
+        "difficulty": "high",
+        "options": [
+          {
+            "id": "q17-a",
+            "text": "Hacer el trabajo como el cliente pide — él es quien manda en su casa.",
+            "is_correct": false,
+            "rationale": "La seguridad no es negociable. Realizar un trabajo en condiciones inseguras te pone a ti y al cliente en riesgo de accidente grave. Además, si algo sale mal, tú eres el profesional responsable que ejecutó el trabajo bajo condiciones inseguras."
+          },
+          {
+            "id": "q17-b",
+            "text": "Negarte a realizar el trabajo mientras exista el riesgo eléctrico, documentarlo en el chat de la app, y sugerir al cliente que primero resuelva el problema eléctrico con un electricista.",
+            "is_correct": true,
+            "rationale": "Correcto. Los proveedores I mendly no deben realizar trabajos en condiciones que pongan en riesgo la seguridad. Documentar la situación en el chat protege a ambas partes y demuestra tu profesionalismo. Cancelar por causa de seguridad justificada no impacta negativamente en tu historial."
+          },
+          {
+            "id": "q17-c",
+            "text": "Hacer el trabajo rápido antes de que el problema eléctrico cause algún incidente.",
+            "is_correct": false,
+            "rationale": "No existe una velocidad que haga seguro un trabajo en condiciones eléctricas peligrosas. Esta lógica es incorrecta y peligrosa."
+          },
+          {
+            "id": "q17-d",
+            "text": "Pedir un precio más alto como compensación por el riesgo adicional.",
+            "is_correct": false,
+            "rationale": "El riesgo no se compensa con dinero — se elimina. Cobrar más por realizar un trabajo inseguro no te protege legal ni moralmente si ocurre un accidente."
+          }
+        ]
+      },
+
+      {
+        "id": "q-18",
+        "module_id": "mod-04",
+        "order": 18,
+        "text": "Un cliente tiene actitud agresiva desde el inicio del servicio, hace comentarios hostiles y en un momento sube el tono de manera intimidante. ¿Qué debes hacer?",
+        "type": "single_choice",
+        "difficulty": "high",
+        "options": [
+          {
+            "id": "q18-a",
+            "text": "Responder a la agresión con firmeza para que el cliente te respete.",
+            "is_correct": false,
+            "rationale": "Responder a la agresión con agresión escala el conflicto y puede terminar en una situación peligrosa. Nunca respondas de manera agresiva, sin importar la provocación."
+          },
+          {
+            "id": "q18-b",
+            "text": "Ignorar la actitud y concentrarte en terminar el trabajo lo más rápido posible.",
+            "is_correct": false,
+            "rationale": "Si la situación es de intimidación activa, terminar el trabajo rápido sin reportarlo puede exponerte a más riesgos. Un ambiente de trabajo hostil o peligroso debe reportarse."
+          },
+          {
+            "id": "q18-c",
+            "text": "Si sientes que tu seguridad está en riesgo, detener el trabajo, salir del domicilio de manera calmada y reportar la situación a I mendly a través del chat de la app de inmediato.",
+            "is_correct": true,
+            "rationale": "Tu seguridad personal es la prioridad absoluta. Si el ambiente de trabajo es hostil o intimidante, tienes derecho a retirarte. Reporta inmediatamente a través del chat, documenta lo ocurrido y el equipo de I mendly intervendrá. Una cancelación por seguridad personal no impacta negativamente en tu historial."
+          },
+          {
+            "id": "q18-d",
+            "text": "Llamar a un familiar o amigo para que te acompañe y así tener testigos.",
+            "is_correct": false,
+            "rationale": "Llevar a personas no autorizadas al domicilio del cliente es una violación a su privacidad. El mecanismo correcto es reportar a I mendly y retirarte si sientes que tu seguridad está en riesgo."
+          }
+        ]
+      },
+
+      {
+        "id": "q-19",
+        "module_id": "mod-04",
+        "order": 19,
+        "text": "El cliente alega que el trabajo de fumigación que realizaste no funcionó porque vio una cucaracha tres días después. ¿Cuál es la respuesta más profesional?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q19-a",
+            "text": "Argumentar que una cucaracha no prueba que la fumigación falló — el cliente exagera.",
+            "is_correct": false,
+            "rationale": "Desestimar la preocupación del cliente sin escuchar ni investigar es una mala práctica de servicio. Aunque técnicamente puedas tener razón, la respuesta correcta es escuchar primero."
+          },
+          {
+            "id": "q19-b",
+            "text": "Escuchar la situación, explicar los tiempos normales de efecto del producto utilizado, y ofrecer una revisión si el producto garantiza reinfestación cero en el período contratado.",
+            "is_correct": true,
+            "rationale": "Esta respuesta demuestra profesionalismo técnico y actitud de servicio. Explicar los tiempos de efecto (muchos productos tienen períodos de eliminación progresiva) y ofrecer una revisión cuando está dentro del alcance de la garantía es exactamente lo que diferencia a un proveedor certificado."
+          },
+          {
+            "id": "q19-c",
+            "text": "Decirle al cliente que abra una disputa si no está satisfecho — eso decidirá I mendly.",
+            "is_correct": false,
+            "rationale": "Derivar inmediatamente a una disputa una situación que puede resolverse con comunicación técnica es una mala práctica. Las disputas deben ser el último recurso."
+          },
+          {
+            "id": "q19-d",
+            "text": "Ofrecer repetir el servicio gratis para evitar una mala calificación.",
+            "is_correct": false,
+            "rationale": "Ofrecer repetir gratis sin evaluar si es justificado puede ser excesivo y crear un precedente inadecuado. La respuesta correcta es evaluar técnicamente si el reclamo tiene fundamento y actuar en consecuencia."
+          }
+        ]
+      },
+
+      {
+        "id": "q-20",
+        "module_id": "mod-04",
+        "order": 20,
+        "text": "Descubres que otro proveedor certificado I mendly en tu zona está acordando trabajos directamente con clientes que conoció en la plataforma. ¿Qué debes hacer?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q20-a",
+            "text": "No hacer nada — no es tu problema y el otro proveedor sabe lo que hace.",
+            "is_correct": false,
+            "rationale": "La conducta de derivación de otros proveedores daña la plataforma que todos usan y erosiona la confianza en I mendly. Aunque no es tu obligación actuar, reportarlo es lo correcto."
+          },
+          {
+            "id": "q20-b",
+            "text": "Hacer lo mismo — si él lo hace, es señal de que no tiene consecuencias.",
+            "is_correct": false,
+            "rationale": "Que otro cometa una infracción no justifica que tú la cometas. Ambos serían sancionados si se detecta. Las consecuencias de la derivación incluyen baja definitiva y posibles acciones legales."
+          },
+          {
+            "id": "q20-c",
+            "text": "Reportarlo al equipo de I mendly a través del correo proveedores@imendly.com o el canal de soporte de la app.",
+            "is_correct": true,
+            "rationale": "Reportar conductas que violan el contrato protege la integridad de la plataforma de la que tú también dependes. I mendly tiene mecanismos de investigación y actuará con base en la evidencia disponible. Tu reporte puede ser anónimo."
+          },
+          {
+            "id": "q20-d",
+            "text": "Confrontar directamente al otro proveedor y pedirle que deje de hacerlo.",
+            "is_correct": false,
+            "rationale": "Una confrontación directa puede generar conflictos y no es el mecanismo adecuado. El canal correcto es reportarlo al equipo de I mendly, que tiene los recursos para investigar y actuar."
+          }
+        ]
+      },
+
+      {
+        "id": "q-21",
+        "module_id": "mod-05",
+        "order": 21,
+        "text": "¿En qué momento exacto se libera el pago del escrow al proveedor?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q21-a",
+            "text": "Inmediatamente cuando el proveedor marca el servicio como completado en la app.",
+            "is_correct": false,
+            "rationale": "Marcar completado inicia el período de validación del cliente, no libera el pago. El pago se libera después de la confirmación del cliente o tras el timeout de 24 horas."
+          },
+          {
+            "id": "q21-b",
+            "text": "Cuando el cliente confirma su satisfacción en la app, O automáticamente si transcurren 24 horas sin respuesta del cliente.",
+            "is_correct": true,
+            "rationale": "Correcto. Hay dos mecanismos de liberación: (1) el cliente confirma activamente → liberación inmediata; (2) el cliente no responde en 24 horas → liberación automática por timeout. En ambos casos, el pago llega vía SPEI al siguiente día hábil."
+          },
+          {
+            "id": "q21-c",
+            "text": "Todos los viernes en un pago consolidado de los servicios de la semana.",
+            "is_correct": false,
+            "rationale": "I mendly no consolida pagos semanales. Cada servicio tiene su propio flujo de escrow independiente y su liberación ocurre según los mecanismos descritos, no en un ciclo semanal."
+          },
+          {
+            "id": "q21-d",
+            "text": "Cuando el cliente califica el servicio con 4 o más estrellas.",
+            "is_correct": false,
+            "rationale": "La calificación y la liberación del pago son procesos independientes. El pago se libera por la confirmación o el timeout, independientemente de la calificación que el cliente dé posteriormente."
+          }
+        ]
+      },
+
+      {
+        "id": "q-22",
+        "module_id": "mod-05",
+        "order": 22,
+        "text": "¿Qué documentos necesitas tener vigentes para mantener tu badge de certificación activo?",
+        "type": "single_choice",
+        "difficulty": "low",
+        "options": [
+          {
+            "id": "q22-a",
+            "text": "Solo el INE vigente — los antecedentes se verifican solo en el registro inicial.",
+            "is_correct": false,
+            "rationale": "Incorrecto. Tanto el INE como el documento de antecedentes no penales deben mantenerse vigentes. Los antecedentes deben renovarse periódicamente y son revisados en cada renovación del badge (cada 6 meses)."
+          },
+          {
+            "id": "q22-b",
+            "text": "INE vigente + antecedentes no penales vigentes (no mayor a 3 meses al momento de la renovación del badge).",
+            "is_correct": true,
+            "rationale": "Correcto. Ambos documentos deben estar vigentes para la renovación del badge cada 6 meses. El INE vencido o los antecedentes expirados resultan en suspensión del badge hasta que se renueven los documentos."
+          },
+          {
+            "id": "q22-c",
+            "text": "No necesitas documentos vigentes después del registro inicial — ya fuiste verificado.",
+            "is_correct": false,
+            "rationale": "La certificación I mendly es un proceso continuo, no un trámite único. La vigencia de documentos es un criterio de renovación activo cada 6 meses."
+          },
+          {
+            "id": "q22-d",
+            "text": "INE, antecedentes y certificado técnico profesional obligatorio.",
+            "is_correct": false,
+            "rationale": "El certificado técnico es opcional (aunque suma puntos en la evaluación). Los documentos obligatorios para mantener el badge son el INE vigente y los antecedentes no penales actualizados."
+          }
+        ]
+      },
+
+      {
+        "id": "q-23",
+        "module_id": "mod-05",
+        "order": 23,
+        "text": "Un cliente te califica con 2 estrellas sin dejar comentario después de un servicio que consideras que hiciste bien. ¿Cuál es la acción correcta?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q23-a",
+            "text": "Contactar al cliente directamente para pedirle que cambie la calificación.",
+            "is_correct": false,
+            "rationale": "Presionar a un cliente para que cambie su calificación está prohibido por I mendly y puede resultar en una sanción. Las calificaciones son definitivas una vez publicadas y solo I mendly puede eliminarlas por causas específicas."
+          },
+          {
+            "id": "q23-b",
+            "text": "Aceptar la calificación, reflexionar sobre si hubo algo que pudiste hacer mejor, y enfocarte en mantener un promedio alto en los siguientes servicios.",
+            "is_correct": true,
+            "rationale": "Esta es la respuesta madura y correcta. Las calificaciones bajas sin comentario son difíciles de entender, pero el mecanismo correcto es la mejora continua. Una calificación baja aislada no destruye un promedio alto si tus demás servicios son excelentes."
+          },
+          {
+            "id": "q23-c",
+            "text": "Reportar la calificación a I mendly como injusta para que la eliminen.",
+            "is_correct": false,
+            "rationale": "I mendly solo elimina calificaciones que contengan insultos, información falsa o contenido inapropiado. Una calificación baja sin comentario, aunque sea percibida como injusta, no califica para eliminación bajo esos criterios."
+          },
+          {
+            "id": "q23-d",
+            "text": "Calificar al cliente con 1 estrella como represalia.",
+            "is_correct": false,
+            "rationale": "Las calificaciones de represalia están prohibidas y son detectables por el sistema. Además, las calificaciones al cliente son para ayudar a otros proveedores a tomar decisiones informadas, no para vengarse de malas calificaciones recibidas."
+          }
+        ]
+      },
+
+      {
+        "id": "q-24",
+        "module_id": "mod-05",
+        "order": 24,
+        "text": "¿Cuántas cancelaciones injustificadas puedes acumular antes de recibir una suspensión temporal de tu cuenta?",
+        "type": "single_choice",
+        "difficulty": "low",
+        "options": [
+          {
+            "id": "q24-a",
+            "text": "Cinco cancelaciones injustificadas.",
+            "is_correct": false,
+            "rationale": "Cinco cancelaciones injustificadas resultan en baja DEFINITIVA, no en suspensión temporal. La escala de sanciones es progresiva."
+          },
+          {
+            "id": "q24-b",
+            "text": "Diez cancelaciones injustificadas.",
+            "is_correct": false,
+            "rationale": "Diez cancelaciones superan con creces el umbral de baja definitiva. El sistema de sanciones de I mendly actúa mucho antes."
+          },
+          {
+            "id": "q24-c",
+            "text": "Tres cancelaciones injustificadas resultan en suspensión temporal de 30 días.",
+            "is_correct": true,
+            "rationale": "Correcto. El régimen de sanciones establece: 1a cancelación = advertencia formal; 2a = reducción de visibilidad 7 días; 3a = suspensión temporal 30 días; 4a = suspensión 90 días; 5a o tres en 30 días = baja definitiva."
+          },
+          {
+            "id": "q24-d",
+            "text": "No hay límite de cancelaciones — I mendly entiende que a veces surgen imprevistos.",
+            "is_correct": false,
+            "rationale": "Sí existe un límite y un régimen de sanciones progresivo. Las cancelaciones injustificadas afectan directamente a los clientes y al funcionamiento de la plataforma, por lo que tienen consecuencias concretas."
+          }
+        ]
+      },
+
+      {
+        "id": "q-25",
+        "module_id": "mod-05",
+        "order": 25,
+        "text": "Tu badge de certificación I mendly tiene una vigencia de 6 meses. Si no completas el proceso de renovación en el plazo establecido, ¿qué ocurre?",
+        "type": "single_choice",
+        "difficulty": "medium",
+        "options": [
+          {
+            "id": "q25-a",
+            "text": "No ocurre nada — el badge se renueva automáticamente si no has tenido incidentes.",
+            "is_correct": false,
+            "rationale": "El badge NO se renueva automáticamente. Requiere una revisión activa de criterios (calificación, tasa de completados, documentos) y una entrevista de renovación de 15 minutos con el equipo I mendly."
+          },
+          {
+            "id": "q25-b",
+            "text": "El badge se suspende hasta que completes el proceso de renovación, lo que reduce tu visibilidad en la plataforma.",
+            "is_correct": true,
+            "rationale": "Correcto. Si no participas en la entrevista de renovación dentro del plazo, el badge queda suspendido. Seguirás en la plataforma pero sin el distintivo de certificado, lo que reduce tu posición en los resultados de búsqueda hasta que renueves."
+          },
+          {
+            "id": "q25-c",
+            "text": "Tu cuenta es eliminada permanentemente.",
+            "is_correct": false,
+            "rationale": "La no renovación del badge no resulta en eliminación de cuenta inmediata — resulta en suspensión del badge. La baja definitiva requiere infracciones más graves o acumulación de faltas."
+          },
+          {
+            "id": "q25-d",
+            "text": "Tienes 6 meses adicionales de gracia antes de que el badge expire.",
+            "is_correct": false,
+            "rationale": "No existe período de gracia para la renovación del badge. I mendly notifica con anticipación la fecha de renovación y el proceso debe completarse en el plazo establecido."
+          }
+        ]
+      }
+
+    ],
+
+    "grading": {
+      "total_points": 25,
+      "points_per_question": 1,
+      "passing_points": 20,
+      "passing_percentage": 80,
+      "grade_scale": [
+        { "min": 96, "max": 100, "label": "Excelente", "badge_color": "#3DB87A", "message": "Dominas perfectamente los valores y protocolos de I mendly. Eres exactamente el tipo de profesional que buscamos." },
+        { "min": 80, "max": 95, "label": "Aprobado", "badge_color": "#0891B2", "message": "Conoces bien los estándares de I mendly. Obtienes tu certificación. Repasa las preguntas que fallaste para perfeccionar tu protocolo." },
+        { "min": 60, "max": 79, "label": "No aprobado", "badge_color": "#F59E0B", "message": "Necesitas reforzar algunos módulos antes de intentarlo de nuevo. Revisa especialmente los temas donde fallaste." },
+        { "min": 0, "max": 59, "label": "Requiere más preparación", "badge_color": "#EF4444", "message": "Te recomendamos volver a revisar todos los módulos del curso antes de presentar el examen nuevamente." }
+      ]
+    },
+
+    "module_breakdown_thresholds": {
+      "description": "Aunque el puntaje global determina si aprueba o reprueba, el sistema también muestra el desempeño por módulo para feedback detallado.",
+      "modules": [
+        { "id": "mod-01", "min_recommended": 4, "label": "Valores I mendly" },
+        { "id": "mod-02", "min_recommended": 4, "label": "Antes del servicio" },
+        { "id": "mod-03", "min_recommended": 4, "label": "Durante y después" },
+        { "id": "mod-04", "min_recommended": 3, "label": "Situaciones difíciles" },
+        { "id": "mod-05", "min_recommended": 4, "label": "Uso de la app" }
+      ]
+    },
+
+    "ui_config": {
+      "randomize_questions": false,
+      "randomize_options": true,
+      "show_rationale_after_answer": false,
+      "show_rationale_after_exam": true,
+      "allow_review_before_submit": true,
+      "show_progress_bar": true,
+      "auto_advance_on_answer": false,
+      "countdown_timer": true,
+      "warn_before_time_expires_minutes": 5
+    },
+
+    "completion_actions": {
+      "on_pass": {
+        "activate_badge": true,
+        "send_congratulation_email": true,
+        "send_push_notification": true,
+        "push_message": "¡Felicidades! Eres Proveedor Certificado I mendly. Tu badge ya está activo.",
+        "email_subject": "¡Bienvenido al equipo certificado I mendly!",
+        "unlock_feature": "full_profile_visibility"
+      },
+      "on_fail_first_attempt": {
+        "allow_retry": true,
+        "retry_cooldown_hours": 24,
+        "send_email": true,
+        "email_subject": "Resultados de tu examen I mendly — Inténtalo de nuevo",
+        "show_weak_modules": true
+      },
+      "on_fail_second_attempt": {
+        "allow_retry": false,
+        "require_course_retake": true,
+        "send_email": true,
+        "email_subject": "Próximos pasos para tu certificación I mendly",
+        "cooldown_days_before_course_retry": 7
+      }
+    }
+  }
+}
