@@ -1,0 +1,75 @@
+Service Name,Category,Description,Base Price,Units,Average Duration (Days),Active Suppliers (Count),Service Image,Suppliers
+Carpintería General y reparaciones,Woodwork,Trabajos de carpinteria general como fabricacion o reparacion de muebles genereales o servicio de pintura,$450.00,Servicio,1,3,,"Carpintería Diaz,Mono Atelier,Zamora"
+Instalación de centro de carga,Electrical,Instalar y conectar centro de carga en residencial,"$1,500.00",Servicio,1,1,,EMDICO
+Instalación de MiniSplit,Electrical,Instalación y conexion de minisplit 110V,$950.00,Servicio,1,0,,EMDICO
+Instalación de Unidad paquete,Electrical,Instalación y conexion de Unidad Paquete,"$3,500.00",Servicio,1,0,,EMDICO
+Analisis de falla electrica,Electrical,Diagnostico,$300.00,Servicio,1,0,,EMDICO
+Cambio de Apagador o Tomacorriente,Electrical,,$280.00,Servicio,1,0,,EMDICO
+Instalación eléctrica,Electrical,Instalacion electrica 110v,$920.00,Mt Lineal,1,0,,EMDICO
+Muro Tablaroca interno 2 caras,Construction,"Levantamiento de Muros en tabla roca 2 caras, incluye estructuras de perfilería de aluminio y acabado en juntas y pasta, no incluye pintura",$580.00,Mt2,1,0,,Mono Atelier
+Trabajo de cielo,Construction,"Recubrimiento de tablaroca en cielo de casa interno, incluye estructuras de perfilería de aluminio y acabado en juntas y pasta, no incluye pintura",$450.00,Mt2,2,0,,Mono Atelier
+Plancha de concreto firme,Construction,,$400.00,Mt2,3,0,,Mono Atelier
+Detallado de muros,Construction,,$350.00,Mt2,2,0,,Mono Atelier
+Levantamiento de muros y estructuras,Construction,,$350.00,Mt2,2,0,,Mono Atelier
+Botones,Fashion Design,,$50.00,Pz,1,1,,Indigo
+Bastilla,Fashion Design,,$99.00,Pz,1,1,,Indigo
+Prenda a medida,Fashion Design,,$400.00,Servicio,15,1,,Indigo
+Vestido a medida (No corsett),Fashion Design,,$950.00,Servicio,15,1,,Indigo
+Vestido de novia,Fashion Design,,"$4,500.00",Servicio,35,1,,Indigo
+Ajuste y pinzas,Fashion Design,,$95.00,Servicio,1,1,,Indigo
+zipper,Fashion Design,,$105.00,Pz,1,1,,Indigo
+Pintura básica de muro,Interior Design,"Pintura de muros
+",$235.00,Mt2,1,0,,Mono Atelier
+Diseño de Interiores,Interior Design,"Servicio de diseño de interiores, cocinas, baños y closets","$1,200.00",Servicio,3,1,,Mono Atelier
+Mueble de madera,Industrial Design,"Diseño y fabricación de mueble de madera, puede variar en estilos y dimensiones, son muebles en general como libreros, escritorios, muebles para loza o bien mueble personalizado","$2,500.00",Servicio,10,0,,"Mono Atelier, Zaomora"
+Comedor completo,Industrial Design,"Comedor de 6 personas en Cuarzo o granito estandar, base de madera estandar y sillas modelos estandar","$26,000.00",Pz,10,3,,"Carpintería Diaz,Mono Atelier,Zamora"
+Sillas,Industrial Design,"Sillas modelos estandar
+","$2,100.00",Pz,10,0,,
+Cocina,Industrial Design,Metro lineal de cocinas minimalistas,"$2,850.00",Mt Lineal,15,4,,"Carpintería Diaz,La Hacienda,Mono Atelier,Zamora"
+Closet,Industrial Design,Metro lineal de closet,"$2,000.00",Mt Lineal,8,4,,"Carpintería Diaz,La Hacienda,Mono Atelier,Zamora"
+TV Station,Industrial Design,metro lineal de estancia de TV sin acabado en muro,"$2,000.00",Mt Lineal,6,0,,Mono Atelier
+Muebles de Baño,Industrial Design,"Mueble de baño sencillo
+","$3,490.00",pz,4,0,,Mono Atelier
+Instalación en Baño,Plumbing,,$550.00,Servicio,1,0,,Mono Atelier
+Instalación de Lavabo,Plumbing,,$450.00,Servicio,1,0,,Mono Atelier
+Instalación de Tarjas,Plumbing,,$550.00,Servicio,1,0,,Mono Atelier
+Reparación de fugas,Plumbing,,$350.00,Servicio,1,,,Mono Atelier
+Limpieza de casa (Basico) 1 planta,Cleanning,,$800.00,Servicio,,0,,Karla´s House Cleaning
+Limpieza de casa (Detallado) 1 planta,Cleanning,,"$1,000.00",Servicio,,0,,Karla´s House Cleaning
+Limpieza de casa (Basico) 2 plantas,Cleanning,,"$1,350.00",Servicio,,0,,Karla´s House Cleaning
+Limpieza de casa (Detallado) 2 plantas,Cleanning,,"$1,500.00",Servicio,,0,,Karla´s House Cleaning
+Lavado de Auto Auto Chico,Cleanning,,$100.00,Pz,,0,,Junior Detail
+Lavado de Auto Auto Grande,Cleanning,,$200.00,Pz,,0,,Junior Detail
+Escombro (1 Troca),Cleanning,,$500.00,Servicio,,0,,
+Remodelación,Architecture,"Servicio de remodelación personalizado por nuestros diseñadores
+ ",,Servicio,,0,,Mono Atelier
+Ampleación,Architecture,"Servicio de Construcción para viviendas o locales comerciales, basados en diseño previamente",,Servicio,,0,,Mono Atelier
+Impermeabilizar,Roofing,Servicio de aislamiento para techo incluye material e instalación,$500.00,Mt2,,0,,Mono Atelier
+Mantenimiento anual de impermiabilizado,Roofing,"Mantenimiento a techo impermeable, incluye material y mano de obra
+",$600.00,Mt2,,0,,Mono Atelier
+Instalación de piso -Ceramica,Flooring,"Servicio de instalación de Pisos cerámicos o rectificados hasta formatos 60 X 120cm, no incluye materiales",$350.00,Mt2,,0,,Mono Atelier
+Instalación de piso -Porcelanato,Flooring,"Servicio de instalación de Pisos Porcelánicos hasta formatos 60 X 120cm, no incluye materiales",$500.00,Mt2,,0,,Mono Atelier
+Pulido de Pisos de marmol o granito,Flooring,"Servicio de pulido de pisos en piedras naturales como mármol o granito, incluye los materiales de limpieza pulido y sellado de la superficie.
+",$300.00,Mt2,,0,,Master Stone
+Cubierta de Cocina,StoneWorks,Metro lineal de Cuarzo estandar,"$3,500.00",Mt Lineal,,2,,"Cianitus,Master Stone"
+Análisis de falla Electrónica,Electronic,,$250.00,Servicio,,0,,
+Reparación de Refrigerador,Electronic,,$850.00,Servicio,,0,,
+Reparación de electrodomestico,Electronic,,$850.00,Servicio,,0,,
+Reparación de Lavadora,Electronic,,$850.00,Servicio,,0,,
+Reparación  de TV,Electronic,,$900.00,Servicio,,0,,
+Podar Árbol chico,Garden,,$200.00,Pz,1,0,,
+Podar Árbol Grande,Garden,,$250.00,Pz,1,0,,
+Arreglar jardín,Garden,,$180.00,Mt2,1,0,,
+Baño de mascota Chica,Pet Care,,$350.00,Pz,1,0,,
+Baño de mascota Grande,Pet Care,,$400.00,Pz,1,0,,
+Fumigación,Pest Control,"Servicio de funmigación para casa estandar, hasta 2 plantas",$650.00,Servicio,1,0,,
+Abrir auto,Cerrajero,,,,,0,,
+Copias de llave,Cerrajero,,,,,0,,
+Lona full color,Printing,,,,,1,,J2M Publicidad
+Etiquetas (stickers),Printing,,,,,1,,J2M Publicidad
+Letreros,Printing,,,,,1,,J2M Publicidad
+Señalaminetos,Printing,,,,,1,,J2M Publicidad
+Vidrios,Canceles,,,,,1,,Vidrios y Canceles
+Espejos,Canceles,,,,,1,,Vidrios y Canceles
+Puertas de cancel,Canceles,,,,,1,,Vidrios y Canceles
+Fijos,Canceles,,,,,1,,Vidrios y Canceles

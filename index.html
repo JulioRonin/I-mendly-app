@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>imendly — servicios a domicilio</title>
+
+  <!-- Fonts: Urbanist — Esmeralda Minimal v2.0 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'im-bg':     '#F5F5F5',
+            'im-green':  '#3DB87A',
+            'im-black':  '#1F1F1F',
+            'im-gray':   '#6B6B6B',
+            'im-silver': '#D1D1D1',
+            'im-white':  '#FFFFFF',
+            'im-border': 'rgba(0,0,0,0.06)',
+          },
+          fontFamily: {
+            sans: ['Urbanist', 'sans-serif'],
+          },
+          borderRadius: {
+            '4xl': '2rem',
+            '5xl': '2.5rem',
+          },
+          boxShadow: {
+            'card':    '0 2px 16px rgba(0,0,0,0.07)',
+            'card-sm': '0 1px 8px rgba(0,0,0,0.06)',
+            'btn':     '0 4px 16px rgba(61,184,122,0.32)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── ESMERALDA MINIMAL v2.0 DESIGN TOKENS ── */
+    :root {
+      --bg:        #F5F5F5;
+      --card:      #FFFFFF;
+      --green:     #3DB87A;
+      --green-dk:  #2a9460;
+      --green-lt:  rgba(61,184,122,0.12);
+      --black:     #1F1F1F;
+      --gray:      #6B6B6B;
+      --gray-lt:   #A8A8A8;
+      --silver:    #D1D1D1;
+      --white:     #FFFFFF;
+      --border:    rgba(0,0,0,0.07);
+      --radius-card: 20px;
+      --radius-chip: 9999px;
+      --shadow-card: 0 2px 16px rgba(0,0,0,0.07);
+      --shadow-sm:   0 1px 8px rgba(0,0,0,0.06);
+      --shadow-green: 0 4px 16px rgba(61,184,122,0.32);
+
+      /* Legacy aliases */
+      --im-bg:        var(--bg);
+      --im-purple:    var(--black);
+      --im-purple-dk: var(--black);
+      --im-ink:       var(--black);
+      --im-border:    var(--border);
+      --im-coral:     var(--green);
+      --im-teal:      var(--green);
+      --mint:         var(--green);
+      --mint-dk:      var(--green-dk);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body, #root {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      font-family: 'Urbanist', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* ── SCROLLBAR HIDE ── */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* ── TYPOGRAPHY (all lowercase per Esmeralda Minimal) ── */
+    .heading-xl {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--black);
+      text-transform: lowercase;
+    }
+    .heading-lg {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--black);
+      text-transform: lowercase;
+    }
+    .heading-md {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--black);
+      text-transform: lowercase;
+    }
+    .label-sm {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--gray);
+      text-transform: lowercase;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+    }
+    .card-gray {
+      background: var(--bg);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-chip);
+      cursor: pointer;
+      box-shadow: var(--shadow-green);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-transform: lowercase;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(61,184,122,0.4); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-black {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-chip);
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+      transition: transform 0.15s ease;
+      text-transform: lowercase;
+    }
+    .btn-black:hover { transform: translateY(-1px); }
+
+    .btn-mint {
+      background: var(--green);
+      color: var(--white);
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-chip);
+      cursor: pointer;
+      box-shadow: var(--shadow-green);
+      transition: transform 0.15s ease;
+    }
+    .btn-mint:hover { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--black);
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      border: 1.5px solid var(--silver);
+      border-radius: var(--radius-chip);
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+      text-transform: lowercase;
+    }
+    .btn-ghost:hover { border-color: var(--gray); }
+
+    /* ── CHIPS ── */
+    .chip {
+      background: var(--white);
+      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-chip);
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--gray);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: lowercase;
+    }
+    .chip.active {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+    .chip-dark {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 18px;
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      border: none;
+      text-transform: lowercase;
+    }
+    .chip-dark.active, .chip-dark[data-active="true"] {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    /* ── FORM FIELDS ── */
+    .field-label {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+      display: block;
+      text-transform: lowercase;
+    }
+    .input-field {
+      width: 100%;
+      background: var(--white);
+      border: 1.5px solid var(--silver);
+      border-radius: 14px;
+      padding: 13px 16px;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .input-field::placeholder { color: var(--gray-lt); }
+    .input-field:focus { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-lt); }
+
+    /* ── SEARCH BAR ── */
+    .search-pill {
+      background: var(--white);
+      border-radius: 9999px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border);
+      font-family: 'Urbanist', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray);
+      padding: 13px 20px;
+    }
+    .search-pill:focus { outline: none; border-color: var(--green); }
+
+    /* ── BOTTOM NAV ── */
+    .floating-nav {
+      background: var(--white);
+      box-shadow: 0 -1px 0 rgba(0,0,0,0.06), 0 -4px 20px rgba(0,0,0,0.04);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── BADGE ── */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      text-transform: lowercase;
+      background: var(--green-lt);
+      color: var(--green-dk);
+      border-radius: 9999px;
+      padding: 4px 12px;
+    }
+
+    /* ── DARK SECTION ── */
+    .section-dark {
+      background: var(--black);
+      border-radius: 20px;
+      color: var(--white);
+    }
+
+    /* ── PROGRESS ── */
+    .progress-bar {
+      background: var(--silver);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: var(--green);
+      border-radius: 9999px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── HOVER LIFT ── */
+    .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-up   { animation: fadeUp  0.4s cubic-bezier(0.22,1,0.36,1) both; }
+    .animate-scale-in  { animation: scaleIn 0.3s cubic-bezier(0.22,1,0.36,1) both; }
+    .animate-slide-up  { animation: fadeUp  0.35s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ── LEGACY COMPAT ── */
+    .btn-coral      { background: var(--green); color: white; font-family: 'Urbanist', sans-serif; font-weight: 600; border: none; border-radius: 9999px; cursor: pointer; }
+    .btn-teal       { background: var(--green); color: white; font-family: 'Urbanist', sans-serif; font-weight: 600; border: none; border-radius: 9999px; cursor: pointer; }
+    .badge-coral    { background: var(--green-lt); color: var(--green-dk); font-family: 'Urbanist', sans-serif; font-weight: 600; border-radius: 9999px; font-size: 11px; padding: 3px 10px; }
+    .badge-teal     { background: var(--green-lt); color: var(--green-dk); font-family: 'Urbanist', sans-serif; font-weight: 600; border-radius: 9999px; font-size: 11px; padding: 3px 10px; }
+    .badge-success  { background: var(--green-lt); color: var(--green-dk); font-family: 'Urbanist', sans-serif; font-weight: 600; border-radius: 9999px; font-size: 11px; padding: 3px 10px; }
+    .glass          { background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); }
+    .input-dark     { background: #2A2A2A; color: white; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; font-family: 'Urbanist', sans-serif; outline: none; }
+    .pb-safe        { padding-bottom: env(safe-area-inset-bottom, 16px); }
+    .blob-coral     { border-radius: 50%; background: var(--green); filter: blur(60px); pointer-events: none; }
+    .input-pill     { background: var(--white); border-radius: 9999px; box-shadow: var(--shadow-card); border: 1px solid var(--border); font-family: 'Urbanist', sans-serif; outline: none; }
+  </style>
+  <script type="module" crossorigin src="/I-mendly-app/assets/index-BmfiYT-9.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
